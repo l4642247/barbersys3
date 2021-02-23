@@ -1,144 +1,71 @@
+
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
   <meta charset="utf-8">
-  <title>编辑文章</title>
+  <title>添加消费记录</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="../../../layuiadmin/style/admin.css" media="all">
-
-  <link href="../../../summernote/dist/summernote.css" rel="stylesheet">
-  <link href="../../../tagsinput/jquery.tagsinput.css" rel="stylesheet">
-  <link href="../../../assets/base/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="layui-fluid">
-  <div class="layui-row layui-col-space15">
-    <div class="layui-col-md12">
-      <div class="layui-card">
-        <div class="layui-card-header">编辑文章</div>
-        <div class="layui-card-body" pad15>
-
-          <form class="layui-form" action="/article/create" method="post">
-            <input type="hidden" name="id" th:value="${article.id}" />
-
-            <div class="layui-form-item">
-              <label class="layui-form-label">标题</label>
-              <div class="layui-input-block">
-                <input type="text" name="title" th:value="${article.title}" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
-              </div>
-            </div>
-
-            <div class="layui-form-item">
-              <label class="layui-form-label">摘要</label>
-              <div class="layui-input-block">
-                <textarea th:utext="${article.summary}"  class="layui-textarea" name="summary">写点什么吧...</textarea>
-              </div>
-            </div>
-
-            <div class="layui-form-item">
-              <label class="layui-form-label">内容</label>
-              <div class="layui-input-block">
-                <textarea th:text="${article.content}" style="width: 400px; height: 100px;" class="summernote layui-textarea" name="content">写点什么吧...</textarea>
-              </div>
-            </div>
-
-            <div class="layui-form-item">
-              <label class="layui-form-label">标签</label>
-              <div class="layui-input-block">
-                <input name="tags" th:value="${tags}" id="tags"  value="admin,dashboard,xyz">
-              </div>
-            </div>
-
-            <div class="layui-form-item">
-              <label class="layui-form-label">目录</label>
-              <div class="layui-input-block">
-                <select name="catalog">
-                  <option value="">请选择</option>
-                  <option th:each="catalog:${catalogList}" th:value="${catalog.id}"  th:text="${catalog.name}" th:selected="${article.catalog != null && catalog.id == article.catalog.id}"></option>
-                </select>
-              </div>
-            </div>
-
-            <div class="layui-form-item">
-              <label class="layui-form-label">类型</label>
-              <div class="layui-input-block">
-                <select name="type" lay-verify="required" th:value="${article.type}">
-                  <option value="0" th:selected="${'0' == article.type}">日记</option>
-                  <option value="1" th:selected="${'1' == article.type}">文章</option>
-                  <option value="2" th:selected="${'2' == article.type}">关于我</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="layui-form-item layui-form-text">
-              <label class="layui-form-label">发布状态</label>
-              <div class="layui-input-block">
-                <input type="checkbox" lay-verify="required" lay-filter="status" name="status" lay-skin="switch" lay-text="已发布|待修改">
-              </div>
-            </div>
-
-            <div class="layui-form-item">
-              <div class="layui-input-block">
-                <input type="submit" class="layui-btn"/>
-                <a class="layui-btn layuiadmin-btn-list" href="#" onClick="javascript :history.back(-1);">取消</a>
-              </div>
-            </div>
-          </form>
-
-        </div>
-      </div>
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;"><div class="layui-form-item">
+  <label class="layui-form-label">会员卡号</label>
+  <div class="layui-input-inline">
+    <input type="text" name="cardNo" lay-verify="required" placeholder="请输入卡号" autocomplete="off" class="layui-input">
+  </div>
+</div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">姓名</label>
+    <div class="layui-input-inline">
+      <input type="text" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
     </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">充值金额</label>
+    <div class="layui-input-inline">
+      <input type="text" name="amount" lay-verify="amount" placeholder="请输入充值金额" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">充值日期</label>
+    <div class="layui-input-inline">
+      <input type="text" class="layui-input" id="rechargeDate" placeholder="yyyy-MM">
+    </div>
+  </div>
+  <div class="layui-form-item" lay-filter="sex">
+    <label class="layui-form-label">操作员</label>
+    <div class="layui-input-inline">
+      <input type="text" name="creator" lay-verify="creator" placeholder="请输入操作员" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item layui-hide">
+    <input type="button" lay-submit lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" value="确认">
   </div>
 </div>
 
 <script src="../../../layuiadmin/layui/layui.js"></script>
-<!--form validation init-->
-<script src="../../../assets/base/js/jquery.min.js"></script>
-<script src="../../../assets/base/js/bootstrap.min.js"></script>
-<script src="../../../summernote/dist/summernote.min.js"></script>
-<script src="../../../tagsinput/jquery.tagsinput.min.js"></script>
 <script>
-    layui.config({
-        base: '../../../layuiadmin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'set']);
+  layui.config({
+    base: '../../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'upload', 'laydate'], function(){
+    var $ = layui.$
+    ,form = layui.form
+    ,laydate = layui.laydate
+    ,upload = layui.upload ;
 
-    // Tags Input
-    jQuery('#tags').tagsInput({width:'100%',height:'80px'});
-
-    jQuery(document).ready(function(){
-        $('.summernote').summernote({
-            height: 600,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: true,                // set focus to editable area after initializing summernote
-            lang:'zh-CN',
-            callbacks: {
-                onImageUpload: function(files) {
-                    //上传图片到服务器
-                    var formData = new FormData();
-                    formData.append('file',files[0]);
-                    $.ajax({
-                        url : 'http://www.nicecoder.cn/imageupload/imageUpload',//后台文件上传接口
-                        type : 'POST',
-                        data : formData,
-                        processData : false,
-                        contentType : false,
-                        success : function(result) {
-                            var jResult = JSON.parse(result);
-                            $('.summernote').summernote('insertImage',jResult.data.src);
-                        }
-                    });
-                }
-            }
-        });
+    //年月选择器
+    laydate.render({
+      elem: '#rechargeDate'
+      ,type: 'month'
     });
+
+  })
 </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>昨日头条</title>
+    <title>title</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -13,179 +13,14 @@
 </head>
 
 <body>
-    <input name="current" th:value="${current}" hidden>
-    <input name="size" th:value="${size}" hidden>
-    <input name="pages" th:value="${pages}" hidden>
-    <div class="layui-fluid" style="padding: 0">
-        <div class="layui-row wallpaper"></div>
-    </div>
-    <div class="layui-fluid nav">
-        <div class="layui-container">
-            <div class="layui-row">
-                <span class="layui-breadcrumb" th:each="catalog : ${catalogResult}">
-                  <a href="" th:text="${catalog.getName()}"></a>
-                  <span class="separator">/</span>
-                </span>
-                <a href="">全部</a>
-            </div>
-        </div>
-    </div>
-    <div class="layui-container">
-        <div class="layui-row">
-            <!--文章列表-->
-            <div class="layui-col-md9">
-                <div class="layui-row article" th:each="news : ${pageResult.getList()}">
-                    <div class="layui-col-md4" >
-                        <img class="cover" th:src="${news.getCover()}">
-                    </div>
-                    <div class="layui-col-md8">
-                        <a th:href="@{'news/'+${news.getId()}}">
-                            <h3 class="layui-elip" th:text="${news.getTitle()}" ></h3>
-                        </a>
-                        <p class="layui-text content" th:text="${news.getSummary()}"></p>
-                        <div class="row">
-                            <div class="layui-col-md6" >
-                                <span th:text="${news.getPublisher()}"></span>
-                                &nbsp;&nbsp;
-                                <span th:text="${news.getPublishTime()}"></span>
-                            </div>
-                            <div class="layui-col-md6" style="text-align: right">
-                                在看：<span th:text="${news.getWatching()}"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <a href="javascript:more();"><div class="layui-row more" th:if="${pages > current}"></div></a>
-
-            </div>
-
-            <!--推荐相关-->
-            <div class="layui-col-md3">
-                <div class="row shortcut">
-                    <h3>今日最热</h3>
-                    <ul>
-                        <li class="layui-elip" th:each="news : ${newsClickTop}" >
-                            <span th:text="${news.getTitle()}" th:alt="${news.getTitle()}"></span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="row shortcut">
-                    <h3>今日推荐</h3>
-                    <ul>
-                        <li class="layui-elip" th:each="news : ${newsClickTop}" >
-                            <span th:text="${news.getTitle()}" th:alt="${news.getTitle()}"></span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="app">
-                <div v-html="message"></div>
-            </div>
-
-        </div>
-    </div>
+    首页
 </body>
 
 
 <script src="../layuiadmin/layui/layui.js"></script>
 <style>
-    .wallpaper{
-        height: 250px;
-        background-image: url('../images/wallpaper.jpg');
-        background-repeat: round;
-    }
-    .nav{
-        border-bottom: 1px solid #666;
-        border-top: 1px solid #666;
-    }
-    .article{
-        padding: 30px 0;
-    }
-    .cover{
-        width: 240px;
-        border-radius: 5px;
-    }
-    .content{
-        padding: 10px 0;
-    }
-    .separator{
-        padding: 0 5px;
-    }
-    .more{
-        text-align: center;
-        border: 1px solid #666;
-        cursor: pointer;
-        user-select: none;
-        height: 30px;
-        line-height: 30px;
-    }
-    .shortcut{
-        padding-top: 20px;
-        padding-left: 20px;
-        margin-bottom: 50px;
-    }
-    .shortcut h3{
-        border-left: 5px solid #F74C31;
-        padding-left: 10px;
-    }
-    .shortcut ul{
-        margin-top: 20px;
-    }
-    .shortcut ul li{
-        padding: 5px 0;
-    }
+
 </style>
-<script>
-    //注意：导航 依赖 element 模块，否则无法进行功能性操作
-    layui.use('element', function(){
-        var element = layui.element;
-        var $ = layui.$
-
-        var current = Number($("input[name='current']").val());
-        var size = Number($("input[name='size']").val());
-
-        window.more = function() {
-            var html = '';
-            $.ajax({
-                url:'news/listPage',
-                data:{'current': current + 1, 'size': size},
-                success:function(result){
-                    current = result.data.current;
-
-                    $.each(result.data.list, function(i,val){
-                        html +="<div class='layui-row article'>\n" +
-                            "<div class='layui-col-md4' >\n" +
-                            "<img class='cover' src='"+val.cover+"'>\n" +
-                            "</div>\n" +
-                            "<div class='layui-col-md8'>\n" +
-                            "<a href='/news/"+val.id+"'>\n" +
-                            "<h3 class='layui-elip'>"+val.title+"</h3>\n" +
-                            "</a>\n" +
-                            "<p class='layui-text content'>"+val.summary+"</p>\n" +
-                            "<div class='row'>\n" +
-                            "<div class='layui-col-md6' >\n" +
-                            "<span>"+val.publisher+"</span>\n" +
-                            "        &nbsp;&nbsp;\n" +
-                            "<span>"+val.publishTime+"</span>\n" +
-                            "</div>\n" +
-                            "<div class='layui-col-md6' style='text-align: right'>\n" +
-                            "        在看：<span>"+val.watching+"</span>\n" +
-                            "</div>\n" +
-                            "</div>\n" +
-                            "</div>\n" +
-                            "</div>"
-                    });
-
-                    $(".article:last").after(html);
-                }});
-        }
-    });
-
-
-</script>
 </body>
 </html>
 

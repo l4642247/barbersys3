@@ -9,10 +9,10 @@
         <relativePath/>
     </parent>
     <groupId>cn.nicecoder</groupId>
-    <artifactId>newssys</artifactId>
+    <artifactId>barbersys</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>newssys</name>
-    <description>newssystem</description>
+    <name>barbersys</name>
+    <description>barbersys</description>
 
     <properties>
         <java.version>1.8</java.version>
