@@ -1,31 +1,41 @@
 package cn.nicecoder.barbersys.controller;
-
-import cn.nicecoder.barbersys.entity.comm.Resp;
-import org.springframework.web.bind.annotation.PostMapping;
+ 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+ 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping("/login")
-public class LoginController {
-
-    /**
-    * 登录失败返回 401 以及提示信息.
-    *
-    * @return the rest
-    */
-    @PostMapping("/failure")
-    public Resp loginFailure() {
-        return Resp.fail( "登录失败了");
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+ 
+@Controller
+public class LoginController 
+{
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginPage(@RequestParam(value = "error", required = false) String error, 
+                            @RequestParam(value = "logout", required = false) String logout,
+                            Model model) {
+        String errorMessge = null;
+        if(error != null) {
+            errorMessge = "Username or Password is incorrect !!";
+        }
+        if(logout != null) {
+            errorMessge = "You have been successfully logged out !!";
+        }
+        model.addAttribute("errorMessge", errorMessge);
+        return "login";
     }
-
-    /**
-    * 登录成功后拿到个人信息.
-    *
-    * @return the rest
-    */
-    @PostMapping("/success")
-    public Resp loginSuccess() {
-         return Resp.ok("登录成功");
+  
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){    
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout=true";
     }
 }

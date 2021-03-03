@@ -1,11 +1,10 @@
 package cn.nicecoder.barbersys;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @SpringBootApplication
-@MapperScan("cn.nicecoder.barbersys.mapper")
 public class BarbersysApplication {
 
     public static void main(String[] args) {

@@ -1,2 +1,53 @@
 /** layuiAdmin.std-v1.1.0 LPPL License By http://www.layui.com/admin/ */
- ;layui.define("form",function(e){var s=layui.$,t=(layui.layer,layui.laytpl,layui.setter,layui.view,layui.admin),i=layui.form,a=s("body");i.verify({nickname:function(e,s){return new RegExp("^[a-zA-Z0-9_一-龥\\s·]+$").test(e)?/(^\_)|(\__)|(\_+$)/.test(e)?"用户名首尾不能出现下划线'_'":/^\d+\d+\d$/.test(e)?"用户名不能全为数字":void 0:"用户名不能有特殊字符"},pass:[/^[\S]{6,12}$/,"密码必须6到12位，且不能出现空格"]}),t.sendAuthCode({elem:"#LAY-user-getsmscode",elemPhone:"#LAY-user-login-cellphone",elemVercode:"#LAY-user-login-vercode",ajax:{url:layui.setter.base+"json/user/sms.js"}}),a.on("click","#LAY-user-get-vercode",function(){s(this);this.src="https://www.oschina.net/action/user/captcha?t="+(new Date).getTime()}),e("user",{})});
+;layui.define(["table", "form", 'util', 'HttpRequest'], function (e) {
+    var t = layui.$, i = layui.table , util = layui.util, HttpRequest = layui.HttpRequest;
+    i.render({
+        elem: "#LAY-user-manage",
+        url: "/user/page",
+        cols: [[
+            {type: "checkbox", fixed: "left"},
+            {type: 'numbers', width: 80, title: "ID"},
+            {field: "username", title: "工号", minWidth: 100},
+            {field: "password", title: "密码", width: 80},
+            {field: "name", title: "姓名", width: 80},
+            {field: "sex", title: "性别", templet: function (d) {return d.sex == '1'?"男":"女";}},
+            {field: "role", title: "职位"},
+            {field: "phone", title: "联系电话"},
+            {field: "status", title: "是否离职", templet: function (d) {return d.status == '1'?"在职":"离职";}},
+            {field: "createTime", title: "添加时间", templet: function (d) {return util.toDateString(d.createTime);}},
+            {title: "操作", width: 150, align: "center", fixed: "right", toolbar: "#table-option"}]],
+        page: !0,
+        limit: 30,
+        height: "full-220",
+        text: "对不起，加载出现异常！"
+    }), i.on("tool(LAY-user-manage)", function (e) {
+        if ("del" === e.event) layer.confirm("确定删除此用户？", function (t) {
+            var httpRequest = new HttpRequest("/user/delete/"+e.data.id, 'delete', function (data) {
+                e.del(), layer.close(t)
+            });
+            httpRequest.start(true);
+        }); else if ("edit" === e.event) {
+            layer.open({
+                type: 2,
+                title: "编辑员工信息",
+                content: "userform?id=" + e.data.id,
+                area: ["800px", "550px"],
+                btn: ["确定", "取消"],
+                yes: function (e, t) {
+                    var l = window["layui-layer-iframe" + e],
+                        r = t.find("iframe").contents().find("#LAY-user-submit");
+                    l.layui.form.on("submit(LAY-user-submit)", function (t) {
+                        var httpRequest = new HttpRequest("/user/save", 'post', function (data) {
+                            i.reload("LAY-user-manage");
+                            layer.close(e)
+                        });
+                        httpRequest.set(t.field);
+                        httpRequest.start(true);
+                    }), r.trigger("click")
+                },
+                success: function (e, t) {
+                }
+            })
+        }
+    }), e("user", {})
+});

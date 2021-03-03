@@ -13,27 +13,39 @@
 <body>
 
 <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;"><div class="layui-form-item">
-  <label class="layui-form-label">会员卡号</label>
+  <label class="layui-form-label">消费单号</label>
   <div class="layui-input-inline">
-    <input type="text" name="cardNo" lay-verify="required" placeholder="请输入卡号" autocomplete="off" class="layui-input">
+    <input type="text" name="orderNo" lay-verify="required" placeholder="请输入消费单号" autocomplete="off" class="layui-input">
   </div>
 </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">姓名</label>
+    <label class="layui-form-label">价格</label>
     <div class="layui-input-inline">
-      <input type="text" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+      <input type="text" name="price" lay-verify="required" placeholder="请输入价格" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">充值金额</label>
+    <label class="layui-form-label">数量</label>
     <div class="layui-input-inline">
-      <input type="text" name="amount" lay-verify="amount" placeholder="请输入充值金额" autocomplete="off" class="layui-input">
+      <input type="text" name="number" lay-verify="number" placeholder="请输入数量" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">充值日期</label>
+    <label class="layui-form-label">合计</label>
     <div class="layui-input-inline">
-      <input type="text" class="layui-input" id="rechargeDate" placeholder="yyyy-MM">
+      <input type="text" name="sum" lay-verify="sum" disabled autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">手机号</label>
+    <div class="layui-input-inline">
+      <input type="text" name="phone" lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">会员卡号</label>
+    <div class="layui-input-inline">
+      <input type="text" name="cardNo" lay-verify="cardNo" placeholder="请输入会员卡号" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item" lay-filter="sex">

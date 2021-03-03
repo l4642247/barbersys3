@@ -1,30 +1,46 @@
 /** layuiAdmin.std-v1.1.0 LPPL License By http://www.layui.com/admin/ */
-;layui.define(["table", "form", 'laydate'], function (e) {
-    var t = layui.$, i = layui.table ,l = layui.laydate;
-    layui.form;
-    //日期范围
-    l.render({
-        elem: '#rechargeDate'
-        ,range: true
-    });
+;layui.define(["table", "form", 'util', 'HttpRequest'], function (e) {
+    var t = layui.$, i = layui.table , util = layui.util, HttpRequest = layui.HttpRequest;
     i.render({
-        elem: "#LAY-expense-manage",
-        url: "/account/recharge/list",
+        elem: "#LAY-user-back-expense",
+        url: "/expense/page",
         cols: [[
             {type: "checkbox", fixed: "left"},
-            {field: "id", width: 80, title: "ID", sort: !0},
-            {field: "orderNo", title: "消费单号", minWidth: 100},
-            {field: "price", title: "价格", width: 80},
-            {field: "number", title: "数量", width: 80},
-            {field: "sum", title: "合计"},
-            {field: "cardNo", title: "会员卡号"},
-            {field: "expenseDate", title: "消费日期"},
-            {field: "creator", title: "操作员"},
-            {field: "createTime", title: "添加时间", sort: !0},
-            {title: "操作", width: 150, align: "center", fixed: "right", toolbar: "#table-useradmin-webuser"}]],
-        page: !0,
-        limit: 30,
-        height: "full-220",
+            {type: 'numbers', width: 80, title: "ID"},
+            {field: "code", title: "编码"},
+            {field: "name", title: "角色名"},
+            {field: "createTime",title: "创建时间", templet: function (d) {return util.toDateString(d.createTime);}},
+            {title: "操作", width: 150, align: "center", fixed: "right", toolbar: "#table-option"}]],
+        page: true,
         text: "对不起，加载出现异常！"
-    })
+    }), i.on("tool(LAY-user-back-expense)", function (e) {
+        if ("del" === e.event) layer.confirm("确定删除此角色？", function (t) {
+            var httpRequest = new HttpRequest("/expense/delete/"+e.data.id, 'delete', function (data) {
+                e.del(), layer.close(t)
+            });
+            httpRequest.start(true);
+        }); else if ("edit" === e.event) {
+            layer.open({
+                type: 2,
+                title: "编辑角色",
+                content: "expenseform?id=" + e.data.id,
+                area: ["500px", "350px"],
+                btn: ["确定", "取消"],
+                yes: function (e, t) {
+                    var l = window["layui-layer-iframe" + e],
+                        r = t.find("iframe").contents().find("#LAY-user-expense-submit");
+                    l.layui.form.on("submit(LAY-user-expense-submit)", function (t) {
+                        var httpRequest = new HttpRequest("/expense/save", 'post', function (data) {
+                            i.reload("LAY-user-back-expense");
+                            layer.close(e)
+                        });
+                        httpRequest.set(t.field);
+                        httpRequest.start(true);
+                    }), r.trigger("click")
+                },
+                success: function (e, t) {
+                }
+            })
+        }
+    }), e("expense", {})
 });

@@ -15,37 +15,10 @@
   <div class="layui-fluid">
     <div class="layui-card">
       <div class="layui-card-header layuiadmin-card-header-auto">
-        <button class="layui-btn layuiadmin-btn-list" onclick="javascript:location.href='tagsform.html'">添加</button>
+        <button class="layui-btn layuiadmin-btn-list" onclick="javascript:location.href='listform'">添加</button>
       </div>
       <div class="layui-card-body">
-        <table class="layui-table" lay-even lay-skin="nob">
-          <colgroup>
-            <col width="150">
-            <col width="200">
-            <col>
-          </colgroup>
-          <thead>
-          <tr>
-            <th>类别序号</th>
-            <th>类别名称</th>
-            <th>类别描述</th>
-            <th>文章数量</th>
-            <th>操作</th>
-          </tr>
-          </thead>
-          <tbody>
-            <tr th:each="catalog:${catalogList}">
-              <td th:text="${catalog.sort}"></td>
-              <td th:text="${catalog.name}"></td>
-              <td th:text="${catalog.des}"></td>
-              <td th:text="${catalog.count}"></td>
-              <td>
-                <a th:href="@{'tagsform.html?id='+${catalog.id}}" >修改</a>
-                <a th:href="@{'../catalog/catalog-delete.html?id='+${catalog.id}}" >删除</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <table id="LAY-member-manage" lay-filter="LAY-member-manage"></table>
         <script type="text/html" id="layuiadmin-app-cont-tagsbar">
           <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
           <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>

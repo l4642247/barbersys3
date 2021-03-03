@@ -1,5 +1,6 @@
 package cn.nicecoder.barbersys.entity.comm;
 
+import cn.nicecoder.barbersys.enums.CommonEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -20,27 +21,29 @@ public class Resp {
     private final Integer code;
     private final String msg;
     private final Object data;
+    private final Long count;
     private final LocalDateTime timestamp = LocalDateTime.now();
-	public static final Resp OK = new Resp(HttpStatus.OK);
-    public static final Resp FAIL = new Resp(HttpStatus.INTERNAL_SERVER_ERROR);
 
-    public static Resp ok(Object data) {
-        return new Resp(HttpStatus.OK, data);
+    public static Resp success(Object data) {
+        return new Resp(CommonEnum.RESP_LAYUI_OK.getCode(),
+                CommonEnum.RESP_LAYUI_OK.getDesc(), data, null);
     }
+
+    public static Resp success(Object data, Long count) {
+        if(count == 0){
+            return new Resp(CommonEnum.RESP_LAYUI_EMPTY.getCode(),
+                    CommonEnum.RESP_LAYUI_EMPTY.getDesc(), data, count);
+        }
+        return new Resp(CommonEnum.RESP_LAYUI_OK.getCode(),
+                CommonEnum.RESP_LAYUI_OK.getDesc(), data, count);
+    }
+
+    public static Resp success(Object data, String msg, Long count) {
+        return new Resp(0, msg, data, count);
+    }
+
     public static Resp fail(String msg) {
-        return new Resp(500, msg);
-    }
-
-    public Resp(Integer code, String msg) {
-        this(code, msg, null);
-    }
-
-    public Resp(HttpStatus httpStatus) {
-        this(httpStatus.value(), httpStatus.getReasonPhrase());
-    }
-
-    public Resp(HttpStatus httpStatus, Object data) {
-        this(httpStatus.value(), httpStatus.getReasonPhrase(), data);
+        return new Resp(HttpStatus.INTERNAL_SERVER_ERROR.value() , msg, null, null);
     }
 }
 

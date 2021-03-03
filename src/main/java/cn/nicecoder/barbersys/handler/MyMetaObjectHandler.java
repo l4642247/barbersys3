@@ -1,6 +1,6 @@
 package cn.nicecoder.barbersys.handler;
 
-import cn.nicecoder.barbersys.enums.StatusEnum;
+import cn.nicecoder.barbersys.enums.CommonEnum;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -24,8 +24,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
-        this.setFieldValByName("click", CLICK_NUM_INIT, metaObject);
-        this.setFieldValByName("status", StatusEnum.NORMAL.getCode(), metaObject);
+        this.setFieldValByName("status", CommonEnum.NORMAL.getCode(), metaObject);
         this.setFieldValByName("createTime", new Date(), metaObject);
         this.setFieldValByName("updateTime", new Date(), metaObject);
     }

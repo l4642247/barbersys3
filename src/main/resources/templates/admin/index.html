@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="utf-8">
@@ -30,15 +31,6 @@
         </li>
       </ul>
       <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-
-        <li class="layui-nav-item" lay-unselect>
-          <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
-            <i class="layui-icon layui-icon-notice"></i>
-
-            <!-- 如果有新消息，则显示小圆点 -->
-            <span class="layui-badge-dot"></span>
-          </a>
-        </li>
         <li class="layui-nav-item layui-hide-xs" lay-unselect>
           <a href="javascript:;" layadmin-event="fullscreen">
             <i class="layui-icon layui-icon-screen-full"></i>
@@ -46,11 +38,11 @@
         </li>
         <li class="layui-nav-item" lay-unselect>
           <a href="javascript:;">
-            <cite>独白</cite>
+            <cite sec:authentication="name"></cite>
           </a>
           <dl class="layui-nav-child">
-            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+            <dd><a lay-href="user/info">基本资料</a></dd>
+            <dd><a lay-href="user/password">修改密码</a></dd>
             <hr>
             <dd style="text-align: center;"><a th:href="@{/logout}">退出</a></dd>
           </dl>
@@ -91,42 +83,31 @@
           <li data-name="cpntent" class="layui-nav-item">
             <a href="javascript:;" lay-tips="主页" lay-direction="2">
               <i class="layui-icon layui-icon-file"></i>
-              <cite>会员消费管理</cite>
+              <cite>用户管理</cite>
             </a>
             <dl class="layui-nav-child">
-              <dd data-name="list"><a lay-href="article/list">消费记录查询</a></dd>
-              <dd data-name="tags"><a lay-href="catalog/list">收支信息管理</a></dd>
-              <dd data-name="comment"><a lay-href="comment/list">员工信息管理</a></dd>
+              <dd data-name="userRole"><a lay-href="user/role">角色管理</a></dd>
+              <dd data-name="userlist"><a lay-href="user/list">员工信息管理</a></dd>
             </dl>
           </li>
 
           <li data-name="user" class="layui-nav-item">
             <a href="javascript:;" lay-tips="用户" lay-direction="2">
               <i class="layui-icon layui-icon-user"></i>
-              <cite>会员信息管理</cite>
+              <cite>会员管理</cite>
             </a>
             <dl class="layui-nav-child">
-              <dd>
-                <a lay-href="user1/list">会员信息管理</a>
-              </dd>
-              <!--<dd>
-                <a lay-href="user0/list">后台管理员</a>
-              </dd>
-              <dd>
-                <a lay-href="role/list">角色管理</a>
-              </dd>-->
+              <dd><a lay-href="member/list">会员管理</a></dd>
             </dl>
           </li>
 
-          <li data-name="recharge" class="layui-nav-item">
-            <a href="javascript:;" lay-tips="用户" lay-direction="2">
-              <i class="layui-icon layui-icon-user"></i>
-              <cite>充值记录管理</cite>
+          <li data-name="cpntent" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-file"></i>
+              <cite>充值消费管理</cite>
             </a>
             <dl class="layui-nav-child">
-              <dd>
-                <a lay-href="recharge/list">充值记录管理</a>
-              </dd>
+              <dd><a lay-href="order/list">订单管理</a></dd>
             </dl>
           </li>
 

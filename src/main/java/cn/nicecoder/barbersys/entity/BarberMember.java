@@ -11,9 +11,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-import javax.servlet.annotation.HandlesTypes;
 
 /**
  * <p>
@@ -21,39 +18,44 @@ import javax.servlet.annotation.HandlesTypes;
  * </p>
  *
  * @author lon't
- * @since 2020-12-18
+ * @since 2021-02-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="News对象", description="")
-@ToString
-public class News implements Serializable {
+@ApiModel(value="BarberMember对象", description="")
+public class BarberMember implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @TableId(value = "ID", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
-    private String cover;
+    private String cardNo;
 
-    private String title;
+    private String name;
 
-    private String content;
+    private Integer sex;
 
-    private Integer catalog;
+    private String idCard;
 
-    private String author;
+    private String phone;
 
-    @TableField(value = "CLICK", fill = FieldFill.INSERT)
-    private Integer click;
+    private String avatar;
+
+    private Long balance;
 
     @TableField(value = "STATUS", fill = FieldFill.INSERT)
-    private String status;
+    private Integer status;
 
     @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
     private Date createTime;
 
+    private Long creator;
+
     @TableField(value = "UPDATE_TIME", fill = FieldFill.UPDATE)
     private Date updateTime;
+
+    private Long updator;
+
 
 }

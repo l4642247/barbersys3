@@ -2,6 +2,9 @@ server:
   port: 8081
 
 spring:
+  http:
+    encoding:
+      charset:
   datasource:
     username: root
     password: Cnm.0001+
