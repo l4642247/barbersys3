@@ -3,6 +3,7 @@ import cn.nicecoder.barbersys.entity.BarberMember;
 import cn.nicecoder.barbersys.entity.BarberOrder;
 import cn.nicecoder.barbersys.entity.BarberUser;
 import cn.nicecoder.barbersys.entity.BarberUserRole;
+import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberMemberService;
 import cn.nicecoder.barbersys.service.BarberOrderService;
@@ -135,9 +136,9 @@ public class PageController {
     public String userInfo(Model model){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
-        BarberUser barberUser = barberUserService.getOne(new LambdaQueryWrapper<BarberUser>()
+        BarberUserVO barberUserVO = barberUserService.userInfo(new LambdaQueryWrapper<BarberUser>()
                 .eq(BarberUser::getUsername, username).eq(BarberUser::getStatus, CommonEnum.NORMAL.getCode()));
-        model.addAttribute("barberUser",barberUser);
+        model.addAttribute("barberUserVO",barberUserVO);
         return "admin/user/info";
     }
 

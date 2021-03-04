@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -48,37 +47,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // 链式编程
-        http.formLogin()
-                .loginPage("/login.html")
-                //必须和表单提交的接口一样，获取执行自定义登陆逻辑
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/welcome",true)
-                .failureUrl("/login.html?error=true")
-        ;
-
+        // 自定义权限控制
         http.authorizeRequests()
+                .antMatchers("/login", "/register").permitAll()
                 .antMatchers("/layuiadmin/**").permitAll()
-                .antMatchers("/login.html").permitAll()
-                .antMatchers("/admin/user/role").hasRole("admin")
-                .anyRequest().authenticated();
+                .antMatchers("/user/role").hasRole("admin")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/welcome",true)
+                        .failureUrl("/login?error=true")
+                )
+                .csrf().disable()
+                .headers().frameOptions().sameOrigin();
 
-
-
-
+        // 自定义403处理
         http.exceptionHandling()
                 .accessDeniedHandler(myAccessDeniedHandler);
 
-        //记住我
+        // 记住我
         http.rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 // 超时时间
                 .tokenValiditySeconds(60)
                 // 自定义登陆逻辑
                 .userDetailsService(userDetailsService);
-
-        http.csrf().disable()
-                .headers().frameOptions().sameOrigin();
     }
 
     /**
@@ -90,8 +84,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-                .withUser("admin").password(new BCryptPasswordEncoder().encode("123456")).roles("role1");*/
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
@@ -99,7 +91,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PersistentTokenRepository persistentTokenRepository(){
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
-        // jdbcTokenRepository.setCreateTableOnStartup(true);
+        /*// 第一次启动开启
+        jdbcTokenRepository.setCreateTableOnStartup(true);*/
         return  jdbcTokenRepository;
     }
 

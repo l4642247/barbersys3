@@ -1,8 +1,8 @@
 package cn.nicecoder.barbersys.service.impl;
 
 import cn.nicecoder.barbersys.entity.BarberUser;
+import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.mapper.BarberUserMapper;
-import cn.nicecoder.barbersys.service.BarberUserRoleService;
 import cn.nicecoder.barbersys.service.BarberUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -46,5 +46,11 @@ public class BarberUserServiceImpl extends ServiceImpl<BarberUserMapper, BarberU
         barberUserOrigin.setPassword(passwordEncoder.encode(password));
         this.updateById(barberUserOrigin);
         return barberUserOrigin;
+    }
+
+    @Override
+    public BarberUserVO userInfo(LambdaQueryWrapper<BarberUser> condition) {
+
+        return null;
     }
 }

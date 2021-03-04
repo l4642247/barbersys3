@@ -22,27 +22,27 @@
               <div class="layui-form-item" hidden>
                 <label class="layui-form-label">id</label>
                 <div class="layui-input-inline">
-                  <input name="id" th:value="${barberUser.id}">
+                  <input name="id" th:value="${barberUserVO.id}">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">我的角色</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="role" th:value="${barberUser.getRole()}" readonly class="layui-input">
+                  <input type="text" name="role" th:value="${barberUserVO.roleName}" readonly class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">当前角色不可更改为其它角色</div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="username" th:value="${barberUser.getUsername()}"  readonly class="layui-input">
+                  <input type="text" name="username" th:value="${barberUserVO.username}"  readonly class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">不可修改。一般用于后台登入名</div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="name" th:value="${barberUser.getName()}" lay-verify="name" autocomplete="off" placeholder="请输入姓名" class="layui-input">
+                  <input type="text" name="name" th:value="${barberUserVO.name}" lay-verify="name" autocomplete="off" placeholder="请输入姓名" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
@@ -67,19 +67,19 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">手机</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="phone" th:value="${barberUser.getPhone()}" lay-verify="phone" autocomplete="off" class="layui-input">
+                  <input type="text" name="phone" th:value="${barberUserVO.phone}" lay-verify="phone" autocomplete="off" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="email" th:value="${barberUser.getEmail()}" lay-verify="email" autocomplete="off" class="layui-input">
+                  <input type="text" name="email" th:value="${barberUserVO.email}" lay-verify="email" autocomplete="off" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">备注</label>
                 <div class="layui-input-block">
-                  <textarea name="description" th:value="${barberUser.getDescription()}" placeholder="请输入内容" class="layui-textarea"></textarea>
+                  <textarea name="description" th:value="${barberUserVO.description}" placeholder="请输入内容" class="layui-textarea"></textarea>
                 </div>
               </div>
               <div class="layui-form-item">

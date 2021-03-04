@@ -1,6 +1,8 @@
 package cn.nicecoder.barbersys.service;
 
 import cn.nicecoder.barbersys.entity.BarberUser;
+import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -26,4 +28,11 @@ public interface BarberUserService extends IService<BarberUser> {
      * @return
      */
     public BarberUser passwordModify(String oldPassword, String password);
+
+    /**
+     * 获取用户信息视图
+     * @param condition
+     * @return
+     */
+    public BarberUserVO userInfo(LambdaQueryWrapper<BarberUser> condition);
 }
