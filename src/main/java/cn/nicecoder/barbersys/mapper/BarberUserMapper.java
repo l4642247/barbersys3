@@ -1,7 +1,9 @@
 package cn.nicecoder.barbersys.mapper;
 
 import cn.nicecoder.barbersys.entity.BarberUser;
+import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -12,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-02-24
  */
 public interface BarberUserMapper extends BaseMapper<BarberUser> {
+    BarberUserVO getOneByUsername(@Param("username") String username);
 }

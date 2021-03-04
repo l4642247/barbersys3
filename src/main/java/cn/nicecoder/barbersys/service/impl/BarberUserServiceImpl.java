@@ -49,8 +49,9 @@ public class BarberUserServiceImpl extends ServiceImpl<BarberUserMapper, BarberU
     }
 
     @Override
-    public BarberUserVO userInfo(LambdaQueryWrapper<BarberUser> condition) {
-
-        return null;
+    public BarberUserVO getOneByUsername(String username) {
+        return this.baseMapper.getOneByUsername(username);
     }
+
+
 }

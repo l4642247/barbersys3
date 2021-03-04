@@ -136,8 +136,7 @@ public class PageController {
     public String userInfo(Model model){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
-        BarberUserVO barberUserVO = barberUserService.userInfo(new LambdaQueryWrapper<BarberUser>()
-                .eq(BarberUser::getUsername, username).eq(BarberUser::getStatus, CommonEnum.NORMAL.getCode()));
+        BarberUserVO barberUserVO = barberUserService.getOneByUsername(username);
         model.addAttribute("barberUserVO",barberUserVO);
         return "admin/user/info";
     }

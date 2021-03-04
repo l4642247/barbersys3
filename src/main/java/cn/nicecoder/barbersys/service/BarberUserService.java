@@ -31,8 +31,8 @@ public interface BarberUserService extends IService<BarberUser> {
 
     /**
      * 获取用户信息视图
-     * @param condition
+     * @param username
      * @return
      */
-    public BarberUserVO userInfo(LambdaQueryWrapper<BarberUser> condition);
+    public BarberUserVO getOneByUsername(String username);
 }

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.nicecoder.barbersys.mapper.BarberUserMapper">
-
+    <select id="getOneByUsername" resultType="cn.nicecoder.barbersys.entity.VO.BarberUserVO">
+        select a.id,a.avatar,a.name,a.phone,a.id_card,a.email,b.name role_name,a.sex,a.username,a.password,a.description
+        from barber_user a left join barber_role on a.role = b.id
+        where a.username = #{username}
+    </select>
 </mapper>
