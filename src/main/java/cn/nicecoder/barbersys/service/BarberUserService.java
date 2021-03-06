@@ -1,8 +1,10 @@
 package cn.nicecoder.barbersys.service;
 
 import cn.nicecoder.barbersys.entity.BarberUser;
+import cn.nicecoder.barbersys.entity.DO.BarberUserDO;
 import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -35,4 +37,12 @@ public interface BarberUserService extends IService<BarberUser> {
      * @return
      */
     public BarberUserVO getOneByUsername(String username);
+
+    /**
+     * 分页查询
+     * @param page
+     * @param barberUserDO
+     * @return
+     */
+    Page<BarberUserVO> listPageBarberUser(Page<BarberUser> page, BarberUserDO barberUserDO);
 }

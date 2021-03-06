@@ -82,11 +82,30 @@
 
           <li data-name="cpntent" class="layui-nav-item">
             <a href="javascript:;" lay-tips="主页" lay-direction="2">
-              <i class="layui-icon layui-icon-file"></i>
-              <cite>用户管理</cite>
+              <i class="layui-icon layui-icon-rmb"></i>
+              <cite>订单管理</cite>
+            </a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="order/list">订单查询</a></dd>
+            </dl>
+          </li>
+
+          <li data-name="cpntent" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-user"></i>
+              <cite>角色管理</cite>
             </a>
             <dl class="layui-nav-child">
               <dd data-name="userRole"><a lay-href="user/role">角色管理</a></dd>
+            </dl>
+          </li>
+
+          <li data-name="cpntent" class="layui-nav-item">
+            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+              <i class="layui-icon layui-icon-face-smile"></i>
+              <cite>员工管理</cite>
+            </a>
+            <dl class="layui-nav-child">
               <dd data-name="userlist"><a lay-href="user/list">员工信息管理</a></dd>
             </dl>
           </li>
@@ -101,16 +120,6 @@
             </dl>
           </li>
 
-          <li data-name="cpntent" class="layui-nav-item">
-            <a href="javascript:;" lay-tips="主页" lay-direction="2">
-              <i class="layui-icon layui-icon-file"></i>
-              <cite>充值消费管理</cite>
-            </a>
-            <dl class="layui-nav-child">
-              <dd><a lay-href="order/list">订单管理</a></dd>
-            </dl>
-          </li>
-
           <li data-name="set" class="layui-nav-item">
             <a href="javascript:;" lay-tips="设置" lay-direction="2">
               <i class="layui-icon layui-icon-set"></i>
@@ -118,17 +127,10 @@
             </a>
             <dl class="layui-nav-child">
               <dd class="layui-nav-itemed">
-                <a href="javascript:;">系统设置</a>
-                <dl class="layui-nav-child">
-                  <dd><a lay-href="website">网站设置</a></dd>
-                  <dd><a lay-href="email">邮件服务</a></dd>
-                </dl>
-              </dd>
-              <dd class="layui-nav-itemed">
                 <a href="javascript:;">我的设置</a>
                 <dl class="layui-nav-child">
-                  <dd><a lay-href="userInfo">基本资料</a></dd>
-                  <dd><a lay-href="userPsw">修改密码</a></dd>
+                  <dd><a lay-href="user/info">基本资料</a></dd>
+                  <dd><a lay-href="user/password">修改密码</a></dd>
                 </dl>
               </dd>
             </dl>

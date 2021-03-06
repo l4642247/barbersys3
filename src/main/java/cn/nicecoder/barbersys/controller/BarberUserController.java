@@ -3,7 +3,9 @@ package cn.nicecoder.barbersys.controller;
 
 import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.BarberUser;
+import cn.nicecoder.barbersys.entity.DO.BarberUserDO;
 import cn.nicecoder.barbersys.entity.DO.PasswordDO;
+import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberUserService;
@@ -36,11 +38,11 @@ public class BarberUserController {
             , @RequestParam(value = "phone",required = false)String phone
             , @RequestParam(value = "idCard",required = false)String idCard){
         Page<BarberUser> page = new Page<>(current, size);
-        Page<BarberUser> result = barberUserService.page(page, new LambdaQueryWrapper<BarberUser>()
-                .eq(BarberUser::getStatus, CommonEnum.NORMAL.getCode())
-                .like(StrUtil.isNotBlank(name), BarberUser:: getName, name)
-                .eq(StrUtil.isNotBlank(phone), BarberUser:: getPhone, phone)
-                .eq(StrUtil.isNotBlank(idCard), BarberUser:: getIdCard, idCard));
+        BarberUserDO barberUserDO = new BarberUserDO();
+        barberUserDO.setName(name);
+        barberUserDO.setPhone(phone);
+        barberUserDO.setIdCard(idCard);
+        Page<BarberUserVO> result = barberUserService.listPageBarberUser(page, barberUserDO);
         return Resp.success(result.getRecords(), result.getTotal());
     }
 

@@ -45,12 +45,10 @@
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">角色</label>
-      <div class="layui-input-inline">
-        <select name="role" lay-filter="role">
-          <option value=""></option>
-          <option value="0">管理员</option>
-          <option value="1" selected>员工</option>
-        </select>
+      <div class="layui-input-block">
+        <input type="checkbox" name="role" value="1" title="写作">
+        <input type="checkbox" name="role" value="2" title="阅读" checked="">
+        <input type="checkbox" name="role" value="3" title="游戏">
       </div>
     </div>
     <!--<div class="layui-form-item">
@@ -70,7 +68,7 @@
     <div class="layui-form-item">
       <label class="layui-form-label">描述</label>
       <div class="layui-input-block">
-        <textarea type="text" th:value="${barberUser.description}" name="description" autocomplete="off" class="layui-textarea"></textarea>
+        <textarea type="text" th:text="${barberUser.description}" name="description" autocomplete="off" class="layui-textarea"></textarea>
       </div>
     </div>
     <div class="layui-form-item layui-hide">

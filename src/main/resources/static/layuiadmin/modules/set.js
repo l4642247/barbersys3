@@ -16,7 +16,13 @@
     }), n.on("submit(set_system_email)", function (t) {
         return e.msg(JSON.stringify(t.field)), !1
     }), n.on("submit(setmyinfo)", function (t) {
-        return e.msg(JSON.stringify(t.field)), !1
+        var httpRequest = new HttpRequest("/user/save", 'post', function (data) {
+            return e.msg(data.msg), !1
+        }, function (data) {
+            return e.msg(data.msg), !1
+        });
+        httpRequest.set(t.field);
+        httpRequest.start(true);
     });
     var r = i("#LAY_avatarSrc");
     s.render({

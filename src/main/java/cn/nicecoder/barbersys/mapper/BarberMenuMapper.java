@@ -1,6 +1,6 @@
 package cn.nicecoder.barbersys.mapper;
 
-import cn.nicecoder.barbersys.entity.BarberUserRole;
+import cn.nicecoder.barbersys.entity.BarberMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author lon't
- * @since 2021-02-24
+ * @since 2021-03-05
  */
-public interface BarberUserRoleMapper extends BaseMapper<BarberUserRole> {
+public interface BarberMenuMapper extends BaseMapper<BarberMenu> {
 
 }

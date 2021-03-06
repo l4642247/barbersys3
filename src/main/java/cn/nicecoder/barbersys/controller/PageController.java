@@ -2,12 +2,12 @@ package cn.nicecoder.barbersys.controller;
 import cn.nicecoder.barbersys.entity.BarberMember;
 import cn.nicecoder.barbersys.entity.BarberOrder;
 import cn.nicecoder.barbersys.entity.BarberUser;
-import cn.nicecoder.barbersys.entity.BarberUserRole;
+import cn.nicecoder.barbersys.entity.BarberRole;
 import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberMemberService;
 import cn.nicecoder.barbersys.service.BarberOrderService;
-import cn.nicecoder.barbersys.service.BarberUserRoleService;
+import cn.nicecoder.barbersys.service.BarberRoleService;
 import cn.nicecoder.barbersys.service.BarberUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 管理员前端
  */
@@ -24,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class PageController {
 
     @Autowired
-    BarberUserRoleService barberUserRoleService;
+    BarberRoleService BarberRoleService;
 
     @Autowired
     BarberUserService barberUserService;
@@ -143,11 +145,11 @@ public class PageController {
 
     @GetMapping("/user/roleform")
     public String roleform(Model model, @RequestParam(value = "id", required = false) Long id){
-        BarberUserRole barberUserRole = new BarberUserRole();
+        BarberRole BarberRole = new BarberRole();
         if(id != null) {
-            barberUserRole = barberUserRoleService.getById(id);
+            BarberRole = BarberRoleService.getById(id);
         }
-        model.addAttribute("barberUserRole", barberUserRole);
+        model.addAttribute("BarberRole", BarberRole);
         return "admin/user/roleform";
     }
 
@@ -174,7 +176,12 @@ public class PageController {
     @GetMapping("/member/rechargeform")
     public String rechargeform(Model model, @RequestParam(value = "memberId", required = false) Long memberId){
         BarberMember barberMember = barberMemberService.getById(memberId);
+        List<BarberUser> barberUserList = barberUserService.list(new LambdaQueryWrapper<BarberUser>().eq(BarberUser::getStatus, CommonEnum.NORMAL.getCode()));
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        model.addAttribute("username",username);
         model.addAttribute("barberMember",barberMember);
+        model.addAttribute("barberUserList",barberUserList);
         return "admin/member/rechargeform";
     }
 

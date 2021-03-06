@@ -42,7 +42,7 @@ public class BarberMemberController {
                 .eq(BarberMember::getStatus, CommonEnum.NORMAL.getCode())
                 .like(StrUtil.isNotBlank(name), BarberMember:: getName, name)
                 .eq(StrUtil.isNotBlank(phone), BarberMember:: getPhone, phone)
-                .eq(StrUtil.isNotBlank(idCard), BarberMember:: getIdCard, idCard));
+                .like(StrUtil.isNotBlank(idCard), BarberMember:: getIdCard, idCard));
         return Resp.success(result.getRecords(), result.getTotal());
     }
 

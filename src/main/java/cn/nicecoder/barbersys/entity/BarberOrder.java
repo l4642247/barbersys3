@@ -34,6 +34,8 @@ public class BarberOrder implements Serializable {
 
     private Long memberId;
 
+    private Long barberId;
+
     @ApiModelProperty(value = "1、卡充值 2、卡消费 3、现金消费 4、退款")
     private Integer type;
 

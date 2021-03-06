@@ -2,8 +2,8 @@ package cn.nicecoder.barbersys.security;
 
 import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.BarberUser;
-import cn.nicecoder.barbersys.entity.BarberUserRole;
-import cn.nicecoder.barbersys.service.BarberUserRoleService;
+import cn.nicecoder.barbersys.entity.BarberRole;
+import cn.nicecoder.barbersys.service.BarberRoleService;
 import cn.nicecoder.barbersys.service.BarberUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     BarberUserService barberUserService;
 
     @Autowired
-    BarberUserRoleService barberUserRoleService;
+    BarberRoleService BarberRoleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,10 +46,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("%s这个用户不存在",username));
         }
         //获取角色
-        BarberUserRole barberUserRole = barberUserRoleService.getById(barberUser.getRole());
+        List<BarberRole> barberRoleList = BarberRoleService.getRoleByUsername(username);
         List<GrantedAuthority> authoritys = new ArrayList<>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(barberUserRole.getCode());
-        authoritys.add(authority);
+        for (BarberRole barberRole: barberRoleList) {
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(barberRole.getCode());
+            authoritys.add(authority);
+        }
         return new User(barberUser.getUsername(), barberUser.getPassword(),authoritys);
     }
 }

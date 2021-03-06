@@ -1,6 +1,6 @@
 package cn.nicecoder.barbersys.service;
 
-import cn.nicecoder.barbersys.entity.BarberUserRole;
+import cn.nicecoder.barbersys.entity.BarberMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author lon't
- * @since 2021-02-24
+ * @since 2021-03-05
  */
-public interface BarberUserRoleService extends IService<BarberUserRole> {
+public interface BarberMenuService extends IService<BarberMenu> {
 
 }

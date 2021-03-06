@@ -5,12 +5,12 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * BarberUserRoleDO
+ * BarberRoleDO
  * @author: longt
  * @date: 2021/2/24 下午11:27
  */
 @Data
-public class BarberUserRoleDO implements Serializable {
+public class BarberRoleDO implements Serializable {
     private static final long serialVersionUID=1L;
 
     private Long id;

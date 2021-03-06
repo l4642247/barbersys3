@@ -17,11 +17,34 @@
       <div class="layui-form layui-card-header layuiadmin-card-header-auto">
         <div class="layui-form-item">
           <div class="layui-inline">
-            <label class="layui-form-label">姓名</label>
+            <label class="layui-form-label">会员姓名</label>
             <div class="layui-input-block">
-              <input type="text" name="name" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+              <input type="text" name="memberName" placeholder="请输入会员姓名" autocomplete="off" class="layui-input">
             </div>
           </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">员工姓名</label>
+            <div class="layui-input-block">
+              <input type="text" name="barberName" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">时间范围</label>
+            <div class="layui-input-block" style="width: 200px;">
+              <input type="text" autocomplete="off" class="layui-input" name="dataRange" id="dataRange" placeholder=" - ">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+              <select class="form-control" name="type">
+                <option value=""></option>
+                <option value="1">充值</option>
+                <option value="2">消费</option>
+              </select>
+            </div>
+          </div>
+
           <div class="layui-inline">
             <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-order-front-search">
               <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
@@ -47,8 +70,13 @@
   }).extend({
     index: 'lib/index', //主入口模块
     HttpRequest: 'HttpRequest',
-  }).use(['index', 'order', 'table', 'form', 'HttpRequest'], function(){
-    var $ = layui.$,form = layui.form,table = layui.table;
+  }).use(['index', 'order', 'table', 'form', 'HttpRequest', 'laydate'], function(){
+    var $ = layui.$,form = layui.form,table = layui.table, laydate = layui.laydate;
+    //日期范围
+    laydate.render({
+      elem: '#dataRange'
+      ,range: "~"
+    });
     //监听搜索
     form.on('submit(LAY-order-front-search)', function(data){
       var field = data.field;

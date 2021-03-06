@@ -1,8 +1,11 @@
 package cn.nicecoder.barbersys.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-
+import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,31 +22,19 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="BarberUser对象", description="")
-public class BarberUser implements Serializable {
+@ApiModel(value="BarberRole对象", description="")
+public class BarberRole implements Serializable {
 
     private static final long serialVersionUID=1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String avatar;
+    private String code;
 
     private String name;
 
-    private String phone;
-
-    private String idCard;
-
-    private String email;
-
-    private Integer sex;
-
-    private String username;
-
-    private String password;
-
-    private String description;
+    private Integer sort;
 
     @TableField(value = "STATUS", fill = FieldFill.INSERT)
     private Integer status;

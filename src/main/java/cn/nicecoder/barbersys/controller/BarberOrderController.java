@@ -1,7 +1,10 @@
 package cn.nicecoder.barbersys.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.BarberOrder;
+import cn.nicecoder.barbersys.entity.DO.BarberOrderDO;
+import cn.nicecoder.barbersys.entity.VO.BarberOrderVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberOrderService;
@@ -27,10 +30,19 @@ public class BarberOrderController {
 
     @GetMapping("/page")
     @ApiOperation(value = "查询所有订单", notes = "")
-    public Resp page(@RequestParam("page") Long current, @RequestParam("limit") Long size) {
+    public Resp page(@RequestParam("page") Long current, @RequestParam("limit") Long size
+            , @RequestParam(value = "memberName",required = false) String memberName, @RequestParam(value = "barberName",required = false) String barberName
+            , @RequestParam(value = "dataRange",required = false) String dataRange, @RequestParam(value = "type",required = false) Integer type) {
         Page<BarberOrder> page = new Page<>(current, size);
-        Page<BarberOrder> result = barberOrderService.page(page, new LambdaQueryWrapper<BarberOrder>()
-                .eq(BarberOrder::getStatus, CommonEnum.NORMAL.getCode()).orderByDesc(BarberOrder::getCreateTime));
+        BarberOrderDO barberOrderDO = new BarberOrderDO();
+        barberOrderDO.setMemberName(memberName);
+        barberOrderDO.setBarberName(barberName);
+        barberOrderDO.setType(type);
+        if(StrUtil.isNotEmpty(dataRange)){
+            barberOrderDO.setDateStart(dataRange.split("~")[0].trim());
+            barberOrderDO.setDateEnd(dataRange.split("~")[1].trim());
+        }
+        Page<BarberOrderVO> result = barberOrderService.listPageBarberOrder(page, barberOrderDO);
         return Resp.success(result.getRecords(), result.getTotal());
     }
 

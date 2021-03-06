@@ -18,31 +18,35 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author lon't
- * @since 2021-02-24
+ * @since 2021-03-05
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="BarberUserRole对象", description="")
-public class BarberUserRole implements Serializable {
+@ApiModel(value="BarberMenu对象", description="")
+public class BarberMenu implements Serializable {
 
     private static final long serialVersionUID=1L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private Integer id;
 
-    private String code;
+    @ApiModelProperty(value = "上级菜单")
+    private Integer parentId;
+
+    private String href;
+
+    private String css;
 
     private String name;
 
-    private Integer sort;
-
-    @TableField(value = "STATUS", fill = FieldFill.INSERT)
     private Integer status;
 
-    @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
+    private Integer sort;
+
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
-    @TableField(value = "UPDATE_TIME", fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.INSERT)
     private Date updateTime;
 
 

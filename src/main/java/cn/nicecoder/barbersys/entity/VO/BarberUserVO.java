@@ -1,9 +1,11 @@
 package cn.nicecoder.barbersys.entity.VO;
 
+import cn.nicecoder.barbersys.entity.BarberRole;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 用户信息视图
@@ -32,11 +34,11 @@ public class BarberUserVO implements Serializable {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
-    @ApiModelProperty(value = "角色名")
-    private Integer roleName;
-
     @ApiModelProperty(value = "性别")
     private Integer sex;
+
+    @ApiModelProperty(value = "状态")
+    private Integer status;
 
     @ApiModelProperty(value = "用户名")
     private String username;
@@ -46,4 +48,10 @@ public class BarberUserVO implements Serializable {
 
     @ApiModelProperty(value = "描述")
     private String description;
+
+    @ApiModelProperty(value = "角色列表")
+    private List<BarberRole> roleList;
+
+    @ApiModelProperty(value = "角色字符串")
+    private String roleStr;
 }
