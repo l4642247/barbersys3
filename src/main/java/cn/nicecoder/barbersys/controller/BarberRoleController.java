@@ -2,6 +2,7 @@ package cn.nicecoder.barbersys.controller;
 
 
 import cn.nicecoder.barbersys.entity.BarberRole;
+import cn.nicecoder.barbersys.entity.VO.SelectVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberRoleService;
@@ -11,6 +12,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -27,6 +31,21 @@ public class BarberRoleController {
 
     @Autowired
     BarberRoleService BarberRoleService;
+
+    @GetMapping("/select")
+    @ApiOperation(value="下拉框数据返回",notes="")
+    public Resp select(){
+        List<BarberRole> barberRoleList = BarberRoleService.list(new LambdaQueryWrapper<BarberRole>()
+                .eq(BarberRole::getStatus,CommonEnum.NORMAL.getCode()));
+        List<SelectVO> selectVOList = new ArrayList<>();
+        barberRoleList.stream().forEach(item ->{
+            SelectVO selectVO = new SelectVO();
+            selectVO.setName(item.getName());
+            selectVO.setValue(item.getId());
+            selectVOList.add(selectVO);
+        });
+        return Resp.success(selectVOList);
+    }
 
     @GetMapping("/page")
     @ApiOperation(value="查询所有角色",notes="")

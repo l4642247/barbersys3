@@ -1,11 +1,14 @@
 package cn.nicecoder.barbersys.service.impl;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.nicecoder.barbersys.entity.BarberRole;
 import cn.nicecoder.barbersys.entity.BarberUser;
+import cn.nicecoder.barbersys.entity.BarberUserRole;
 import cn.nicecoder.barbersys.entity.DO.BarberUserDO;
 import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.mapper.BarberUserMapper;
 import cn.nicecoder.barbersys.service.BarberRoleService;
+import cn.nicecoder.barbersys.service.BarberUserRoleService;
 import cn.nicecoder.barbersys.service.BarberUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -36,6 +39,9 @@ public class BarberUserServiceImpl extends ServiceImpl<BarberUserMapper, BarberU
     @Autowired
     private BarberRoleService barberRoleService;
 
+    @Autowired
+    private BarberUserRoleService barberUserRoleService;
+
     @Override
     public BarberUser createBarberUser(BarberUser barberUserSave) {
         barberUserSave.setPassword(passwordEncoder.encode(PASSWORD_DEFAULT_ORIGIN));
@@ -61,13 +67,15 @@ public class BarberUserServiceImpl extends ServiceImpl<BarberUserMapper, BarberU
     public BarberUserVO getOneByUsername(String username) {
         BarberUserVO barberUserVO =  this.baseMapper.getOneByUsername(username);
         List<BarberRole> barberRoleList = barberRoleService.getRoleByUsername(username);
-        barberUserVO.setRoleList(barberRoleList);
-        StringBuffer roleBuffer = new StringBuffer();
-        barberRoleList.stream().forEach(item -> {
-            roleBuffer.append(item.getName()).append(",");
-        });
-        roleBuffer.deleteCharAt(roleBuffer.length()-1);
-        barberUserVO.setRoleStr(roleBuffer.toString());
+        if(barberRoleList.size() > 0) {
+            barberUserVO.setRoleList(barberRoleList);
+            StringBuffer roleBuffer = new StringBuffer();
+            barberRoleList.stream().forEach(item -> {
+                roleBuffer.append(item.getName()).append(",");
+            });
+            roleBuffer.deleteCharAt(roleBuffer.length() - 1);
+            barberUserVO.setRoleStr(roleBuffer.toString());
+        }
         return barberUserVO;
     }
 
@@ -76,15 +84,36 @@ public class BarberUserServiceImpl extends ServiceImpl<BarberUserMapper, BarberU
         Page<BarberUserVO> pageResult =  this.baseMapper.listPageBarberUser(page, barberUserDO);
         for (BarberUserVO barberUserVO :pageResult.getRecords()){
             List<BarberRole> barberRoleList = barberRoleService.getRoleByUsername(barberUserVO.getUsername());
-            barberUserVO.setRoleList(barberRoleList);
-            StringBuffer roleBuffer = new StringBuffer();
-            barberRoleList.stream().forEach(item -> {
-                roleBuffer.append(item.getName()).append(",");
-            });
-            roleBuffer.deleteCharAt(roleBuffer.length()-1);
-            barberUserVO.setRoleStr(roleBuffer.toString());
+            if(barberRoleList.size() > 0) {
+                barberUserVO.setRoleList(barberRoleList);
+                StringBuffer roleBuffer = new StringBuffer();
+                barberRoleList.stream().forEach(item -> {
+                    roleBuffer.append(item.getName()).append(",");
+                });
+                roleBuffer.deleteCharAt(roleBuffer.length() - 1);
+                barberUserVO.setRoleStr(roleBuffer.toString());
+            }
         }
         return pageResult;
+    }
+
+    @Override
+    public BarberUser saveOne(BarberUserDO barberUserSave) {
+        String[] roleStr = barberUserSave.getRoleStr().split(",");
+        this.saveOrUpdate(createBarberUser(barberUserSave));
+        // 更新角色
+        if(barberUserSave.getId() != null) {
+            barberUserRoleService.remove(new LambdaQueryWrapper<BarberUserRole>()
+                    .eq(BarberUserRole::getUserId, barberUserSave.getId()));
+        }
+        for (String roleId : roleStr ){
+            BarberUserRole barberUserRole = new BarberUserRole();
+            barberUserRole.setRoleId(Long.parseLong(roleId));
+            barberUserRole.setUserId(barberUserSave.getId());
+            barberUserRoleService.save(barberUserRole);
+        }
+        this.saveOrUpdate(barberUserSave);
+        return barberUserSave;
     }
 
 

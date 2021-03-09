@@ -160,6 +160,12 @@ public class PageController {
             barberUser = barberUserService.getById(id);
         }
         model.addAttribute("barberUser", barberUser);
+        List<BarberRole> roleList = BarberRoleService.getRoleByUsername(barberUser.getUsername());
+        Long[] roleArr = new Long[roleList.size()];
+        for(BarberRole item : roleList){
+            roleArr[roleList.indexOf(item)] = item.getId();
+        }
+        model.addAttribute("roles", roleArr);
         return "admin/user/userform";
     }
 

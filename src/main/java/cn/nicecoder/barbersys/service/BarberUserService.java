@@ -6,6 +6,7 @@ import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -45,4 +46,13 @@ public interface BarberUserService extends IService<BarberUser> {
      * @return
      */
     Page<BarberUserVO> listPageBarberUser(Page<BarberUser> page, BarberUserDO barberUserDO);
+
+
+    /**
+     * 新增或更新
+     * @param barberUserSave
+     * @return
+     */
+    @Transactional
+    BarberUser saveOne(BarberUserDO barberUserSave);
 }

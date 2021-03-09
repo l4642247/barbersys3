@@ -1,6 +1,7 @@
 /** layuiAdmin.std-v1.1.0 LPPL License By http://www.layui.com/admin/ */
 ;layui.define(["table", "form", 'util', 'HttpRequest'], function (e) {
     var t = layui.$, i = layui.table , util = layui.util, HttpRequest = layui.HttpRequest;
+
     i.render({
         elem: "#LAY-user-manage",
         url: "/user/page",

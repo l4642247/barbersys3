@@ -48,8 +48,8 @@ public class BarberUserController {
 
     @PostMapping("/save")
     @ApiOperation(value="保存/更新用户",notes="")
-    public Resp save(@RequestBody BarberUser barberUserSave){
-        barberUserService.saveOrUpdate(barberUserService.createBarberUser(barberUserSave));
+    public Resp save(@RequestBody BarberUserDO barberUserSave){
+        barberUserService.saveOne(barberUserSave);
         return Resp.success(barberUserSave);
     }
 
