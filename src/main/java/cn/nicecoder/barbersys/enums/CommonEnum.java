@@ -16,6 +16,9 @@ public enum CommonEnum {
 
     ORDER_TYPE_1(1,"充值"),
     ORDER_TYPE_2(2,"消费"),
+
+    MENU_TYPE_1(1,"菜单"),
+    MENU_TYPE_0(0,"页面"),
     ;
 
     CommonEnum(Integer code, String desc) {

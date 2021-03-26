@@ -24,7 +24,7 @@
                 type: 2,
                 title: "编辑角色",
                 content: "roleform?id=" + e.data.id,
-                area: ["500px", "350px"],
+                area: ["500px", "400px"],
                 btn: ["确定", "取消"],
                 yes: function (e, t) {
                     var l = window["layui-layer-iframe" + e],

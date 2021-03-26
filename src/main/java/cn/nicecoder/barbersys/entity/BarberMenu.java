@@ -28,10 +28,10 @@ public class BarberMenu implements Serializable {
     private static final long serialVersionUID=1L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(value = "上级菜单")
-    private Integer parentId;
+    private Long parentId;
 
     private String href;
 
@@ -39,14 +39,17 @@ public class BarberMenu implements Serializable {
 
     private String name;
 
+    @TableField(value = "STATUS", fill = FieldFill.INSERT)
     private Integer status;
 
     private Integer sort;
 
-    @TableField(fill = FieldFill.INSERT)
+    private Integer type;
+
+    @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
     private Date createTime;
 
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "UPDATE_TIME", fill = FieldFill.UPDATE)
     private Date updateTime;
 
 

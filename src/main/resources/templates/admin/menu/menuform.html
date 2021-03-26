@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>添加菜单</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="/layuiadmin/style/dtree.css" media="all">
+  <link rel="stylesheet" href="/layuiadmin/style/font/dtreefont.css" media="all">
+</head>
+<body>
+
+  <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
+
+    <div class="layui-form-item" hidden>
+      <label class="layui-form-label">id</label>
+      <div class="layui-input-inline">
+        <input name="id" th:value="${barberMenu.id}">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">父菜单</label>
+      <div class="layui-input-inline">
+        <ul id="selTree1" class="dtree" data-id="0" th:data-value="${barberMenu.parentId}"></ul>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">菜单名</label>
+      <div class="layui-input-inline">
+        <input th:value="${barberMenu.name}" type="text" name="name" lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">类型</label>
+      <div class="layui-input-inline">
+        <input th:checked="${barberMenu.type == 1} ? true : false" type="radio" name="type" value="1" title="菜单">
+        <input th:checked="${barberMenu.type == 0} ? true : false" type="radio" name="type" value="0" title="页面">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">路径</label>
+      <div class="layui-input-inline">
+        <input type="text" th:value="${barberMenu.href}" name="href" lay-verify="href" placeholder="请输入路径" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">图标</label>
+      <div class="layui-input-inline">
+        <input type="text" th:value="${barberMenu.css}" name="css" lay-verify="css" placeholder="请输入图标" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">排序</label>
+      <div class="layui-input-inline">
+        <input type="text" th:value="${barberMenu.sort}" name="sort" lay-verify="sort" placeholder="请输入排序" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-hide">
+      <input type="button" lay-submit lay-filter="LAY-menu-submit" id="LAY-menu-submit" value="确认">
+    </div>
+  </div>
+
+  <script src="/layuiadmin/layui/layui.js"></script>
+  <script th:inline="javascript">
+    var parents = [[${roles}]];
+  </script>
+  <script>
+  layui.config({
+    base: '../../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'upload', 'HttpRequest','dtree'], function(){
+    var $ = layui.$, dtree = layui.dtree;
+
+    dtree.renderSelect({
+      elem: "#selTree1",
+      response:{treeId:"id",title:"title"},
+      url: "/menu/parentTree",
+    });
+
+  })
+  </script>
+</body>
+</html>

@@ -1,14 +1,9 @@
 package cn.nicecoder.barbersys.controller;
-import cn.nicecoder.barbersys.entity.BarberMember;
-import cn.nicecoder.barbersys.entity.BarberOrder;
-import cn.nicecoder.barbersys.entity.BarberUser;
-import cn.nicecoder.barbersys.entity.BarberRole;
+import cn.nicecoder.barbersys.entity.*;
 import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
+import cn.nicecoder.barbersys.entity.comm.MenuTreeResp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
-import cn.nicecoder.barbersys.service.BarberMemberService;
-import cn.nicecoder.barbersys.service.BarberOrderService;
-import cn.nicecoder.barbersys.service.BarberRoleService;
-import cn.nicecoder.barbersys.service.BarberUserService;
+import cn.nicecoder.barbersys.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +21,7 @@ import java.util.List;
 public class PageController {
 
     @Autowired
-    BarberRoleService BarberRoleService;
+    BarberRoleService barberRoleService;
 
     @Autowired
     BarberUserService barberUserService;
@@ -37,10 +32,8 @@ public class PageController {
     @Autowired
     BarberOrderService barberOrderService;
 
-    @RequestMapping("/welcome")
-    public String admin(){
-        return "admin/index";
-    }
+    @Autowired
+    BarberMenuService barberMenuService;
 
     @GetMapping("/homepage")
     public String homepage(){
@@ -51,63 +44,6 @@ public class PageController {
     public String console(){
         return "admin/home/console";
     }
-
-    @GetMapping("/article/list")
-    public String articleList(){
-        return "admin/app/content/list";
-    }
-
-    @GetMapping("/article/listform")
-    public String articleListForm(){
-        return "admin/app/content/listform";
-    }
-
-    @GetMapping("/catalog/list")
-    public String catalogList(){
-        return "admin/app/content/tags";
-    }
-
-    @GetMapping("/catalog/listform")
-    public String catalogListForm(){
-        return "admin/app/content/tagsform";
-    }
-
-    @GetMapping("/comment/list")
-    public String commentList(){
-        return "admin/app/content/comment";
-    }
-
-    @GetMapping("/user0/list")
-    public String user0List(){
-        return "admin/user/administrators/list";
-    }
-
-    @GetMapping("/role/list")
-    public String roleList(){
-        return "admin/user/administrators/role";
-    }
-
-    @GetMapping("/website")
-    public String websiteInfo(){
-        return "admin/set/system/website";
-    }
-
-    @GetMapping("/email")
-    public String email(){
-        return "admin/set/system/email";
-    }
-
-    @GetMapping("/recharge/list")
-    public String rechargeList(){
-        return "admin/account/recharge/list";
-    }
-
-    @GetMapping("/recharge/rechargeform")
-    public String rechargeform(){
-        return "admin/account/recharge/rechargeform";
-    }
-
-
 
     @GetMapping("/user/role")
     public String userRole(){
@@ -134,6 +70,18 @@ public class PageController {
         return "admin/user/password";
     }
 
+    @GetMapping("/menu/list")
+    public String menuList(){
+        return "admin/menu/menu";
+    }
+
+    @RequestMapping("/welcome")
+    public String admin(Model model){
+        MenuTreeResp resp = new MenuTreeResp(barberMenuService.createMenuTreeRoot(false));
+        model.addAttribute("menuTree", resp);
+        return "admin/index";
+    }
+
     @GetMapping("/user/info")
     public String userInfo(Model model){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -147,10 +95,20 @@ public class PageController {
     public String roleform(Model model, @RequestParam(value = "id", required = false) Long id){
         BarberRole BarberRole = new BarberRole();
         if(id != null) {
-            BarberRole = BarberRoleService.getById(id);
+            BarberRole = barberRoleService.getById(id);
         }
-        model.addAttribute("BarberRole", BarberRole);
+        model.addAttribute("barberRole", BarberRole);
         return "admin/user/roleform";
+    }
+
+    @GetMapping("/menu/menuform")
+    public String menuform(Model model, @RequestParam(value = "id", required = false) Long id){
+        BarberMenu barberMenu = new BarberMenu();
+        if(id != null) {
+            barberMenu = barberMenuService.getById(id);
+        }
+        model.addAttribute("barberMenu", barberMenu);
+        return "admin/menu/menuform";
     }
 
     @GetMapping("/user/userform")
@@ -160,7 +118,7 @@ public class PageController {
             barberUser = barberUserService.getById(id);
         }
         model.addAttribute("barberUser", barberUser);
-        List<BarberRole> roleList = BarberRoleService.getRoleByUsername(barberUser.getUsername());
+        List<BarberRole> roleList = barberRoleService.getRoleByUsername(barberUser.getUsername());
         Long[] roleArr = new Long[roleList.size()];
         for(BarberRole item : roleList){
             roleArr[roleList.indexOf(item)] = item.getId();
