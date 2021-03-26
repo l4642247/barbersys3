@@ -1,4 +1,5 @@
 package cn.nicecoder.barbersys.controller;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.nicecoder.barbersys.entity.*;
 import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.entity.comm.MenuTreeResp;
@@ -34,6 +35,9 @@ public class PageController {
 
     @Autowired
     BarberMenuService barberMenuService;
+
+    @Autowired
+    BarberRoleMenuService barberRoleMenuService;
 
     @GetMapping("/homepage")
     public String homepage(){
@@ -97,6 +101,14 @@ public class PageController {
         if(id != null) {
             BarberRole = barberRoleService.getById(id);
         }
+        List<BarberRoleMenu> barberRoleMenuList = barberRoleMenuService.list(new LambdaQueryWrapper<BarberRoleMenu>()
+                .eq(BarberRoleMenu::getRoleId, id));
+        StringBuffer menuBuffer = new StringBuffer();
+        barberRoleMenuList.stream().forEach(item ->{
+            menuBuffer.append(item.getMenuId()).append(",");
+        });
+        menuBuffer.deleteCharAt(menuBuffer.length() - 1);
+        model.addAttribute("menus",menuBuffer.toString());
         model.addAttribute("barberRole", BarberRole);
         return "admin/user/roleform";
     }

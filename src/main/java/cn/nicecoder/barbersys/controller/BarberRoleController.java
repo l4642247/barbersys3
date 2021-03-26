@@ -2,6 +2,7 @@ package cn.nicecoder.barbersys.controller;
 
 
 import cn.nicecoder.barbersys.entity.BarberRole;
+import cn.nicecoder.barbersys.entity.DO.BarberRoleDO;
 import cn.nicecoder.barbersys.entity.VO.SelectVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
@@ -30,12 +31,12 @@ import java.util.List;
 public class BarberRoleController {
 
     @Autowired
-    BarberRoleService BarberRoleService;
+    BarberRoleService barberRoleService;
 
     @GetMapping("/select")
     @ApiOperation(value="下拉框数据返回",notes="")
     public Resp select(){
-        List<BarberRole> barberRoleList = BarberRoleService.list(new LambdaQueryWrapper<BarberRole>()
+        List<BarberRole> barberRoleList = barberRoleService.list(new LambdaQueryWrapper<BarberRole>()
                 .eq(BarberRole::getStatus,CommonEnum.NORMAL.getCode()));
         List<SelectVO> selectVOList = new ArrayList<>();
         barberRoleList.stream().forEach(item ->{
@@ -51,16 +52,16 @@ public class BarberRoleController {
     @ApiOperation(value="查询所有角色",notes="")
     public Resp page(@RequestParam("page")Long current, @RequestParam("limit")Long size){
         Page<BarberRole> page = new Page<>(current, size);
-        Page<BarberRole> result = BarberRoleService.page(page, new LambdaQueryWrapper<BarberRole>().eq(
+        Page<BarberRole> result = barberRoleService.page(page, new LambdaQueryWrapper<BarberRole>().eq(
                 BarberRole::getStatus, CommonEnum.NORMAL.getCode()));
         return Resp.success(result.getRecords(), result.getTotal());
     }
 
     @PostMapping("/save")
     @ApiOperation(value="保存/更新角色",notes="")
-    public Resp save(@RequestBody BarberRole BarberRoleSave){
-        BarberRoleService.saveOrUpdate(BarberRoleSave);
-        return Resp.success(BarberRoleSave);
+    public Resp save(@RequestBody BarberRoleDO barberRoleDO){
+        barberRoleService.saveOne(barberRoleDO);
+        return Resp.success(barberRoleDO);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -69,7 +70,7 @@ public class BarberRoleController {
         BarberRole BarberRoleDelete = new BarberRole();
         BarberRoleDelete.setId(id);
         BarberRoleDelete.setStatus(CommonEnum.DELETED.getCode());
-        BarberRoleService.updateById(BarberRoleDelete);
+        barberRoleService.updateById(BarberRoleDelete);
         return Resp.success(BarberRoleDelete);
     }
 }

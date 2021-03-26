@@ -44,6 +44,4 @@ public class BarberRole implements Serializable {
 
     @TableField(value = "UPDATE_TIME", fill = FieldFill.UPDATE)
     private Date updateTime;
-
-
 }

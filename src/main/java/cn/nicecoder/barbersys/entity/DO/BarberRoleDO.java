@@ -1,5 +1,6 @@
 package cn.nicecoder.barbersys.entity.DO;
 
+import cn.nicecoder.barbersys.entity.BarberRole;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,10 +11,6 @@ import java.io.Serializable;
  * @date: 2021/2/24 下午11:27
  */
 @Data
-public class BarberRoleDO implements Serializable {
-    private static final long serialVersionUID=1L;
-
-    private Long id;
-    private String code;
-    private String name;
+public class BarberRoleDO extends BarberRole {
+    private String selTree1_select_nodeId;
 }

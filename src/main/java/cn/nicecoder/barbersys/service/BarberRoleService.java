@@ -1,7 +1,11 @@
 package cn.nicecoder.barbersys.service;
 
 import cn.nicecoder.barbersys.entity.BarberRole;
+import cn.nicecoder.barbersys.entity.BarberUser;
+import cn.nicecoder.barbersys.entity.DO.BarberRoleDO;
+import cn.nicecoder.barbersys.entity.DO.BarberUserDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,4 +26,12 @@ public interface BarberRoleService extends IService<BarberRole> {
      * @date: 2021/3/5 下午3:14
      */
     List<BarberRole> getRoleByUsername(String username);
+
+    /**
+     * 新增或更新
+     * @param barberUserSave
+     * @return
+     */
+    @Transactional
+    BarberRole saveOne(BarberRoleDO barberUserSave);
 }

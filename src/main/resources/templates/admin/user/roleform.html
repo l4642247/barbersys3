@@ -49,6 +49,9 @@
   </div>
 
   <script src="../../../layuiadmin/layui/layui.js"></script>
+  <script th:inline="javascript">
+    var menus = [[${menus}]];
+  </script>
   <script>
   layui.config({
     base: '../../../layuiadmin/' //静态资源所在路径
@@ -59,12 +62,12 @@
 
     dtree.renderSelect({
       elem: "#selTree1",
-      url: "/menu/parentTree",
+      url: "/menu/checkTree",
       checkbar: true, // 设置复选框
       checkbarType: "self",
       selectInitVal: "", // 设置默认值
       done: function(){
-        dtree.chooseDataInit("selTree1", "13,1");
+        dtree.chooseDataInit("selTree1", menus);
         dtree.selectVal("selTree1"); // 也可以在这里指定，第二个参数如果不填，则会自动读取
       }
     });

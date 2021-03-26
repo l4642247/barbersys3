@@ -64,7 +64,6 @@ public class BarberMenuController {
         return Resp.success(barberMenuDelete);
     }
 
-
     @PostMapping("/parentTree")
     @ApiOperation(value="查询所有菜单树",notes="")
     public MenuTreeResp parentTree(){
@@ -74,10 +73,8 @@ public class BarberMenuController {
     @PostMapping("/checkTree")
     @ApiOperation(value="查询下拉多选菜单树",notes="")
     public MenuTreeResp checkTree(){
-        return new MenuTreeResp(barberMenuService.createMenuTreeRoot(true));
+        return new MenuTreeResp(barberMenuService.createMenuTreeRoot(false));
     }
-
-
 
 }
 

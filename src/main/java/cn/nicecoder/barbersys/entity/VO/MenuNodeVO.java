@@ -13,9 +13,9 @@ import java.util.List;
 public class MenuNodeVO {
     private String id;
     private String title;
-    private String parentId;
-    private CheckArrVO checkArr;
     private String level;
     private Boolean last;
+    private String parentId;
+    private CheckArrVO checkArr;
     List<MenuNodeVO> children;
 }
