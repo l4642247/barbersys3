@@ -2,6 +2,7 @@ package cn.nicecoder.barbersys.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.BarberMenu;
 import cn.nicecoder.barbersys.entity.comm.MenuTreeResp;
 import cn.nicecoder.barbersys.entity.comm.Resp;
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -32,10 +34,13 @@ public class BarberMenuController {
 
     @GetMapping("/page")
     @ApiOperation(value="查询所有菜单",notes="")
-    public Resp page(@RequestParam("page")Long current, @RequestParam("limit")Long size){
+    public Resp page(@RequestParam("page")Long current, @RequestParam("limit")Long size,
+                     @RequestParam(value = "name", required = false)String name, @RequestParam(value = "type", required = false)Long type){
         Page<BarberMenu> page = new Page<>(current, size);
         Page<BarberMenu> result = barberMenuService.page(page, new LambdaQueryWrapper<BarberMenu>()
                 .eq(BarberMenu::getStatus, CommonEnum.NORMAL.getCode())
+                .like(StrUtil.isNotEmpty(name), BarberMenu::getName, name)
+                .eq(ObjectUtil.isNotEmpty(type), BarberMenu::getType, type)
                 .orderByAsc(BarberMenu::getParentId,BarberMenu::getSort));
         return Resp.success(result.getRecords(), result.getTotal());
     }

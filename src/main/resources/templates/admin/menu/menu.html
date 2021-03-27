@@ -22,6 +22,16 @@
             </div>
           </div>
           <div class="layui-inline">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+              <select class="form-control" name="type">
+                <option value=""></option>
+                <option value="0">页面</option>
+                <option value="1">菜单</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-inline">
             <button class="layui-btn layuiadmin-btn-menuadmin" lay-submit lay-filter="LAY-user-front-search">
               <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
             </button>
@@ -57,6 +67,8 @@
     ,form = layui.form
     ,HttpRequest = layui.HttpRequest
     ,table = layui.table;
+
+    form.render();
 
     //监听搜索
     form.on('submit(LAY-user-front-search)', function(data){

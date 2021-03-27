@@ -107,7 +107,7 @@ public class PageController {
         barberRoleMenuList.stream().forEach(item ->{
             menuBuffer.append(item.getMenuId()).append(",");
         });
-        menuBuffer.deleteCharAt(menuBuffer.length() - 1);
+        if(menuBuffer.length() > 0){menuBuffer.deleteCharAt(menuBuffer.length() - 1);}
         model.addAttribute("menus",menuBuffer.toString());
         model.addAttribute("barberRole", BarberRole);
         return "admin/user/roleform";
