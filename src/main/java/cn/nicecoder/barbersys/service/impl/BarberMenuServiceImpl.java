@@ -40,6 +40,8 @@ public class BarberMenuServiceImpl extends ServiceImpl<BarberMenuMapper, BarberM
             nodeVO.setId(String.valueOf(item.getId()));
             nodeVO.setLevel("1");
             nodeVO.setTitle(item.getName());
+            nodeVO.setHref(item.getHref());
+            nodeVO.setCss(item.getCss());
             nodeVO.setParentId("-1");
             nodeVO.setCheckArr(new CheckArrVO("0","0"));
             // 获得子节点
@@ -74,6 +76,8 @@ public class BarberMenuServiceImpl extends ServiceImpl<BarberMenuMapper, BarberM
             for(BarberMenu barberMenu : childNode){
                 MenuNodeVO menuNodeVO = new MenuNodeVO();
                 menuNodeVO.setTitle(barberMenu.getName());
+                menuNodeVO.setHref(barberMenu.getHref());
+                menuNodeVO.setCss(barberMenu.getCss());
                 menuNodeVO.setId(String.valueOf(barberMenu.getId()));
                 menuNodeVO.setParentId(String.valueOf(barberMenu.getParentId()));
                 menuNodeVO.setLevel(String.valueOf(level));

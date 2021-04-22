@@ -5,6 +5,7 @@ import cn.nicecoder.barbersys.entity.BarberRole;
 import cn.nicecoder.barbersys.entity.BarberRoleMenu;
 import cn.nicecoder.barbersys.entity.BarberUserRole;
 import cn.nicecoder.barbersys.entity.DO.BarberRoleDO;
+import cn.nicecoder.barbersys.entity.PO.PermissionPO;
 import cn.nicecoder.barbersys.mapper.BarberRoleMapper;
 import cn.nicecoder.barbersys.service.BarberMenuService;
 import cn.nicecoder.barbersys.service.BarberRoleMenuService;
@@ -53,6 +54,11 @@ public class BarberRoleServiceImpl extends ServiceImpl<BarberRoleMapper, BarberR
         }
         this.saveOrUpdate(barberRoleDO);
         return barberRoleDO;
+    }
+
+    @Override
+    public List<PermissionPO> getResourcePermission() {
+        return this.baseMapper.getResourcePermission();
     }
 
 

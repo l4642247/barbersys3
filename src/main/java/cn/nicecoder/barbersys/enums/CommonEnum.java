@@ -19,6 +19,8 @@ public enum CommonEnum {
 
     MENU_TYPE_1(1,"菜单"),
     MENU_TYPE_0(0,"页面"),
+
+    REDIS_KEY_MENU_PERMISSION(0, "key_menuPermission"),
     ;
 
     CommonEnum(Integer code, String desc) {

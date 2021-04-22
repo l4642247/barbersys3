@@ -13,6 +13,8 @@ import java.util.List;
 public class MenuNodeVO {
     private String id;
     private String title;
+    private String href;
+    private String css;
     private String level;
     private Boolean last;
     private String parentId;

@@ -65,6 +65,25 @@
         </div>
 
         <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+
+          <li data-name="" th:class="${pIndex.index == 0?'layui-nav-item layui-nav-itemed':'layui-nav-item'}" th:each="item,pIndex:${menuTree.data}">
+            <a href="javascript:;" th:lay-tips="${item.title}" lay-direction="2">
+              <i th:class="${'layui-icon ' + item.css}"></i>
+              <cite th:text="${item.title}"></cite>
+            </a>
+            <dl class="layui-nav-child" th:if="${not #strings.isEmpty(item.children)}">
+              <dd th:data-name="${child.href}" th:class="${pIndex.index == 0 && cIndex.index == 0 ?'layui-this':''}" th:each="child,cIndex:${item.children}">
+                <a th:lay-href="${child.href}" th:text="${child.title}"></a>
+                <dl class="layui-nav-child" th:if="${not #strings.isEmpty(child.children)}">
+                  <dd th:each="child0:${child.children}">
+                    <a th:lay-href="${child0.getHref()}" th:text="${child0.getTitle()}"></a>
+                  </dd>
+                </dl>
+              </dd>
+            </dl>
+          </li>
+
+          <!--
           <li data-name="home" class="layui-nav-item layui-nav-itemed">
             <a href="javascript:;" lay-tips="主页" lay-direction="2">
               <i class="layui-icon layui-icon-home"></i>
@@ -145,6 +164,9 @@
               </dd>
             </dl>
           </li>
+          -->
+
+
 
         </ul>
       </div>

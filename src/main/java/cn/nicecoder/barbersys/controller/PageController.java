@@ -1,5 +1,5 @@
 package cn.nicecoder.barbersys.controller;
-import cn.hutool.core.collection.CollectionUtil;
+
 import cn.nicecoder.barbersys.entity.*;
 import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.entity.comm.MenuTreeResp;
@@ -11,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -79,7 +81,12 @@ public class PageController {
         return "admin/menu/menu";
     }
 
-    @RequestMapping("/welcome")
+    @GetMapping("/403")
+    public String accessdenied(){
+        return "403";
+    }
+
+    @RequestMapping("/admin")
     public String admin(Model model){
         MenuTreeResp resp = new MenuTreeResp(barberMenuService.createMenuTreeRoot(false));
         model.addAttribute("menuTree", resp);

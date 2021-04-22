@@ -7,4 +7,11 @@
         inner join barber_user c on b.user_id = c.id
         where c.username = #{username}
     </select>
+
+    <select id="getResourcePermission" resultType="cn.nicecoder.barbersys.entity.PO.PermissionPO">
+        select a.code, c.href from barber_role a
+        inner join barber_role_menu b on a.id = b.role_id
+        inner join barber_menu c on b.menu_id = c.id
+        where c.type = 0
+    </select>
 </mapper>
