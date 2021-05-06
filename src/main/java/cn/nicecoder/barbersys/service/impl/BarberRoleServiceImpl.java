@@ -1,9 +1,7 @@
 package cn.nicecoder.barbersys.service.impl;
 
-import cn.nicecoder.barbersys.entity.BarberMenu;
 import cn.nicecoder.barbersys.entity.BarberRole;
 import cn.nicecoder.barbersys.entity.BarberRoleMenu;
-import cn.nicecoder.barbersys.entity.BarberUserRole;
 import cn.nicecoder.barbersys.entity.DO.BarberRoleDO;
 import cn.nicecoder.barbersys.entity.PO.PermissionPO;
 import cn.nicecoder.barbersys.mapper.BarberRoleMapper;
@@ -14,7 +12,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -67,16 +64,5 @@ public class BarberRoleServiceImpl extends ServiceImpl<BarberRoleMapper, BarberR
         barberRoleMenu.setMenuId(menuId);
         barberRoleMenu.setRoleId(roleId);
         barberRoleMenuService.save(barberRoleMenu);
-
-        //如果有父节点一起保存
-        BarberMenu barberMenu = barberMenuService.getById(menuId);
-        if(barberMenu.getParentId() > 0){
-            BarberRoleMenu barberRoleMenuParent = barberRoleMenuService.getOne(new LambdaQueryWrapper<BarberRoleMenu>()
-                    .eq(BarberRoleMenu::getMenuId, barberMenu.getParentId())
-                    .eq(BarberRoleMenu::getRoleId, roleId));
-            if(ObjectUtils.isEmpty(barberRoleMenuParent)) {
-                saveRoleMenu(barberMenu.getParentId(), roleId);
-            }
-        }
     }
 }

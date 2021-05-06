@@ -20,6 +20,11 @@ public enum CommonEnum {
     MENU_TYPE_1(1,"菜单"),
     MENU_TYPE_0(0,"页面"),
 
+    MENU_PRIVILEGE_0(0,"不需要权限"),
+    MENU_PRIVILEGE_1(1,"需要权限"),
+
+
+
     REDIS_KEY_MENU_PERMISSION(0, "key_menuPermission"),
     ;
 

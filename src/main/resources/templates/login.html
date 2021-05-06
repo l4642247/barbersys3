@@ -28,8 +28,8 @@
                         <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
                     </div>
                     <div class="layui-form-item">
-                        <label style="color: red" th:if="${param.error}" th:text="${'用户名或密码错误'}" id="lab1"></label>
-                        <label th:if="${param.logout}" th:text="${'账号已登出'}" id="lab2"></label>
+                        <label style="color: red" th:if="${param.error}" th:text="${session.errorMsg}" id="lab"></label>
+                        <label th:if="${param.logout}" th:text="${errorMessge}" id="lab1"></label>
                     </div>
                     <div class="layui-form-item" style="margin-bottom: 20px;">
                         <input type="checkbox" name="remember-me" lay-skin="primary" title="记住密码">

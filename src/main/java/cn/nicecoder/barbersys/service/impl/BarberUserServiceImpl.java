@@ -43,6 +43,13 @@ public class BarberUserServiceImpl extends ServiceImpl<BarberUserMapper, BarberU
     private BarberUserRoleService barberUserRoleService;
 
     @Override
+    public BarberUserVO getCurrentUser(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        BarberUserVO oneByUsername = this.baseMapper.getOneByUsername(userDetails.getUsername());
+        return oneByUsername;
+    }
+
+    @Override
     public BarberUser createBarberUser(BarberUser barberUserSave) {
         barberUserSave.setPassword(passwordEncoder.encode(PASSWORD_DEFAULT_ORIGIN));
         return barberUserSave;

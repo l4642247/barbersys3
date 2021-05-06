@@ -64,7 +64,7 @@
       elem: "#selTree1",
       url: "/menu/checkTree",
       checkbar: true, // 设置复选框
-      checkbarType: "self",
+      checkbarType: "all",
       selectInitVal: "", // 设置默认值
       done: function(){
         dtree.chooseDataInit("selTree1", menus);
@@ -73,7 +73,6 @@
     });
     dtree.on('chooseDone("selTree1")', function(obj){
       var param = dtree.selectVal("selTree1");
-      layer.msg(JSON.stringify(param));
     });
     $("#selTree1_btn").click(function(){
       SelTree6.selectResetVal();

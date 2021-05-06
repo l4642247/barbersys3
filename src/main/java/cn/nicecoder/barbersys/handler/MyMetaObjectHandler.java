@@ -11,8 +11,6 @@ import java.util.Date;
 /**
  * mybatisplus填充器
  * @author: longt
- * @Param:
- * @return:
  * @date: 2020/12/21 下午7:45
  */
 @Slf4j

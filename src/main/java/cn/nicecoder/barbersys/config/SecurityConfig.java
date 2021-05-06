@@ -1,6 +1,7 @@
 package cn.nicecoder.barbersys.config;
 
 import cn.nicecoder.barbersys.handler.MyAccessDeniedHandler;
+import cn.nicecoder.barbersys.handler.MyAuthenticationFailureHandler;
 import cn.nicecoder.barbersys.handler.MyLogoutSuccessHandler;
 import cn.nicecoder.barbersys.security.RoleBasedVoter;
 import cn.nicecoder.barbersys.security.RoleSecurityMetadataSource;
@@ -54,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RoleSecurityMetadataSource roleSecurityMetadataSource;
 
+    @Autowired
+    private MyAuthenticationFailureHandler authenticationFailureHandler;
+
     /**
      * @Description: 授权
      * @author: longt
@@ -81,25 +85,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin(form -> form
                             .loginPage("/login")
                             .defaultSuccessUrl("/admin",true)
-                            .failureUrl("/login?error=true")
+                            .failureHandler(authenticationFailureHandler)
                     )
                     .csrf().disable()
                     .logout()
                     .logoutUrl("/logout")
                     .logoutSuccessHandler(myLogoutSuccessHandler)
-                .and()
+                /*.and()
                     .exceptionHandling()
-                    .accessDeniedHandler(myAccessDeniedHandler)
+                    .accessDeniedHandler(myAccessDeniedHandler)*/
                 .and()
                     .headers().frameOptions().sameOrigin();
 
         // 记住我
-        http.rememberMe()
+        /*http.rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 // 超时时间
                 .tokenValiditySeconds(60)
                 // 自定义登陆逻辑
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService);*/
     }
 
     /**
@@ -125,7 +129,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //使用自定义角色器，放入 AccessDecisionManager的一个实现 AffirmativeBased 中
     private AccessDecisionManager customizeAccessDecisionManager() {
-
         List<AccessDecisionVoter<? extends Object>> decisionVoterList
                 = Arrays.asList(
                 new RoleBasedVoter()

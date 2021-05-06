@@ -17,6 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2021-02-24
  */
 public interface BarberUserService extends IService<BarberUser> {
+
+    /**
+     * @Description: 获取当前用户id
+     * @author: longt
+     * @Param: []
+     * @return: java.lang.Long
+     * @date: 2021/4/28 下午3:16
+     */
+    public BarberUserVO getCurrentUser();
+
     /**
      * 创建用户
      * @param barberUserSave

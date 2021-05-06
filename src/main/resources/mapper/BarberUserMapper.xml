@@ -3,7 +3,7 @@
 <mapper namespace="cn.nicecoder.barbersys.mapper.BarberUserMapper">
     <select id="getOneByUsername" resultType="cn.nicecoder.barbersys.entity.VO.BarberUserVO">
         select a.id,a.avatar,a.name,a.phone,a.id_card,a.email,a.sex,a.username,a.password,a.description
-        from barber_user a where a.username = #{username}
+        from barber_user a where a.username = #{username} and a.status = 1
     </select>
 
     <select id="listPageBarberUser" resultType="cn.nicecoder.barbersys.entity.VO.BarberUserVO">

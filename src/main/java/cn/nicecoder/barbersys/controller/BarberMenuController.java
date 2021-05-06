@@ -38,7 +38,6 @@ public class BarberMenuController {
                      @RequestParam(value = "name", required = false)String name, @RequestParam(value = "type", required = false)Long type){
         Page<BarberMenu> page = new Page<>(current, size);
         Page<BarberMenu> result = barberMenuService.page(page, new LambdaQueryWrapper<BarberMenu>()
-                .eq(BarberMenu::getStatus, CommonEnum.NORMAL.getCode())
                 .like(StrUtil.isNotEmpty(name), BarberMenu::getName, name)
                 .eq(ObjectUtil.isNotEmpty(type), BarberMenu::getType, type)
                 .orderByAsc(BarberMenu::getParentId,BarberMenu::getSort));
@@ -49,11 +48,16 @@ public class BarberMenuController {
     @ApiOperation(value="保存/更新菜单",notes="")
     public Resp save(@RequestBody Map menuMap){
         BarberMenu barberMenu = new BarberMenu();
-        BeanUtil.fillBeanWithMap(menuMap, barberMenu, false);
+        BeanUtil.fillBeanWithMap(menuMap, barberMenu, true);
         if(ObjectUtil.isNotEmpty(menuMap.get("selTree1_select_nodeId"))){
             barberMenu.setParentId(Long.parseLong(menuMap.get("selTree1_select_nodeId").toString()));
         }else{
             barberMenu.setParentId(0L);
+        }
+        if(ObjectUtil.isNotEmpty(menuMap.get("status")) && "on".equals(menuMap.get("status"))){
+            barberMenu.setStatus(1);
+        }else{
+            barberMenu.setStatus(0);
         }
         barberMenuService.saveOrUpdate(barberMenu);
         return Resp.success(barberMenu);

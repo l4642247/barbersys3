@@ -43,6 +43,9 @@ public class BarberOrderVO implements Serializable {
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "创建人id")
     private Long creator;
+
+    @ApiModelProperty(value = "创建人")
+    private String creatorName;
 }

@@ -24,4 +24,14 @@ public interface BarberMenuService extends IService<BarberMenu> {
      * @date: 2021/3/11 上午10:23
      */
     List<MenuNodeVO> createMenuTreeRoot(boolean flag);
+
+    /**
+     * 获取首链接
+     * @author: longt
+     * @Param: [nodeVO]
+     * @return: java.lang.String
+     * @date: 2021/4/22 下午7:01
+     */
+    public String getFirstHref(MenuNodeVO nodeVO);
+
 }

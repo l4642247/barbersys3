@@ -2,7 +2,6 @@ package cn.nicecoder.barbersys.handler;
 
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.util.RedisClient;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

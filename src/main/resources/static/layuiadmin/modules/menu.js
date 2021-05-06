@@ -13,7 +13,7 @@
             {field: "css", title: "图标"},
             {field: "href", title: "路径", templet: function (d) {return d.href == '' ? "-":d.href}},
             {field: "sort", title: "排序"},
-            {field: "status", title: "状态", align:"center"},
+            {field: "status", title: "状态", align:"center",templet: function (d) { return d.status == '1'?"启用":"禁用";}},
             {field: "createTime", title: "添加时间", templet: function (d) {return util.toDateString(d.createTime);}},
             {title: "操作", width: 150, align: "center", fixed: "right", toolbar: "#table-option"}]],
         page: !0,

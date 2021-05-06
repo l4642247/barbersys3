@@ -46,6 +46,15 @@
         <input type="text" th:value="${barberMenu.href}" name="href" lay-verify="href" placeholder="请输入路径" autocomplete="off" class="layui-input">
       </div>
     </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">状态</label>
+      <div class="layui-input-block">
+        <input th:if="${barberMenu.status == 1}" type="checkbox" checked="" name="status" lay-skin="switch" lay-text="启用|禁用">
+        <input th:if="${barberMenu.status == 0}" type="checkbox" name="status" lay-skin="switch" lay-text="启用|禁用">
+      </div>
+    </div>
+
     <div class="layui-form-item">
       <label class="layui-form-label">图标</label>
       <div class="layui-input-inline">

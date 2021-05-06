@@ -14,6 +14,7 @@
                 ,templet: function (d) {return d.type == '1'?"<span class=\"layui-badge\">充值</span>":"<span class=\"layui-badge layui-bg-green\">消费</span>";}},
             {field: "amount", title: "金额"},
             {field: "status", title: "状态" ,templet: function (d) {return d.status == '1'?"已完成":"取消";}},
+            {field: "creatorName", width:100, title: "操作人"},
             {field: "createTime", width: 170,title: "创建时间", templet: function (d) {
                     return util.toDateString(d.createTime);}},
             ]],

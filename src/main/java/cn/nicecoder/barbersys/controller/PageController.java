@@ -1,11 +1,16 @@
 package cn.nicecoder.barbersys.controller;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.*;
 import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
+import cn.nicecoder.barbersys.entity.VO.MenuNodeVO;
 import cn.nicecoder.barbersys.entity.comm.MenuTreeResp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -88,9 +93,24 @@ public class PageController {
 
     @RequestMapping("/admin")
     public String admin(Model model){
-        MenuTreeResp resp = new MenuTreeResp(barberMenuService.createMenuTreeRoot(false));
+        List<MenuNodeVO> menuTreeRoot = barberMenuService.createMenuTreeRoot(false);
+        MenuTreeResp resp = new MenuTreeResp(menuTreeRoot);
         model.addAttribute("menuTree", resp);
+        String firstHref = getFirstHref(menuTreeRoot.get(0));
+        model.addAttribute("firstHref", firstHref);
         return "admin/index";
+    }
+
+    public String getFirstHref(MenuNodeVO nodeVO){
+        List<MenuNodeVO> children = nodeVO.getChildren();
+        for(MenuNodeVO menuNodeVO : children){
+            if(StrUtil.isNotEmpty(menuNodeVO.getHref())){
+                return menuNodeVO.getHref();
+            }else{
+                return getFirstHref(menuNodeVO);
+            }
+        }
+        return "";
     }
 
     @GetMapping("/user/info")
@@ -171,7 +191,12 @@ public class PageController {
     @GetMapping("/member/expenseform")
     public String expenseform(Model model, @RequestParam(value = "memberId", required = false) Long memberId){
         BarberMember barberMember = barberMemberService.getById(memberId);
+        List<BarberUser> barberUserList = barberUserService.list(new LambdaQueryWrapper<BarberUser>().eq(BarberUser::getStatus, CommonEnum.NORMAL.getCode()));
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        model.addAttribute("username",username);
         model.addAttribute("barberMember",barberMember);
+        model.addAttribute("barberUserList",barberUserList);
         return "admin/member/expenseform";
     }
 

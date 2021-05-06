@@ -3,10 +3,13 @@ package cn.nicecoder.barbersys.security;
 import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.BarberUser;
 import cn.nicecoder.barbersys.entity.BarberRole;
+import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberRoleService;
 import cn.nicecoder.barbersys.service.BarberUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -38,20 +41,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(StrUtil.isEmpty(username)){
             throw new RuntimeException("用户名不能为空");
         }
-        System.out.println("自定义用户认证逻辑，登陆的用户是："+username);
         //获取用户
         BarberUser barberUser = barberUserService.getOne(
-                new LambdaQueryWrapper<BarberUser>().eq(BarberUser::getUsername, username));
+                new LambdaQueryWrapper<BarberUser>().eq(BarberUser::getUsername, username).eq(BarberUser::getStatus, CommonEnum.NORMAL.getCode()));
         if(barberUser == null){
-            throw new UsernameNotFoundException(String.format("%s这个用户不存在",username));
+            throw new RuntimeException("用户不存在");
         }
         //获取角色
         List<BarberRole> barberRoleList = BarberRoleService.getRoleByUsername(username);
+
         List<GrantedAuthority> authoritys = new ArrayList<>();
         for (BarberRole barberRole: barberRoleList) {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(barberRole.getCode());
             authoritys.add(authority);
         }
-        return new User(barberUser.getUsername(), barberUser.getPassword(),authoritys);
+        return new User(barberUser.getUsername(), barberUser.getPassword(), authoritys);
     }
+
+
 }

@@ -14,7 +14,7 @@
             {field: "sex", title: "性别"},
             {field: "position", title: "职位"},
             {field: "phone", title: "联系电话"},
-            {field: "dimission", title: "是否离职"},
+            {field: "dimission", title: "状态"},
             {field: "createTime", title: "添加时间", sort: !0},
             {title: "操作", width: 150, align: "center", fixed: "right", toolbar: "#table-useradmin-webuser"}]],
         page: !0,
