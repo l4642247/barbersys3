@@ -7,8 +7,8 @@
         cols: [[
             {type: "checkbox", fixed: "left"},
             {type: 'numbers', width: 80, title: "ID"},
-            {field: "cardNo", title: "卡号"},
-            {field: "memberName", title: "会员名"},
+            {field: "cardNo", title: "卡号", templet: function (d) {return d.cardNo == null ? "-" : d.cardNo}},
+            {field: "memberName", title: "会员名", templet: function (d) {return d.memberName == null ? "-" : d.memberName}},
             {field: "barberName", title: "员工名"},
             {field: "type", title: "类型" , width: 150, align:'center'
                 ,templet: function (d) {return d.type == '1'?"<span class=\"layui-badge\">充值</span>":"<span class=\"layui-badge layui-bg-green\">消费</span>";}},

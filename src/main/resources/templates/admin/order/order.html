@@ -40,7 +40,8 @@
               <select class="form-control" name="type">
                 <option value=""></option>
                 <option value="1">充值</option>
-                <option value="2">消费</option>
+                <option value="2">会员消费</option>
+                <option value="3">现金消费</option>
               </select>
             </div>
           </div>
@@ -54,6 +55,9 @@
       </div>
 
       <div class="layui-card-body">
+        <div style="padding-bottom: 10px;">
+          <button class="layui-btn layuiadmin-btn-order" data-type="add">添加</button>
+        </div>
         <table id="LAY-order" lay-filter="LAY-order"></table>
       </div>
     </div>
@@ -71,12 +75,42 @@
     index: 'lib/index', //主入口模块
     HttpRequest: 'HttpRequest',
   }).use(['index', 'order', 'table', 'form', 'HttpRequest', 'laydate'], function(){
-    var $ = layui.$,form = layui.form,table = layui.table, laydate = layui.laydate;
+    var $ = layui.$,HttpRequest = layui.HttpRequest,form = layui.form,table = layui.table, laydate = layui.laydate;
+
     //日期范围
     laydate.render({
       elem: '#dataRange'
       ,range: "~"
     });
+
+    var active = {
+      add: function(){
+        layer.open({
+          type: 2
+          ,title: '添加消费记录'
+          ,content: 'orderform'
+          ,area: ['400px', '350px']
+          ,btn: ['确定', '取消']
+          ,yes: function(index, layero){
+            var iframeWindow = window['layui-layer-iframe'+ index]
+            var submit = layero.find('iframe').contents().find("#LAY-order-cash-submit")
+            //监听提交
+            iframeWindow.layui.form.on('submit(LAY-order-cash-submit)', function(data){
+              var field = data.field; //获取提交的字段
+              //提交 Ajax 成功后，静态更新表格中的数据
+              var httpRequest = new HttpRequest("/order/save", 'post', function (data) {
+                table.reload('LAY-order');
+                layer.close(index); //关闭弹层
+              });
+              httpRequest.set(field);
+              httpRequest.start(true);
+            });
+            submit.trigger('click');
+          }
+        });
+      }
+    }
+
     //监听搜索
     form.on('submit(LAY-order-front-search)', function(data){
       var field = data.field;
@@ -84,6 +118,11 @@
       table.reload('LAY-order', {
         where: field
       });
+    });
+
+    $('.layui-btn.layuiadmin-btn-order').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
     });
   });
   </script>

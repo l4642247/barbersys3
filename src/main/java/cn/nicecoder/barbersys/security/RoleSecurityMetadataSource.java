@@ -2,7 +2,7 @@ package cn.nicecoder.barbersys.security;
 
 import cn.nicecoder.barbersys.entity.PO.PermissionPO;
 import cn.nicecoder.barbersys.enums.CommonEnum;
-import cn.nicecoder.barbersys.service.BarberRoleService;
+import cn.nicecoder.barbersys.service.SysRoleService;
 import cn.nicecoder.barbersys.util.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
@@ -22,7 +22,7 @@ public class RoleSecurityMetadataSource implements FilterInvocationSecurityMetad
     private final Map<String,List<String>> urlRoleMap = new HashMap<>();
 
     @Autowired
-    private BarberRoleService barberRoleService;
+    private SysRoleService sysRoleService;
 
     @Autowired
     private RedisClient redisClient;
@@ -30,7 +30,7 @@ public class RoleSecurityMetadataSource implements FilterInvocationSecurityMetad
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         if(urlRoleMap.isEmpty() || redisClient.get(CommonEnum.REDIS_KEY_MENU_PERMISSION.getDesc()) == null){
-            List<PermissionPO> permissionPOList = barberRoleService.getResourcePermission();
+            List<PermissionPO> permissionPOList = sysRoleService.getResourcePermission();
             /**
              * 固定：给"/admin"添加访问权限
              */

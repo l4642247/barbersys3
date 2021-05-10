@@ -3,18 +3,22 @@ package cn.nicecoder.barbersys.service.impl;
 import cn.nicecoder.barbersys.entity.BarberMember;
 import cn.nicecoder.barbersys.entity.BarberOrder;
 import cn.nicecoder.barbersys.entity.DO.BarberOrderDO;
+import cn.nicecoder.barbersys.entity.PO.OverviewPO;
+import cn.nicecoder.barbersys.entity.VO.BarberOrderStatisVO;
 import cn.nicecoder.barbersys.entity.VO.BarberOrderVO;
+import cn.nicecoder.barbersys.entity.VO.EChartLineVO;
+import cn.nicecoder.barbersys.entity.VO.EChartPieVO;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.mapper.BarberOrderMapper;
 import cn.nicecoder.barbersys.service.BarberMemberService;
 import cn.nicecoder.barbersys.service.BarberOrderService;
-import cn.nicecoder.barbersys.service.BarberUserService;
+import cn.nicecoder.barbersys.service.SysUserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,11 +35,11 @@ public class BarberOrderServiceImpl extends ServiceImpl<BarberOrderMapper, Barbe
     BarberMemberService barberMemberService;
 
     @Autowired
-    BarberUserService barberUserService;
+    SysUserService sysUserService;
 
     @Override
     public BarberMember recharge(BarberOrder barberOrder) {
-        Long userId = barberUserService.getCurrentUser().getId();
+        Long userId = sysUserService.getCurrentUser().getId();
         barberOrder.setType(CommonEnum.ORDER_TYPE_1.getCode());
         barberOrder.setCreator(userId);
         this.save(barberOrder);
@@ -50,7 +54,7 @@ public class BarberOrderServiceImpl extends ServiceImpl<BarberOrderMapper, Barbe
 
     @Override
     public BarberMember expense(BarberOrder barberOrder) {
-        Long userId = barberUserService.getCurrentUser().getId();
+        Long userId = sysUserService.getCurrentUser().getId();
         barberOrder.setType(CommonEnum.ORDER_TYPE_2.getCode());
         barberOrder.setCreator(userId);
         this.save(barberOrder);
@@ -67,4 +71,72 @@ public class BarberOrderServiceImpl extends ServiceImpl<BarberOrderMapper, Barbe
     public Page<BarberOrderVO> listPageBarberOrder(Page<BarberOrder> page, BarberOrderDO barberOrderDO) {
         return this.baseMapper.listPageBarberOrder(page, barberOrderDO);
     }
+
+    @Override
+    public void saveOne(BarberOrder barberOrderSave) {
+        Long userId = sysUserService.getCurrentUser().getId();
+        barberOrderSave.setType(CommonEnum.ORDER_TYPE_3.getCode());
+        barberOrderSave.setCreator(userId);
+        this.saveOrUpdate(barberOrderSave);
+    }
+
+    @Override
+    public BarberOrderStatisVO getOverviewData() {
+        List<OverviewPO> dayList = this.baseMapper.orderStatisDay();
+        BarberOrderStatisVO result = new BarberOrderStatisVO();
+        for (OverviewPO item: dayList) {
+            Long amountDay = result.getAmountDay();
+            Long orderNumDay = result.getOrderNumDay();
+            if(CommonEnum.ORDER_TYPE_2.getCode().equals(item.getType())
+                    || CommonEnum.ORDER_TYPE_3.getCode().equals(item.getType())){
+                result.setAmountDay(amountDay + item.getAmount());
+                result.setOrderNumDay(orderNumDay + item.getCountNum());
+            }
+        }
+        List<OverviewPO> monthList = this.baseMapper.orderStatisCurrentMonth();
+        for (OverviewPO item: monthList) {
+            Long orderNumMonth = result.getOrderNumMonth();
+            Long amountMemberMonth = result.getAmountMemberMonth();
+            Long amountCashMonth = result.getAmountCashMonth();
+            Long amountTotal = result.getAmountTotal();
+            if(CommonEnum.ORDER_TYPE_2.getCode().equals(item.getType())
+                    || CommonEnum.ORDER_TYPE_3.getCode().equals(item.getType())){
+                result.setOrderNumMonth(orderNumMonth + item.getCountNum());
+                result.setAmountTotal(amountTotal + item.getAmount());
+                if(CommonEnum.ORDER_TYPE_2.getCode().equals(item.getType())){
+                    result.setAmountMemberMonth(amountMemberMonth + item.getAmount());
+                }else{
+                    result.setAmountCashMonth(amountCashMonth + item.getAmount());
+                }
+            }
+        }
+        List<OverviewPO> overviewList = barberMemberService.memberStatisCurrentMonth();
+        for (OverviewPO item : overviewList){
+            result.setAmountMemberMonth(result.getMemberNumMonth() + item.getCountNum());
+        }
+        return result;
+    }
+
+    @Override
+    public EChartLineVO getEchartsLineData() {
+        EChartLineVO eChartLineVO = new EChartLineVO();
+        List<OverviewPO> overviewPOS = barberMemberService.memberStatisMonth();
+        for(OverviewPO item : overviewPOS){
+            int index = Integer.parseInt(item.getCreateTime()) - 1;
+            eChartLineVO.getMemberArr()[index] = item.getCountNum();
+        }
+        List<OverviewPO> overviewPOS1 = this.baseMapper.orderStatisMonth();
+        for(OverviewPO item : overviewPOS1){
+            int index = Integer.parseInt(item.getCreateTime()) - 1;
+            eChartLineVO.getAmountArr()[index] = item.getAmount();
+            eChartLineVO.getOrderNumArr()[index] = item.getCountNum();
+        }
+        return eChartLineVO;
+    }
+
+    @Override
+    public List<EChartPieVO> getEChartPieData() {
+        return this.baseMapper.echartsPieData();
+    }
+
 }

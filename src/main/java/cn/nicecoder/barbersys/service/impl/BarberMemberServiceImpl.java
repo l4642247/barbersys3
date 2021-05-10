@@ -2,11 +2,14 @@ package cn.nicecoder.barbersys.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.BarberMember;
+import cn.nicecoder.barbersys.entity.PO.OverviewPO;
 import cn.nicecoder.barbersys.mapper.BarberMemberMapper;
 import cn.nicecoder.barbersys.service.BarberMemberService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,5 +31,15 @@ public class BarberMemberServiceImpl extends ServiceImpl<BarberMemberMapper, Bar
         String cardNo = StrUtil.fillBefore(String.valueOf(count+1), '0',6);
         barberMember.setCardNo(cardNo);
         return barberMember;
+    }
+
+    @Override
+    public List<OverviewPO> memberStatisMonth() {
+        return this.baseMapper.memberStatisMonth();
+    }
+
+    @Override
+    public List<OverviewPO> memberStatisCurrentMonth() {
+        return this.baseMapper.memberStatisCurrentMonth();
     }
 }

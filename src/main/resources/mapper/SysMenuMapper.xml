@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.nicecoder.barbersys.mapper.SysMenuMapper">
+
+    <select id="getMenuIdsByRoleCodes" resultType="java.lang.Long">
+        select c.id from sys_role a
+        inner join sys_role_menu b on a.id = b.role_id
+        inner join sys_menu c on b.menu_id = c.id
+        where a.code in
+        <foreach collection="roleCodes" item="code" index="index" open="(" close=")" separator=",">
+            #{code}
+        </foreach>
+    </select>
+
+</mapper>

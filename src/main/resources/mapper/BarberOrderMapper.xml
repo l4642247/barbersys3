@@ -5,8 +5,8 @@
         select a.id,a.card_no,b.name member_name,c.name barber_name,a.type,a.amount,a.status,a.create_time,a.creator,d.name creatorName
         from barber_order a
         left join barber_member b on a.member_id = b.id
-        left join barber_user c on a.barber_id = c.id
-        left join barber_user d on a.creator = d.id
+        left join sys_user c on a.barber_id = c.id
+        left join sys_user d on a.creator = d.id
         where a.status = 1
         <if test="barberOrderDO.type != null and barberOrderDO.type != ''">
             and a.type = #{barberOrderDO.type}
@@ -25,4 +25,66 @@
         </if>
         order by a.create_time desc
     </select>
+
+
+    <select id="orderStatisDay" resultType="cn.nicecoder.barbersys.entity.PO.OverviewPO">
+        SELECT
+            type,
+            count(id) countNum,
+            sum(amount) amount,
+            DATE(create_time) createTime
+        FROM
+            barber_order
+        WHERE
+            to_days(create_time) = to_days(now())
+        GROUP BY
+            DATE(create_time),type
+        ORDER BY
+            DATE(create_time) DESC;
+    </select>
+
+    <select id="orderStatisMonth" resultType="cn.nicecoder.barbersys.entity.PO.OverviewPO">
+        SELECT
+            type,
+            count(id) countNum,
+            sum(amount) amount,
+            MONTH(create_time) createTime
+        FROM
+            barber_order
+        WHERE
+            YEAR(create_time)=YEAR(NOW())
+        GROUP BY
+            MONTH(create_time),type
+        ORDER BY
+            MONTH(create_time) DESC;
+    </select>
+
+    <select id="orderStatisCurrentMonth" resultType="cn.nicecoder.barbersys.entity.PO.OverviewPO">
+        SELECT
+            type,
+            count(id) countNum,
+            sum(amount) amount,
+            MONTH(create_time) createTime
+        FROM
+            barber_order
+        WHERE
+            DATE_FORMAT(create_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+        GROUP BY
+            MONTH(create_time),type
+    </select>
+
+    <select id="echartsPieData" resultType="cn.nicecoder.barbersys.entity.VO.EChartPieVO">
+        SELECT
+            sum(a.amount) value,
+            b.name name
+        FROM
+            barber_order a
+            LEFT JOIN sys_user b on a.barber_id = b.id
+        WHERE
+            DATE_FORMAT(a.create_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+            AND (a.type = 2 or a.type =3)
+        GROUP BY
+            barber_id
+    </select>
+
 </mapper>

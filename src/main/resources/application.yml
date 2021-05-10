@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: Cnm.0001+
-    url: jdbc:mysql://nicecoder.cn:3306/project?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=GMT
+    url: jdbc:mysql://nicecoder.cn:3306/project2?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=GMT
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   redis:

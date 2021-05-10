@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.nicecoder.barbersys.mapper.SysRoleMapper">
+    <select id="getRoleByUsername" resultType="cn.nicecoder.barbersys.entity.SysRole">
+        select a.* from sys_role a
+        inner join sys_user_role b on a.id = b.role_id
+        inner join sys_user c on b.user_id = c.id
+        where c.username = #{username}
+        and a.status = 1 and c.status = 1
+    </select>
+
+    <select id="getResourcePermission" resultType="cn.nicecoder.barbersys.entity.PO.PermissionPO">
+        select a.code, c.href from sys_role a
+        inner join sys_role_menu b on a.id = b.role_id
+        inner join sys_menu c on b.menu_id = c.id
+        where c.type = 0 and c.status = 1
+    </select>
+</mapper>

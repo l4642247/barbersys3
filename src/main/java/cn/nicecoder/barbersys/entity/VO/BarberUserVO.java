@@ -1,6 +1,6 @@
 package cn.nicecoder.barbersys.entity.VO;
 
-import cn.nicecoder.barbersys.entity.BarberRole;
+import cn.nicecoder.barbersys.entity.SysRole;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -50,7 +50,7 @@ public class BarberUserVO implements Serializable {
     private String description;
 
     @ApiModelProperty(value = "角色列表")
-    private List<BarberRole> roleList;
+    private List<SysRole> roleList;
 
     @ApiModelProperty(value = "角色字符串")
     private String roleStr;

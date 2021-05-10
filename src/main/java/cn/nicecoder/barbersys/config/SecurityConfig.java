@@ -122,12 +122,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PersistentTokenRepository persistentTokenRepository(){
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
-        /*// 第一次启动开启
-        jdbcTokenRepository.setCreateTableOnStartup(true);*/
         return  jdbcTokenRepository;
     }
 
-    //使用自定义角色器，放入 AccessDecisionManager的一个实现 AffirmativeBased 中
+    /**
+     * 使用自定义角色器，放入 AccessDecisionManager的一个实现 AffirmativeBased 中
+     */
     private AccessDecisionManager customizeAccessDecisionManager() {
         List<AccessDecisionVoter<? extends Object>> decisionVoterList
                 = Arrays.asList(

@@ -1,16 +1,14 @@
 package cn.nicecoder.barbersys.controller;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.*;
+import cn.nicecoder.barbersys.entity.VO.BarberOrderStatisVO;
 import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.entity.VO.MenuNodeVO;
 import cn.nicecoder.barbersys.entity.comm.MenuTreeResp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,10 +27,10 @@ import java.util.List;
 public class PageController {
 
     @Autowired
-    BarberRoleService barberRoleService;
+    SysRoleService sysRoleService;
 
     @Autowired
-    BarberUserService barberUserService;
+    SysUserService sysUserService;
 
     @Autowired
     BarberMemberService barberMemberService;
@@ -41,13 +39,15 @@ public class PageController {
     BarberOrderService barberOrderService;
 
     @Autowired
-    BarberMenuService barberMenuService;
+    SysMenuService sysMenuService;
 
     @Autowired
-    BarberRoleMenuService barberRoleMenuService;
+    SysRoleMenuService sysRoleMenuService;
 
     @GetMapping("/homepage")
-    public String homepage(){
+    public String homepage(Model model){
+        BarberOrderStatisVO overviewData = barberOrderService.getOverviewData();
+        model.addAttribute("overviewData", overviewData);
         return "admin/home/homepage";
     }
 
@@ -93,7 +93,7 @@ public class PageController {
 
     @RequestMapping("/admin")
     public String admin(Model model){
-        List<MenuNodeVO> menuTreeRoot = barberMenuService.createMenuTreeRoot(false);
+        List<MenuNodeVO> menuTreeRoot = sysMenuService.createMenuTreeRoot(false);
         MenuTreeResp resp = new MenuTreeResp(menuTreeRoot);
         model.addAttribute("menuTree", resp);
         String firstHref = getFirstHref(menuTreeRoot.get(0));
@@ -117,49 +117,49 @@ public class PageController {
     public String userInfo(Model model){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
-        BarberUserVO barberUserVO = barberUserService.getOneByUsername(username);
+        BarberUserVO barberUserVO = sysUserService.getOneByUsername(username);
         model.addAttribute("barberUserVO",barberUserVO);
         return "admin/user/info";
     }
 
     @GetMapping("/user/roleform")
     public String roleform(Model model, @RequestParam(value = "id", required = false) Long id){
-        BarberRole BarberRole = new BarberRole();
+        SysRole SysRole = new SysRole();
         if(id != null) {
-            BarberRole = barberRoleService.getById(id);
+            SysRole = sysRoleService.getById(id);
         }
-        List<BarberRoleMenu> barberRoleMenuList = barberRoleMenuService.list(new LambdaQueryWrapper<BarberRoleMenu>()
-                .eq(BarberRoleMenu::getRoleId, id));
+        List<SysRoleMenu> barberRoleMenuList = sysRoleMenuService.list(new LambdaQueryWrapper<SysRoleMenu>()
+                .eq(SysRoleMenu::getRoleId, id));
         StringBuffer menuBuffer = new StringBuffer();
         barberRoleMenuList.stream().forEach(item ->{
             menuBuffer.append(item.getMenuId()).append(",");
         });
         if(menuBuffer.length() > 0){menuBuffer.deleteCharAt(menuBuffer.length() - 1);}
         model.addAttribute("menus",menuBuffer.toString());
-        model.addAttribute("barberRole", BarberRole);
+        model.addAttribute("barberRole", SysRole);
         return "admin/user/roleform";
     }
 
     @GetMapping("/menu/menuform")
     public String menuform(Model model, @RequestParam(value = "id", required = false) Long id){
-        BarberMenu barberMenu = new BarberMenu();
+        SysMenu sysMenu = new SysMenu();
         if(id != null) {
-            barberMenu = barberMenuService.getById(id);
+            sysMenu = sysMenuService.getById(id);
         }
-        model.addAttribute("barberMenu", barberMenu);
+        model.addAttribute("barberMenu", sysMenu);
         return "admin/menu/menuform";
     }
 
     @GetMapping("/user/userform")
     public String userform(Model model, @RequestParam(value = "id", required = false) Long id){
-        BarberUser barberUser = new BarberUser();
+        SysUser sysUser = new SysUser();
         if(id != null) {
-            barberUser = barberUserService.getById(id);
+            sysUser = sysUserService.getById(id);
         }
-        model.addAttribute("barberUser", barberUser);
-        List<BarberRole> roleList = barberRoleService.getRoleByUsername(barberUser.getUsername());
+        model.addAttribute("barberUser", sysUser);
+        List<SysRole> roleList = sysRoleService.getRoleByUsername(sysUser.getUsername());
         Long[] roleArr = new Long[roleList.size()];
-        for(BarberRole item : roleList){
+        for(SysRole item : roleList){
             roleArr[roleList.indexOf(item)] = item.getId();
         }
         model.addAttribute("roles", roleArr);
@@ -179,34 +179,34 @@ public class PageController {
     @GetMapping("/member/rechargeform")
     public String rechargeform(Model model, @RequestParam(value = "memberId", required = false) Long memberId){
         BarberMember barberMember = barberMemberService.getById(memberId);
-        List<BarberUser> barberUserList = barberUserService.list(new LambdaQueryWrapper<BarberUser>().eq(BarberUser::getStatus, CommonEnum.NORMAL.getCode()));
+        List<SysUser> sysUserList = sysUserService.list(new LambdaQueryWrapper<SysUser>().eq(SysUser::getStatus, CommonEnum.NORMAL.getCode()));
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         model.addAttribute("username",username);
         model.addAttribute("barberMember",barberMember);
-        model.addAttribute("barberUserList",barberUserList);
+        model.addAttribute("barberUserList", sysUserList);
         return "admin/member/rechargeform";
     }
 
     @GetMapping("/member/expenseform")
     public String expenseform(Model model, @RequestParam(value = "memberId", required = false) Long memberId){
         BarberMember barberMember = barberMemberService.getById(memberId);
-        List<BarberUser> barberUserList = barberUserService.list(new LambdaQueryWrapper<BarberUser>().eq(BarberUser::getStatus, CommonEnum.NORMAL.getCode()));
+        List<SysUser> sysUserList = sysUserService.list(new LambdaQueryWrapper<SysUser>().eq(SysUser::getStatus, CommonEnum.NORMAL.getCode()));
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         model.addAttribute("username",username);
         model.addAttribute("barberMember",barberMember);
-        model.addAttribute("barberUserList",barberUserList);
+        model.addAttribute("barberUserList", sysUserList);
         return "admin/member/expenseform";
     }
 
     @GetMapping("/order/orderform")
-    public String orderform(Model model, @RequestParam(value = "id", required = false) Long id){
-        BarberOrder barberOrder = new BarberOrder();
-        if(id != null) {
-            barberOrder = barberOrderService.getById(id);
-        }
-        model.addAttribute("barberOrder", barberOrder);
+    public String orderform(Model model){
+        List<SysUser> sysUserList = sysUserService.list(new LambdaQueryWrapper<SysUser>().eq(SysUser::getStatus, CommonEnum.NORMAL.getCode()));
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        model.addAttribute("username",username);
+        model.addAttribute("barberUserList", sysUserList);
         return "admin/order/orderform";
     }
 

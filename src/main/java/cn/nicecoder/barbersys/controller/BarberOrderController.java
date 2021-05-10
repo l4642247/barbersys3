@@ -49,7 +49,7 @@ public class BarberOrderController {
     @PostMapping("/save")
     @ApiOperation(value = "保存/更新订单", notes = "")
     public Resp save(@RequestBody BarberOrder barberOrderSave) {
-        barberOrderService.saveOrUpdate(barberOrderSave);
+        barberOrderService.saveOne(barberOrderSave);
         return Resp.success(barberOrderSave);
     }
 
@@ -62,5 +62,18 @@ public class BarberOrderController {
         barberOrderService.updateById(barberOrderDelete);
         return Resp.success(barberOrderDelete);
     }
+
+    @GetMapping("/echartsLineData")
+    @ApiOperation(value = "折线图数据", notes = "")
+    public Resp getEchartsLineData() {
+        return Resp.success(barberOrderService.getEchartsLineData());
+    }
+
+    @GetMapping("/echartsPieData")
+    @ApiOperation(value = "饼图数据", notes = "")
+    public Resp getEChartPieData() {
+        return Resp.success(barberOrderService.getEChartPieData());
+    }
+
 }
 
