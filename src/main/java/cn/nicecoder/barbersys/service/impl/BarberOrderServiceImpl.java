@@ -1,5 +1,6 @@
 package cn.nicecoder.barbersys.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.nicecoder.barbersys.entity.BarberMember;
 import cn.nicecoder.barbersys.entity.BarberOrder;
 import cn.nicecoder.barbersys.entity.DO.BarberOrderDO;
@@ -9,15 +10,18 @@ import cn.nicecoder.barbersys.entity.VO.BarberOrderVO;
 import cn.nicecoder.barbersys.entity.VO.EChartLineVO;
 import cn.nicecoder.barbersys.entity.VO.EChartPieVO;
 import cn.nicecoder.barbersys.enums.CommonEnum;
+import cn.nicecoder.barbersys.exception.ServiceException;
 import cn.nicecoder.barbersys.mapper.BarberOrderMapper;
 import cn.nicecoder.barbersys.service.BarberMemberService;
 import cn.nicecoder.barbersys.service.BarberOrderService;
 import cn.nicecoder.barbersys.service.SysUserService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,8 +64,11 @@ public class BarberOrderServiceImpl extends ServiceImpl<BarberOrderMapper, Barbe
         this.save(barberOrder);
         //计算余额
         BarberMember barberMemberUpdate = barberMemberService.getById(barberOrder.getMemberId());
-        Long balance = barberMemberUpdate.getBalance();
-        barberMemberUpdate.setBalance(balance - barberOrder.getAmount());
+        Long balance = barberMemberUpdate.getBalance() - barberOrder.getAmount();
+        if(balance < 0){
+            throw new ServiceException(CommonEnum.RESP_LAYUI_FAIL.getCode(), "余额不足！");
+        }
+        barberMemberUpdate.setBalance(balance);
         barberMemberUpdate.setUpdator(userId);
         barberMemberService.updateById(barberMemberUpdate);
         return barberMemberUpdate;
@@ -110,9 +117,11 @@ public class BarberOrderServiceImpl extends ServiceImpl<BarberOrderMapper, Barbe
                 }
             }
         }
-        List<OverviewPO> overviewList = barberMemberService.memberStatisCurrentMonth();
-        for (OverviewPO item : overviewList){
-            result.setAmountMemberMonth(result.getMemberNumMonth() + item.getCountNum());
+        List<OverviewPO> memberNewMonth = barberMemberService.memberStatisCurrentMonth();
+        for (OverviewPO item : memberNewMonth){
+            if(Integer.parseInt(item.getCreateTime()) == DateUtil.month(new Date())+1){
+                result.setMemberNumMonth(item.getCountNum());
+            }
         }
         return result;
     }

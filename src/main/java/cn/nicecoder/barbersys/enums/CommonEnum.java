@@ -11,6 +11,7 @@ public enum CommonEnum {
     DELETED(0,"已删除"),
 
     // layui返回值
+    RESP_LAYUI_FAIL(-1,"失败"),
     RESP_LAYUI_OK(0,"成功"),
     RESP_LAYUI_EMPTY(201,"无数据"),
 

@@ -85,8 +85,12 @@
                         r = t.find("iframe").contents().find("#LAY-order-expense-submit");
                     l.layui.form.on("submit(LAY-order-expense-submit)", function (t) {
                         var httpRequest = new HttpRequest("/member/expense", 'post', function (data) {
-                            i.reload("LAY-user-member");
-                            layer.close(e)
+                            if(data.code == 0){
+                                i.reload("LAY-user-member");
+                                layer.close(e)
+                            }else{
+                                layer.msg(data.msg)
+                            }
                         });
                         httpRequest.set(t.field);
                         httpRequest.start(true);

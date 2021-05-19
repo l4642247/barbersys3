@@ -17,4 +17,5 @@ public class BarberOrderDO implements Serializable {
     private Integer type;
     private String dateStart;
     private String dateEnd;
+    private Long barberId;
 }

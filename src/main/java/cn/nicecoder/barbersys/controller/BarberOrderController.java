@@ -5,9 +5,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.BarberOrder;
 import cn.nicecoder.barbersys.entity.DO.BarberOrderDO;
 import cn.nicecoder.barbersys.entity.VO.BarberOrderVO;
+import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberOrderService;
+import cn.nicecoder.barbersys.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +30,9 @@ public class BarberOrderController {
     @Autowired
     BarberOrderService barberOrderService;
 
+    @Autowired
+    SysUserService sysUserService;
+
     @GetMapping("/page")
     @ApiOperation(value = "查询所有订单", notes = "")
     public Resp page(@RequestParam("page") Long current, @RequestParam("limit") Long size
@@ -41,6 +46,11 @@ public class BarberOrderController {
         if(StrUtil.isNotEmpty(dataRange)){
             barberOrderDO.setDateStart(dataRange.split("~")[0].trim());
             barberOrderDO.setDateEnd(dataRange.split("~")[1].trim());
+        }
+        BarberUserVO currentUser = sysUserService.getCurrentUser();
+        // 暂定名为"admin"的用户才能查看全部订单
+        if(!"admin".equals(currentUser.getUsername())){
+            barberOrderDO.setBarberId(sysUserService.getOneByUsername(currentUser.getUsername()).getId());
         }
         Page<BarberOrderVO> result = barberOrderService.listPageBarberOrder(page, barberOrderDO);
         return Resp.success(result.getRecords(), result.getTotal());

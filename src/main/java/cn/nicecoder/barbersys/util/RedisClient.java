@@ -1,9 +1,14 @@
 package cn.nicecoder.barbersys.util;
  
+import cn.hutool.core.util.StrUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
- 
+import redis.clients.jedis.commands.JedisCommands;
+
 import java.util.concurrent.TimeUnit;
  
 /**
@@ -13,7 +18,10 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class RedisClient {
- 
+
+    private static final Logger logger = LoggerFactory.getLogger(RedisClient.class);
+
+
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 

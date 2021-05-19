@@ -2,12 +2,15 @@ package cn.nicecoder.barbersys.controller;
 
 
 import cn.hutool.core.util.StrUtil;
+import cn.nicecoder.barbersys.aspect.NoRepeatSubmit;
 import cn.nicecoder.barbersys.entity.BarberMember;
 import cn.nicecoder.barbersys.entity.BarberOrder;
+import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberMemberService;
 import cn.nicecoder.barbersys.service.BarberOrderService;
+import cn.nicecoder.barbersys.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
@@ -72,6 +75,7 @@ public class BarberMemberController {
 
     @PostMapping("/expense")
     @ApiOperation(value="会员消费",notes="")
+    @NoRepeatSubmit(location = "expense")
     public Resp expense(@RequestBody BarberOrder barberOrderSave){
         BarberMember barberMember = barberOrderService.expense(barberOrderSave);
         return Resp.success(barberMember);

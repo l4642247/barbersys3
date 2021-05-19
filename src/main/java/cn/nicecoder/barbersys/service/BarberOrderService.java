@@ -10,6 +10,7 @@ import cn.nicecoder.barbersys.entity.VO.EChartLineVO;
 import cn.nicecoder.barbersys.entity.VO.EChartPieVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,7 +30,8 @@ public interface BarberOrderService extends IService<BarberOrder> {
      * @return: cn.nicecoder.barbersys.entity.BarberMember
      * @date: 2021/2/27 上午11:54
      */
-    public BarberMember recharge(BarberOrder barberOrder);
+    @Transactional
+    BarberMember recharge(BarberOrder barberOrder);
 
 
     /**
@@ -39,7 +41,8 @@ public interface BarberOrderService extends IService<BarberOrder> {
      * @return: cn.nicecoder.barbersys.entity.BarberMember
      * @date: 2021/2/27 上午11:54
      */
-    public BarberMember expense(BarberOrder barberOrder);
+    @Transactional
+    BarberMember expense(BarberOrder barberOrder);
 
     /**
      * 分页查询
