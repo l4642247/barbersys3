@@ -13,13 +13,13 @@ import java.util.List;
  *  服务类
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-02-24
  */
 public interface SysRoleService extends IService<SysRole> {
     /**
      * 通过username获取用户角色
-     * @author: longt
+     * @author: xxxxx
      * @Param: [username]
      * @return: java.util.List<cn.nicecoder.barbersys.entity.BarberRole>
      * @date: 2021/3/5 下午3:14
@@ -36,7 +36,7 @@ public interface SysRoleService extends IService<SysRole> {
 
     /**
      * 查询资源权限
-     * @author: longt
+     * @author: xxxxx
      * @Param: []
      * @return: java.util.List<cn.nicecoder.barbersys.entity.PO.PermissionPO>
      * @date: 2021/4/14 下午4:18

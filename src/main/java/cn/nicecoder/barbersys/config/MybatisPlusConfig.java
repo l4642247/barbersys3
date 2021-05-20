@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Spring boot方式mybatisplus分页插件
- * @author: longt
+ * @author: xxxxx
  * @Param:
  * @return:
  * @date: 2020/12/22 下午4:06

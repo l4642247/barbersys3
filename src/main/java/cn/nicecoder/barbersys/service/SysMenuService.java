@@ -11,14 +11,14 @@ import java.util.List;
  *  服务类
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-03-05
  */
 public interface SysMenuService extends IService<SysMenu> {
 
     /**
      * 查询根菜单
-     * @author: longt
+     * @author: xxxxx
      * @Param: []
      * @return: java.util.List<cn.nicecoder.barbersys.entity.VO.MenuNodeVO>
      * @date: 2021/3/11 上午10:23
@@ -27,7 +27,7 @@ public interface SysMenuService extends IService<SysMenu> {
 
     /**
      * 获取首链接
-     * @author: longt
+     * @author: xxxxx
      * @Param: [nodeVO]
      * @return: java.lang.String
      * @date: 2021/4/22 下午7:01

@@ -2,7 +2,7 @@ package cn.nicecoder.barbersys.enums;
 
 /**
  * StatusEnum
- * @author: longt
+ * @author: xxxxx
  * @date: 2020/12/22 上午8:47
  */
 public enum CommonEnum {

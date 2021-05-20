@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * 自定义权限验证
- * @author: longt
+ * @author: xxxxx
  * @date: 2021/2/27 下午10:04
  */
 @Service

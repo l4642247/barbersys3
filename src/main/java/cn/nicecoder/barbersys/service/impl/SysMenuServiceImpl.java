@@ -24,7 +24,7 @@ import java.util.List;
  *  服务实现类
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-03-05
  */
 @Service
@@ -78,7 +78,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     /**
      * 查询子节点(flag::仅查询菜单)
-     * @author: longt
+     * @author: xxxxx
      * @Param: [nodeVO, type]
      * @return: cn.nicecoder.barbersys.entity.VO.MenuNodeVO
      * @date: 2021/3/11 下午2:32

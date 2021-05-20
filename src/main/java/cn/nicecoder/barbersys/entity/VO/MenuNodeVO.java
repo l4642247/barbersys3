@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * 菜单树节点
- * @author: longt
+ * @author: xxxxx
  * @date: 2021/3/10 下午3:56
  */
 @Data

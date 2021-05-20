@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  *  前端控制器
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-02-24
  */
 @RestController
@@ -68,6 +68,7 @@ public class BarberMemberController {
 
     @PostMapping("/recharge")
     @ApiOperation(value="会员充值",notes="")
+    @NoRepeatSubmit(location = "/member/recharge")
     public Resp recharge(@RequestBody BarberOrder barberOrderSave){
         BarberMember barberMember = barberOrderService.recharge(barberOrderSave);
         return Resp.success(barberMember);
@@ -75,7 +76,7 @@ public class BarberMemberController {
 
     @PostMapping("/expense")
     @ApiOperation(value="会员消费",notes="")
-    @NoRepeatSubmit(location = "expense")
+    @NoRepeatSubmit(location = "/member/expense")
     public Resp expense(@RequestBody BarberOrder barberOrderSave){
         BarberMember barberMember = barberOrderService.expense(barberOrderSave);
         return Resp.success(barberMember);

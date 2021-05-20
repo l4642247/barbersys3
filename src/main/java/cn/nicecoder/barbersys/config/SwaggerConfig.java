@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @Description: Swagger配置
- * @author: longt
+ * @author: xxxxx
  * @date: 2020/12/16 上午11:20
  */
 @Configuration
@@ -35,7 +35,7 @@ public class SwaggerConfig {
                 //页面标题
                 .title("昨日头条开发文档V1.0")
                 //创建人
-                .contact(new Contact("lon't", "http://www.nicecoder.cn", ""))
+                .contact(new Contact("xxxxx", "http://www.nicecoder.cn", ""))
                 //版本号
                 .version("1.0")
                 //描述

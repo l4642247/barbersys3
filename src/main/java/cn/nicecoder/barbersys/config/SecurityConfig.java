@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * @Description: 权限管理
- * @author: longt
+ * @author: xxxxx
  * @date: 2020/12/16 上午11:18
  */
 @EnableWebSecurity
@@ -44,9 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private MyAccessDeniedHandler myAccessDeniedHandler;
-
-    @Autowired
     private MyLogoutSuccessHandler myLogoutSuccessHandler;
 
     @Autowired
@@ -60,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * @Description: 授权
-     * @author: longt
+     * @author: xxxxx
      * @Param: [http]
      * @return: void
      * @date: 2020/12/16 上午11:19
@@ -108,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * @Description: 配置
-     * @author: longt
+     * @author: xxxxx
      * @Param: [auth]
      * @return: void
      * @date: 2020/12/16 上午11:19

@@ -2,7 +2,7 @@ package cn.nicecoder.barbersys.exception;
 
 /**
  * 自定义异常类
- * @author: longt
+ * @author: xxxxx
  * @date: 2021/5/17 下午3:44
  */
 public class ServiceException extends RuntimeException{

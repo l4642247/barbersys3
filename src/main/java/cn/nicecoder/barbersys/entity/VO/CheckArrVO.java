@@ -3,14 +3,18 @@ package cn.nicecoder.barbersys.entity.VO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
- * @description: TODO
- * @author: longt
+ * 菜单勾选视图
+ * @author: xxxxx
  * @date: 2021/3/19 下午3:55
  */
 @Data
 @AllArgsConstructor
-public class CheckArrVO {
+public class CheckArrVO implements Serializable {
+    private static final long serialVersionUID=1L;
+
     /**
      * type必须从0
      */

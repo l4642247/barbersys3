@@ -19,13 +19,13 @@ import java.util.List;
  *  服务类
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-02-24
  */
 public interface BarberOrderService extends IService<BarberOrder> {
     /**
      * @Description: 充值
-     * @author: longt
+     * @author: xxxxx
      * @Param: [barberOrder]
      * @return: cn.nicecoder.barbersys.entity.BarberMember
      * @date: 2021/2/27 上午11:54
@@ -36,7 +36,7 @@ public interface BarberOrderService extends IService<BarberOrder> {
 
     /**
      * @Description: 消费
-     * @author: longt
+     * @author: xxxxx
      * @Param: [barberOrder]
      * @return: cn.nicecoder.barbersys.entity.BarberMember
      * @date: 2021/2/27 上午11:54
@@ -54,7 +54,7 @@ public interface BarberOrderService extends IService<BarberOrder> {
 
     /**
      * 保存订单
-     * @author: longt
+     * @author: xxxxx
      * @Param: [barberOrderSave]
      * @return: void
      * @date: 2021/5/7 下午2:34
@@ -64,7 +64,7 @@ public interface BarberOrderService extends IService<BarberOrder> {
 
     /**
      * 数据概览
-     * @author: longt
+     * @author: xxxxx
      * @Param: []
      * @return: java.util.List<cn.nicecoder.barbersys.entity.VO.BarberOrderStatisVO>
      * @date: 2021/5/8 上午10:09
@@ -73,7 +73,7 @@ public interface BarberOrderService extends IService<BarberOrder> {
 
     /**
      * 获取折线图数据
-     * @author: longt
+     * @author: xxxxx
      * @Param: []
      * @return: cn.nicecoder.barbersys.entity.VO.EChartLineVO
      * @date: 2021/5/8 下午4:16
@@ -82,7 +82,7 @@ public interface BarberOrderService extends IService<BarberOrder> {
 
     /**
      * 获取饼图数据
-     * @author: longt
+     * @author: xxxxx
      * @Param: []
      * @return: cn.nicecoder.barbersys.entity.VO.EChartPieVO
      * @date: 2021/5/8 下午4:17

@@ -1,9 +1,5 @@
 package cn.nicecoder.barbersys.entity.VO;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -12,7 +8,7 @@ import java.util.Date;
 
 /**
  * 用户信息视图
- * @author: longt
+ * @author: xxxxx
  * @date: 2021/3/4 上午11:24
  */
 @Data

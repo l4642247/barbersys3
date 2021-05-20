@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  服务类
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-03-07
  */
 public interface SysRoleMenuService extends IService<SysRoleMenu> {

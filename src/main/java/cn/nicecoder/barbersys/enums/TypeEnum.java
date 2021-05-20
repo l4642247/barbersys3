@@ -2,7 +2,7 @@ package cn.nicecoder.barbersys.enums;
 
 /**
  * TypeEnum
- * @author: longt
+ * @author: xxxxx
  * @date: 2020/12/22 上午8:47
  */
 public enum TypeEnum {

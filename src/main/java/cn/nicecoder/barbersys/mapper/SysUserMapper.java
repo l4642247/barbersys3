@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  *  Mapper 接口
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-02-24
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {

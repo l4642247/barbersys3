@@ -2,6 +2,7 @@ package cn.nicecoder.barbersys.controller;
 
 
 import cn.hutool.core.util.StrUtil;
+import cn.nicecoder.barbersys.aspect.NoRepeatSubmit;
 import cn.nicecoder.barbersys.entity.BarberOrder;
 import cn.nicecoder.barbersys.entity.DO.BarberOrderDO;
 import cn.nicecoder.barbersys.entity.VO.BarberOrderVO;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  *  前端控制器
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-02-24
  */
 @RestController
@@ -58,6 +59,7 @@ public class BarberOrderController {
 
     @PostMapping("/save")
     @ApiOperation(value = "保存/更新订单", notes = "")
+    @NoRepeatSubmit(location = "/order/save")
     public Resp save(@RequestBody BarberOrder barberOrderSave) {
         barberOrderService.saveOne(barberOrderSave);
         return Resp.success(barberOrderSave);

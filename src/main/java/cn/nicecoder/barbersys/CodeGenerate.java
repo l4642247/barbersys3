@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * @Description: 代码生成器
- * @author: longt
+ * @author: xxxxx
  * @date: 2020/12/18 上午11:22
  */
 public class CodeGenerate {
@@ -33,7 +33,7 @@ public class CodeGenerate {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("lon't");
+        gc.setAuthor("xxxxx");
         gc.setOpen(false);
         gc.setFileOverride(false);
         gc.setServiceName("%sService");

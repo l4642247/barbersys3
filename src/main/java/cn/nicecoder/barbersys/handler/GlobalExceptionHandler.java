@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 异常拦截器
- * @author: longt
+ * @author: xxxxx
  * @date: 2021/5/17 下午3:50
  */
 @ControllerAdvice

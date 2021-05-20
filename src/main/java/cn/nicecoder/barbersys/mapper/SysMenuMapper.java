@@ -11,14 +11,14 @@ import java.util.List;
  *  Mapper 接口
  * </p>
  *
- * @author lon't
+ * @author xxxxx
  * @since 2021-03-05
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
      * @Description: 根据角色查询对应菜单id
-     * @author: longt
+     * @author: xxxxx
      * @Param: [roleCodes]
      * @return: java.util.List<java.lang.Long>
      * @date: 2021/4/22 下午4:30

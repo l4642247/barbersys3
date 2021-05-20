@@ -5,8 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * BarberUserDO
- * @author: longt
+ * 订单数据传输对象
+ * @author: xxxxx
  * @date: 2021/2/24 下午11:27
  */
 @Data

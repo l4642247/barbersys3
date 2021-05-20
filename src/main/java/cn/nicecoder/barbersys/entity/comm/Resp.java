@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 /**
  * Rest接口通用返回
- * @author: longt
+ * @author: xxxxx
  * @Param:
  * @return:
  * @date: 2020/12/24 上午11:13

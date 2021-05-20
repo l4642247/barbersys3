@@ -3,8 +3,8 @@ package cn.nicecoder.barbersys.entity.DO;
 import lombok.Data;
 
 /**
- * @description: TODO
- * @author: longt
+ * 菜单id数据传输对象
+ * @author: xxxxx
  * @date: 2021/3/3 下午5:22
  */
 @Data

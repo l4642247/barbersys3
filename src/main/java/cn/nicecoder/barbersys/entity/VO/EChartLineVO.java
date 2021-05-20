@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * echarts折线图
- * @author: longt
+ * @author: xxxxx
  * @date: 2021/3/4 上午11:24
  */
 @Data
