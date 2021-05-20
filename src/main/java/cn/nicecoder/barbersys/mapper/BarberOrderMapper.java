@@ -21,13 +21,48 @@ import java.util.List;
  */
 public interface BarberOrderMapper extends BaseMapper<BarberOrder> {
 
+    /**
+     * 分页查询订单
+     * @author: xxxxx
+     * @Param: [page, barberOrderDO]
+     * @return: com.baomidou.mybatisplus.extension.plugins.pagination.Page<cn.nicecoder.barbersys.entity.VO.BarberOrderVO>
+     * @date: 2021/5/20 上午10:32
+     */
     Page<BarberOrderVO> listPageBarberOrder(Page page, @Param("barberOrderDO") BarberOrderDO barberOrderDO);
 
+    /**
+     * 当天的订单分析数据
+     * @author: xxxxx
+     * @Param: []
+     * @return: java.util.List<cn.nicecoder.barbersys.entity.PO.OverviewPO>
+     * @date: 2021/5/20 上午10:32
+     */
     List<OverviewPO> orderStatisDay();
 
+    /**
+     * 本年每个月的订单分析数据
+     * @author: xxxxx
+     * @Param: []
+     * @return: java.util.List<cn.nicecoder.barbersys.entity.PO.OverviewPO>
+     * @date: 2021/5/20 上午10:33
+     */
     List<OverviewPO> orderStatisMonth();
 
+    /**
+     * 当月的订单分析数据
+     * @author: xxxxx
+     * @Param: []
+     * @return: java.util.List<cn.nicecoder.barbersys.entity.PO.OverviewPO>
+     * @date: 2021/5/20 上午10:33
+     */
     List<OverviewPO> orderStatisCurrentMonth();
 
+    /**
+     * 饼图数据
+     * @author: xxxxx
+     * @Param: []
+     * @return: java.util.List<cn.nicecoder.barbersys.entity.VO.EChartPieVO>
+     * @date: 2021/5/20 上午10:33
+     */
     List<EChartPieVO> echartsPieData();
 }

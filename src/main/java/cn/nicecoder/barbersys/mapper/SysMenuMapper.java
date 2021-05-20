@@ -17,7 +17,7 @@ import java.util.List;
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
-     * @Description: 根据角色查询对应菜单id
+     * 根据角色查询对应菜单id
      * @author: xxxxx
      * @Param: [roleCodes]
      * @return: java.util.List<java.lang.Long>

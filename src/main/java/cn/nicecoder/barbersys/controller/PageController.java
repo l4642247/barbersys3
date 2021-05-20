@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 /**
- * 管理员前端
+ * 页面跳转
+ * @author: xxxxx
+ * @date: 2021/5/20 上午10:49
  */
 @Controller
 public class PageController {

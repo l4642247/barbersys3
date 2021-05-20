@@ -1,7 +1,7 @@
 package cn.nicecoder.barbersys.enums;
 
 /**
- * StatusEnum
+ * 通用枚举类
  * @author: xxxxx
  * @date: 2020/12/22 上午8:47
  */

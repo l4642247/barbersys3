@@ -24,7 +24,7 @@ import java.util.List;
  */
 public interface BarberOrderService extends IService<BarberOrder> {
     /**
-     * @Description: 充值
+     * 充值
      * @author: xxxxx
      * @Param: [barberOrder]
      * @return: cn.nicecoder.barbersys.entity.BarberMember
@@ -35,7 +35,7 @@ public interface BarberOrderService extends IService<BarberOrder> {
 
 
     /**
-     * @Description: 消费
+     * 消费
      * @author: xxxxx
      * @Param: [barberOrder]
      * @return: cn.nicecoder.barbersys.entity.BarberMember

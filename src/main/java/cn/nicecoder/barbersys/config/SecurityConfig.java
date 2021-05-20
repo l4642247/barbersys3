@@ -1,6 +1,5 @@
 package cn.nicecoder.barbersys.config;
 
-import cn.nicecoder.barbersys.handler.MyAccessDeniedHandler;
 import cn.nicecoder.barbersys.handler.MyAuthenticationFailureHandler;
 import cn.nicecoder.barbersys.handler.MyLogoutSuccessHandler;
 import cn.nicecoder.barbersys.security.RoleBasedVoter;
@@ -27,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Description: 权限管理
+ * 权限管理
  * @author: xxxxx
  * @date: 2020/12/16 上午11:18
  */
@@ -56,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private MyAuthenticationFailureHandler authenticationFailureHandler;
 
     /**
-     * @Description: 授权
+     * 授权
      * @author: xxxxx
      * @Param: [http]
      * @return: void
@@ -88,9 +87,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutUrl("/logout")
                     .logoutSuccessHandler(myLogoutSuccessHandler)
-                /*.and()
-                    .exceptionHandling()
-                    .accessDeniedHandler(myAccessDeniedHandler)*/
                 .and()
                     .headers().frameOptions().sameOrigin();
 
@@ -104,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * @Description: 配置
+     * 配置
      * @author: xxxxx
      * @Param: [auth]
      * @return: void

@@ -3,7 +3,7 @@ package cn.nicecoder.barbersys.entity.comm;
 import lombok.Data;
 
 /**
- * @description: TODO
+ * TODO
  * @author: xxxxx
  * @date: 2021/3/10 下午4:24
  */

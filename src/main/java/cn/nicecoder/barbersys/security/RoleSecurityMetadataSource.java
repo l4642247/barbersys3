@@ -16,6 +16,11 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @Description: 从数据源中加载ConfigAttribute到SecurityMetadataSource资源器中，为授权决策器作准备
+ * @author: xxxxx
+ * @date: 2021/5/20 上午10:45
+ */
 @Component
 public class RoleSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();

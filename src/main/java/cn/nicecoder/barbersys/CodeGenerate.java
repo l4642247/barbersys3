@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import java.util.ArrayList;
 
 /**
- * @Description: 代码生成器
+ * 代码生成器
  * @author: xxxxx
  * @date: 2020/12/18 上午11:22
  */
@@ -26,7 +26,7 @@ public class CodeGenerate {
     private static final String DB_PASSWORD = "Cnm.0001+";
 
     public static void main(String[] args) {
-        //需要构建一个代码生成器
+        //0、需要构建一个代码生成器
         AutoGenerator autoGenerator = new AutoGenerator();
 
         //1、生成器配置
@@ -68,14 +68,14 @@ public class CodeGenerate {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setLogicDeleteFieldName("deleted");
-        // 自动填充配置
+        //5、自动填充配置
         TableFill gmtCreate = new TableFill("create_time", FieldFill.INSERT);
         TableFill gmtModified = new TableFill("update_time", FieldFill.INSERT);
         ArrayList<TableFill> tableFills = new ArrayList<>();
         tableFills.add(gmtCreate);
         tableFills.add(gmtModified);
         strategy.setTableFillList(tableFills);
-        // 乐观锁
+        //6、乐观锁
         strategy.setVersionFieldName("version");
         strategy.setRestControllerStyle(true);
         strategy.setControllerMappingHyphenStyle(true);

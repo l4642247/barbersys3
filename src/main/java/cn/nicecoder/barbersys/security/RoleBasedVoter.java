@@ -7,6 +7,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+/**
+ * 投票器（决定该资源是否能够访问）
+ * @author: xxxxx
+ * @date: 2021/5/20 上午10:35
+ */
 public class RoleBasedVoter implements AccessDecisionVoter<Object> {
 
     @Override

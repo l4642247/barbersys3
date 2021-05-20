@@ -9,10 +9,10 @@ import java.lang.reflect.Method;
 
 /**
  * Key生成工具
- * @author hanchao
+ * @author: xxxxx
+ * @date: 2021/5/20 上午10:50
  */
 public class KeyUtil {
-    private static final Logger LOGGER = LoggerFactory.getLogger(KeyUtil.class);
 
     /**
      * 根据{方法名 + 参数列表}和md5转换生成key

@@ -15,7 +15,21 @@ import java.util.List;
  * @since 2021-02-24
  */
 public interface BarberMemberMapper extends BaseMapper<BarberMember> {
+    /**
+     * 查询本年每月的分析数据
+     * @author: xxxxx
+     * @Param: []
+     * @return: java.util.List<cn.nicecoder.barbersys.entity.PO.OverviewPO>
+     * @date: 2021/5/20 上午10:30
+     */
     List<OverviewPO> memberStatisMonth();
 
+    /**
+     * 查询当月的分析数据
+     * @author: xxxxx
+     * @Param: []
+     * @return: java.util.List<cn.nicecoder.barbersys.entity.PO.OverviewPO>
+     * @date: 2021/5/20 上午10:31
+     */
     List<OverviewPO> memberStatisCurrentMonth();
 }

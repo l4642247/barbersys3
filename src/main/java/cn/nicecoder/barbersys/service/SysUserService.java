@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SysUserService extends IService<SysUser> {
 
     /**
-     * @Description: 获取当前用户id
+     * 获取当前用户id
      * @author: xxxxx
      * @Param: []
      * @return: java.lang.Long

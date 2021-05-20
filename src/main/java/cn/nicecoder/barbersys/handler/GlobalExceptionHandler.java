@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 处理其他异常(暂不处理)
+     * 处理其他异常(暂不需要)
      *
     @ExceptionHandler(value = Exception.class)
     @ResponseBody

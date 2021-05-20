@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Description: 登出
+ * 登出
  * @author: xxxxx
  * @date: 2021/4/21 上午10:06
  */

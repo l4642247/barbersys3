@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface BarberMemberService extends IService<BarberMember> {
     /**
-     * @Description: 创建会员用户卡号
+     * 创建会员用户卡号
      * @author: xxxxx
      * @Param: [barberMember]
      * @return: cn.nicecoder.barbersys.entity.BarberMember
@@ -26,7 +26,7 @@ public interface BarberMemberService extends IService<BarberMember> {
 
 
     /**
-     * @Description: 获取会员人数
+     * 获取会员人数
      * @author: xxxxx
      * @Param: []
      * @return: cn.nicecoder.barbersys.entity.PO.OverviewPO
@@ -35,7 +35,7 @@ public interface BarberMemberService extends IService<BarberMember> {
     public List<OverviewPO> memberStatisMonth();
 
     /**
-     * @Description: 获取当会员新增
+     * 获取当会员新增
      * @author: xxxxx
      * @Param: []
      * @return: cn.nicecoder.barbersys.entity.PO.OverviewPO

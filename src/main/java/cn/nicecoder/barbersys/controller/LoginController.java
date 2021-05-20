@@ -11,7 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
- 
+
+/**
+ * 登录控制器
+ * @author: xxxxx
+ * @date: 2021/5/20 上午10:48
+ */
 @Controller
 public class LoginController 
 {

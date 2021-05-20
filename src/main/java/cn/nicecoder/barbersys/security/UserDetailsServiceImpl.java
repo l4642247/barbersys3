@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 自定义权限验证
+ * 自定义账号密码校验
  * @author: xxxxx
  * @date: 2021/2/27 下午10:04
  */
