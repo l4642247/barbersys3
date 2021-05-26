@@ -4,10 +4,12 @@ import cn.nicecoder.barbersys.entity.SysRole;
 import cn.nicecoder.barbersys.entity.SysRoleMenu;
 import cn.nicecoder.barbersys.entity.DO.SysRoleDO;
 import cn.nicecoder.barbersys.entity.PO.PermissionPO;
+import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.mapper.SysRoleMapper;
 import cn.nicecoder.barbersys.service.SysMenuService;
 import cn.nicecoder.barbersys.service.SysRoleMenuService;
 import cn.nicecoder.barbersys.service.SysRoleService;
+import cn.nicecoder.barbersys.util.RedisClient;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private SysRoleMenuService sysRoleMenuService;
 
     @Autowired
-    private SysMenuService sysMenuService;
+    private RedisClient redisClient;
 
     @Override
     public List<SysRole> getRoleByUsername(String username) {
@@ -50,6 +52,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             saveRoleMenu(Long.parseLong(menuId), barberRoleDO.getId());
         }
         this.saveOrUpdate(barberRoleDO);
+
+        // 清除缓存的菜单信息
+        redisClient.delete(CommonEnum.REDIS_KEY_MENU_PERMISSION.getDesc());
         return barberRoleDO;
     }
 

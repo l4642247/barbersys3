@@ -50,15 +50,15 @@
     <div class="layui-form-item">
       <label class="layui-form-label">状态</label>
       <div class="layui-input-block">
-        <input th:if="${barberMenu.status == 1}" type="checkbox" checked="" name="status" lay-skin="switch" lay-text="启用|禁用">
+        <input th:if="${barberMenu.status == 1 || barberMenu.status == null}" type="checkbox" checked="" name="status" lay-skin="switch" lay-text="启用|禁用">
         <input th:if="${barberMenu.status == 0}" type="checkbox" name="status" lay-skin="switch" lay-text="启用|禁用">
       </div>
     </div>
 
     <div class="layui-form-item">
       <label class="layui-form-label">图标</label>
-      <div class="layui-input-inline">
-        <input type="text" th:value="${barberMenu.css}" name="css" lay-verify="css" placeholder="请输入图标" autocomplete="off" class="layui-input">
+      <div class="layui-input-inline" style="width: 300px">
+        <input type="text" th:value="${barberMenu.css}" name="css" id="iconHhysFa" lay-filter="" class="hide">
       </div>
     </div>
     <div class="layui-form-item">
@@ -82,8 +82,28 @@
     base: '../../../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'form', 'upload', 'HttpRequest','dtree'], function(){
-    var $ = layui.$, dtree = layui.dtree;
+  }).use(['index', 'form', 'upload', 'HttpRequest','dtree','iconHhysFa'], function(){
+    var $ = layui.$, dtree = layui.dtree, iconHhysFa = layui.iconHhysFa;
+
+    iconHhysFa.render({
+      // 选择器，推荐使用input
+      elem: '#iconHhysFa',
+      // 数据类型：fontClass/awesome，推荐使用fontClass
+      type: 'fontClass',
+      // 是否开启搜索：true/false，默认true
+      search: true,
+      // 是否开启分页：true/false，默认true
+      page: true,
+      // 每页显示数量，默认12
+      limit: 16,
+      url: '',
+      // 点击回调
+      click: function(data) {
+      },
+      // 渲染成功后的回调
+      success: function(d) {
+      }
+    });
 
     dtree.renderSelect({
       elem: "#selTree1",

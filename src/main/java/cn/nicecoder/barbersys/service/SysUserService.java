@@ -2,7 +2,7 @@ package cn.nicecoder.barbersys.service;
 
 import cn.nicecoder.barbersys.entity.SysUser;
 import cn.nicecoder.barbersys.entity.DO.SysUserDO;
-import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
+import cn.nicecoder.barbersys.entity.VO.SysUserVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public interface SysUserService extends IService<SysUser> {
      * @return: java.lang.Long
      * @date: 2021/4/28 下午3:16
      */
-    public BarberUserVO getCurrentUser();
+    public SysUserVO getCurrentUser();
 
     /**
      * 创建用户
@@ -46,7 +46,7 @@ public interface SysUserService extends IService<SysUser> {
      * @param username
      * @return
      */
-    public BarberUserVO getOneByUsername(String username);
+    public SysUserVO getOneByUsername(String username);
 
     /**
      * 分页查询
@@ -54,7 +54,7 @@ public interface SysUserService extends IService<SysUser> {
      * @param barberUserDO
      * @return
      */
-    Page<BarberUserVO> listPageBarberUser(Page<SysUser> page, SysUserDO barberUserDO);
+    Page<SysUserVO> listPageBarberUser(Page<SysUser> page, SysUserDO barberUserDO);
 
 
     /**

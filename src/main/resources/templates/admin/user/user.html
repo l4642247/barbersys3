@@ -61,6 +61,9 @@
   </script>
 
   <script src="/layuiadmin/layui/layui.js"></script>
+  <script type="text/html" id="switchTpl">
+    <input type="checkbox" lay-filter="switchStatus" id="{{d.id}}" name="status" value="{{d.status}}" lay-skin="switch" lay-text="启用|禁用" {{ d.status == 1 ? 'checked' : '' }}>
+  </script>
   <script>
   layui.config({
     base: '../../../layuiadmin/' //静态资源所在路径
@@ -71,6 +74,21 @@
     ,form = layui.form
     ,HttpRequest = layui.HttpRequest
     ,table = layui.table;
+
+    form.on('switch(switchStatus)', function(obj) {
+      var validFlag = Number(obj.elem.checked);//转为 0、1
+      var id = obj.elem.id
+      var status = validFlag
+
+      $.ajax({
+        type: "POST",
+        data: {"id":id, "status":status},
+        url: "/user/updateStatus",
+        success: function(data){
+          layer.msg(data.msg)
+        }
+      });
+    });
 
     //监听搜索
     form.on('submit(LAY-user-front-search)', function(data){

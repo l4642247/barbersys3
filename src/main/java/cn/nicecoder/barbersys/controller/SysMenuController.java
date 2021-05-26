@@ -75,13 +75,13 @@ public class SysMenuController {
     @PostMapping("/parentTree")
     @ApiOperation(value="查询所有菜单树",notes="")
     public MenuTreeResp parentTree(){
-        return new MenuTreeResp(sysMenuService.createMenuTreeRoot(true));
+        return new MenuTreeResp(sysMenuService.createMenuTreeRoot(true, false));
     }
 
     @PostMapping("/checkTree")
     @ApiOperation(value="查询下拉多选菜单树",notes="")
     public MenuTreeResp checkTree(){
-        return new MenuTreeResp(sysMenuService.createMenuTreeRoot(false));
+        return new MenuTreeResp(sysMenuService.createMenuTreeRoot(false, false));
     }
 
 }

@@ -4,7 +4,7 @@ import cn.nicecoder.barbersys.entity.SysRole;
 import cn.nicecoder.barbersys.entity.SysUser;
 import cn.nicecoder.barbersys.entity.SysUserRole;
 import cn.nicecoder.barbersys.entity.DO.SysUserDO;
-import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
+import cn.nicecoder.barbersys.entity.VO.SysUserVO;
 import cn.nicecoder.barbersys.mapper.SysUserMapper;
 import cn.nicecoder.barbersys.service.SysRoleService;
 import cn.nicecoder.barbersys.service.SysUserRoleService;
@@ -42,9 +42,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysUserRoleService barberUserRoleService;
 
     @Override
-    public BarberUserVO getCurrentUser(){
+    public SysUserVO getCurrentUser(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        BarberUserVO oneByUsername = this.baseMapper.getOneByUsername(userDetails.getUsername());
+        SysUserVO oneByUsername = this.baseMapper.getOneByUsername(userDetails.getUsername());
         return oneByUsername;
     }
 
@@ -70,34 +70,34 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public BarberUserVO getOneByUsername(String username) {
-        BarberUserVO barberUserVO =  this.baseMapper.getOneByUsername(username);
+    public SysUserVO getOneByUsername(String username) {
+        SysUserVO sysUserVO =  this.baseMapper.getOneByUsername(username);
         List<SysRole> sysRoleList = sysRoleService.getRoleByUsername(username);
         if(sysRoleList.size() > 0) {
-            barberUserVO.setRoleList(sysRoleList);
+            sysUserVO.setRoleList(sysRoleList);
             StringBuffer roleBuffer = new StringBuffer();
             sysRoleList.stream().forEach(item -> {
                 roleBuffer.append(item.getName()).append(",");
             });
             roleBuffer.deleteCharAt(roleBuffer.length() - 1);
-            barberUserVO.setRoleStr(roleBuffer.toString());
+            sysUserVO.setRoleStr(roleBuffer.toString());
         }
-        return barberUserVO;
+        return sysUserVO;
     }
 
     @Override
-    public Page<BarberUserVO> listPageBarberUser(Page<SysUser> page, SysUserDO barberUserDO) {
-        Page<BarberUserVO> pageResult =  this.baseMapper.listPageBarberUser(page, barberUserDO);
-        for (BarberUserVO barberUserVO :pageResult.getRecords()){
-            List<SysRole> sysRoleList = sysRoleService.getRoleByUsername(barberUserVO.getUsername());
+    public Page<SysUserVO> listPageBarberUser(Page<SysUser> page, SysUserDO barberUserDO) {
+        Page<SysUserVO> pageResult =  this.baseMapper.listPageBarberUser(page, barberUserDO);
+        for (SysUserVO SysUserVO :pageResult.getRecords()){
+            List<SysRole> sysRoleList = sysRoleService.getRoleByUsername(SysUserVO.getUsername());
             if(sysRoleList.size() > 0) {
-                barberUserVO.setRoleList(sysRoleList);
+                SysUserVO.setRoleList(sysRoleList);
                 StringBuffer roleBuffer = new StringBuffer();
                 sysRoleList.stream().forEach(item -> {
                     roleBuffer.append(item.getName()).append(",");
                 });
                 roleBuffer.deleteCharAt(roleBuffer.length() - 1);
-                barberUserVO.setRoleStr(roleBuffer.toString());
+                SysUserVO.setRoleStr(roleBuffer.toString());
             }
         }
         return pageResult;
@@ -105,18 +105,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public SysUser saveOne(SysUserDO barberUserSave) {
-        String[] roleStr = barberUserSave.getRoleStr().split(",");
         this.saveOrUpdate(createBarberUser(barberUserSave));
-        // 更新角色
-        if(barberUserSave.getId() != null) {
-            barberUserRoleService.remove(new LambdaQueryWrapper<SysUserRole>()
-                    .eq(SysUserRole::getUserId, barberUserSave.getId()));
-        }
-        for (String roleId : roleStr ){
-            SysUserRole sysUserRole = new SysUserRole();
-            sysUserRole.setRoleId(Long.parseLong(roleId));
-            sysUserRole.setUserId(barberUserSave.getId());
-            barberUserRoleService.save(sysUserRole);
+        if(barberUserSave.getRoleStr() != null) {
+            // 更新角色
+            if(barberUserSave.getId() != null) {
+                barberUserRoleService.remove(new LambdaQueryWrapper<SysUserRole>()
+                        .eq(SysUserRole::getUserId, barberUserSave.getId()));
+            }
+            String[] roleStr = barberUserSave.getRoleStr().split(",");
+            for (String roleId : roleStr) {
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setRoleId(Long.parseLong(roleId));
+                sysUserRole.setUserId(barberUserSave.getId());
+                barberUserRoleService.save(sysUserRole);
+            }
         }
         this.saveOrUpdate(barberUserSave);
         return barberUserSave;

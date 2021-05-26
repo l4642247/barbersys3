@@ -6,12 +6,11 @@ import cn.nicecoder.barbersys.aspect.NoRepeatSubmit;
 import cn.nicecoder.barbersys.entity.BarberOrder;
 import cn.nicecoder.barbersys.entity.DO.BarberOrderDO;
 import cn.nicecoder.barbersys.entity.VO.BarberOrderVO;
-import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
+import cn.nicecoder.barbersys.entity.VO.SysUserVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberOrderService;
 import cn.nicecoder.barbersys.service.SysUserService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class BarberOrderController {
             barberOrderDO.setDateStart(dataRange.split("~")[0].trim());
             barberOrderDO.setDateEnd(dataRange.split("~")[1].trim());
         }
-        BarberUserVO currentUser = sysUserService.getCurrentUser();
+        SysUserVO currentUser = sysUserService.getCurrentUser();
         // 暂定名为"admin"的用户才能查看全部订单
         if(!"admin".equals(currentUser.getUsername())){
             barberOrderDO.setBarberId(sysUserService.getOneByUsername(currentUser.getUsername()).getId());

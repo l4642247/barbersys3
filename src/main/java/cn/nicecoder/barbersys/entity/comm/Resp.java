@@ -24,6 +24,11 @@ public class Resp {
     private final Long count;
     private final LocalDateTime timestamp = LocalDateTime.now();
 
+    public static Resp success() {
+        return new Resp(CommonEnum.RESP_LAYUI_OK.getCode(),
+                CommonEnum.RESP_LAYUI_OK.getDesc(), null, null);
+    }
+
     public static Resp success(Object data) {
         return new Resp(CommonEnum.RESP_LAYUI_OK.getCode(),
                 CommonEnum.RESP_LAYUI_OK.getDesc(), data, null);

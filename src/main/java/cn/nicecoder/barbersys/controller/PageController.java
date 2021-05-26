@@ -3,8 +3,8 @@ package cn.nicecoder.barbersys.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.entity.*;
 import cn.nicecoder.barbersys.entity.VO.BarberOrderStatisVO;
-import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.entity.VO.MenuNodeVO;
+import cn.nicecoder.barbersys.entity.VO.SysUserVO;
 import cn.nicecoder.barbersys.entity.comm.MenuTreeResp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.*;
@@ -95,7 +95,7 @@ public class PageController {
 
     @RequestMapping("/admin")
     public String admin(Model model){
-        List<MenuNodeVO> menuTreeRoot = sysMenuService.createMenuTreeRoot(false);
+        List<MenuNodeVO> menuTreeRoot = sysMenuService.createMenuTreeRoot(false, true);
         MenuTreeResp resp = new MenuTreeResp(menuTreeRoot);
         model.addAttribute("menuTree", resp);
         String firstHref = getFirstHref(menuTreeRoot.get(0));
@@ -119,8 +119,8 @@ public class PageController {
     public String userInfo(Model model){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
-        BarberUserVO barberUserVO = sysUserService.getOneByUsername(username);
-        model.addAttribute("barberUserVO",barberUserVO);
+        SysUserVO sysUserVO = sysUserService.getOneByUsername(username);
+        model.addAttribute("barberUserVO",sysUserVO);
         return "admin/user/info";
     }
 

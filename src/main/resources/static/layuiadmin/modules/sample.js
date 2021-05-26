@@ -65,7 +65,7 @@
             success: function(data){
                 var e = layui.$, a = (layui.carousel, layui.echarts), l = [], t = [{
                     title: {
-                        text: '消费金额（月）',
+                        text: '营业额（月）',
                         x: 'left',
                         textStyle:{
                             fontSize:14,

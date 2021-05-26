@@ -23,7 +23,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * @return: java.util.List<cn.nicecoder.barbersys.entity.VO.MenuNodeVO>
      * @date: 2021/3/11 上午10:23
      */
-    List<MenuNodeVO> createMenuTreeRoot(boolean flag);
+    List<MenuNodeVO> createMenuTreeRoot(boolean onlyParent, boolean onlyChecked);
 
     /**
      * 获取首链接

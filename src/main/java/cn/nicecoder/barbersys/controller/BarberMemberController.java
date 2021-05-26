@@ -1,16 +1,13 @@
 package cn.nicecoder.barbersys.controller;
 
-
 import cn.hutool.core.util.StrUtil;
 import cn.nicecoder.barbersys.aspect.NoRepeatSubmit;
 import cn.nicecoder.barbersys.entity.BarberMember;
 import cn.nicecoder.barbersys.entity.BarberOrder;
-import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberMemberService;
 import cn.nicecoder.barbersys.service.BarberOrderService;
-import cn.nicecoder.barbersys.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
@@ -59,11 +56,15 @@ public class BarberMemberController {
     @DeleteMapping("/delete/{id}")
     @ApiOperation(value="删除会员",notes="")
     public Resp delete(@PathVariable("id") Long id){
-        BarberMember barberMemberDelete = new BarberMember();
-        barberMemberDelete.setId(id);
-        barberMemberDelete.setStatus(CommonEnum.DELETED.getCode());
-        barberMemberService.updateById(barberMemberDelete);
-        return Resp.success(barberMemberDelete);
+        barberMemberService.deleteMember(id);
+        return Resp.success();
+    }
+
+    @DeleteMapping("/batchdel/{ids}")
+    @ApiOperation(value="批量删除会员",notes="")
+    public Resp batchdel(@PathVariable("ids") String ids){
+        barberMemberService.deleteBatchMember(ids);
+        return Resp.success();
     }
 
     @PostMapping("/recharge")

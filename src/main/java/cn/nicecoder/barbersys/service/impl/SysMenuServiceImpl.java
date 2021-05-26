@@ -33,7 +33,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     private static final String PARENT_ID_MENU_STR_DEFAULT = "0";
 
     @Override
-    public List<MenuNodeVO> createMenuTreeRoot(boolean onlyMenu) {
+    public List<MenuNodeVO> createMenuTreeRoot(boolean onlyParent, boolean onlyChecked) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // 当前用户具有的权限菜单
@@ -52,7 +52,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         List<MenuNodeVO> menuNodeVOList = new ArrayList<>();
         for (SysMenu item : sysMenuLsit){
             // 没有权限
-            if(!menuIdsByRoleCodes.contains(item.getId())){
+            if(!menuIdsByRoleCodes.contains(item.getId()) && onlyChecked){
                 continue;
             }
 
@@ -65,7 +65,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             nodeVO.setParentId("-1");
             nodeVO.setCheckArr(new CheckArrVO("0","0"));
             // 获得子节点
-            nodeVO = getChild(nodeVO, onlyMenu, 1, menuIdsByRoleCodes);
+            nodeVO = getChild(nodeVO, onlyParent, onlyChecked, 1, menuIdsByRoleCodes);
             nodeVO.setLast(false);
             if(ObjectUtils.isEmpty(nodeVO.getChildren())){
                 nodeVO.setLast(true);
@@ -83,20 +83,20 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @return: cn.nicecoder.barbersys.entity.VO.MenuNodeVO
      * @date: 2021/3/11 下午2:32
      */
-    public MenuNodeVO getChild(MenuNodeVO nodeVO, boolean onlyMenu, int level, List<Long> menuIdsByRoleCodes){
+    public MenuNodeVO getChild(MenuNodeVO nodeVO, boolean onlyParent, boolean onlyChecked, int level, List<Long> menuIdsByRoleCodes){
         level += 1;
         LambdaQueryWrapper queryWrapper  = new LambdaQueryWrapper<SysMenu>()
                 .ne(SysMenu::getParentId, PARENT_ID_MENU_STR_DEFAULT)
                 .eq(SysMenu::getParentId, nodeVO.getId())
                 .eq(SysMenu::getStatus, CommonEnum.NORMAL.getCode())
-                .eq(onlyMenu, SysMenu::getType, CommonEnum.MENU_TYPE_1.getCode())
+                .eq(onlyParent, SysMenu::getType, CommonEnum.MENU_TYPE_1.getCode())
                 .orderByAsc(SysMenu::getSort);
         List<SysMenu> childNode = this.baseMapper.selectList(queryWrapper);
         if(childNode.size() > 0){
             List<MenuNodeVO> menuNodeVOList = new ArrayList<>();
             for(SysMenu sysMenu : childNode){
                 // 没有权限
-                if(!menuIdsByRoleCodes.contains(sysMenu.getId())){
+                if(!menuIdsByRoleCodes.contains(sysMenu.getId()) && onlyChecked){
                     continue;
                 }
 
@@ -109,7 +109,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                 menuNodeVO.setLevel(String.valueOf(level));
                 menuNodeVO.setCheckArr(new CheckArrVO("0","0"));
                 // 递归查询
-                menuNodeVO = getChild(menuNodeVO, onlyMenu, level, menuIdsByRoleCodes);
+                menuNodeVO = getChild(menuNodeVO, onlyParent, onlyChecked, level, menuIdsByRoleCodes);
                 menuNodeVO.setLast(false);
                 if(ObjectUtils.isEmpty(menuNodeVO.getChildren())){
                     menuNodeVO.setLast(true);

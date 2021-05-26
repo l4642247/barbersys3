@@ -96,15 +96,15 @@
         }
 
         layer.confirm('确定删除吗？', function(index) {
-          //执行 Ajax 后重载
-          /*
-          admin.req({
-            url: 'xxx'
-            //,……
+          var ids = '';
+          checkData.forEach(function(item){
+            ids = ids + "," + item.id ;
           });
-          */
-          table.reload('LAY-user-member');
-          layer.msg('已删除');
+          var httpRequest = new HttpRequest("/member/batchdel/" + ids, 'delete', function (data) {
+            table.reload('LAY-user-member');
+            layer.msg('已删除');
+          });
+          httpRequest.start(true);
         });
       }
     }

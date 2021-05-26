@@ -13,7 +13,7 @@ import java.util.List;
  * @date: 2021/3/4 上午11:24
  */
 @Data
-public class BarberUserVO implements Serializable {
+public class SysUserVO implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "主键id")

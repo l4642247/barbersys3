@@ -43,5 +43,21 @@ public interface BarberMemberService extends IService<BarberMember> {
      */
     public List<OverviewPO> memberStatisCurrentMonth();
 
+    /**
+     * 删除单个会员
+     * @author: longt
+     * @Param: [id]
+     * @return: void
+     * @date: 2021/5/24 上午10:42
+     */
+    public void deleteMember(Long id);
 
+    /**
+     * 批量删除会员
+     * @author: longt
+     * @Param: [ids]
+     * @return: void
+     * @date: 2021/5/24 上午10:42
+     */
+    public void deleteBatchMember(String ids);
 }

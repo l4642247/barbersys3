@@ -13,7 +13,7 @@
             {field: "sex", title: "性别", align:"center", templet: function (d) {return d.sex == '1'?"男":"女";}},
             {field: "roleStr", title: "职位"},
             {field: "phone", title: "联系电话"},
-            {field: "status", title: "状态", align:"center", templet: function (d) {return d.status == '1'?"启用":"禁用";}},
+            {field: "status", title: "状态", align:"center", templet: '#switchTpl', unresize: true},
             {field: "createTime", title: "添加时间", templet: function (d) {return util.toDateString(d.createTime);}},
             {title: "操作", width: 150, align: "center", fixed: "right", toolbar: "#table-option"}]],
         page: !0,

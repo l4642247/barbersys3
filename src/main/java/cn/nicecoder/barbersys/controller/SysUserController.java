@@ -1,10 +1,11 @@
 package cn.nicecoder.barbersys.controller;
 
 
-import cn.nicecoder.barbersys.entity.SysUser;
-import cn.nicecoder.barbersys.entity.DO.SysUserDO;
+import cn.nicecoder.barbersys.aspect.NoRepeatSubmit;
 import cn.nicecoder.barbersys.entity.DO.PasswordDO;
-import cn.nicecoder.barbersys.entity.VO.BarberUserVO;
+import cn.nicecoder.barbersys.entity.DO.SysUserDO;
+import cn.nicecoder.barbersys.entity.SysUser;
+import cn.nicecoder.barbersys.entity.VO.SysUserVO;
 import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.SysUserService;
@@ -39,7 +40,7 @@ public class SysUserController {
         barberUserDO.setName(name);
         barberUserDO.setPhone(phone);
         barberUserDO.setIdCard(idCard);
-        Page<BarberUserVO> result = sysUserService.listPageBarberUser(page, barberUserDO);
+        Page<SysUserVO> result = sysUserService.listPageBarberUser(page, barberUserDO);
         return Resp.success(result.getRecords(), result.getTotal());
     }
 
@@ -48,6 +49,17 @@ public class SysUserController {
     public Resp save(@RequestBody SysUserDO barberUserSave){
         sysUserService.saveOne(barberUserSave);
         return Resp.success(barberUserSave);
+    }
+
+    @PostMapping("/updateStatus")
+    @ApiOperation(value="更新状态",notes="")
+    @NoRepeatSubmit
+    public Resp updateStatus(@RequestParam("id")Long id, @RequestParam("status")Integer status){
+        SysUser sysUser = new SysUser();
+        sysUser.setId(id);
+        sysUser.setStatus(status);
+        sysUserService.updateById(sysUser);
+        return Resp.success();
     }
 
     @DeleteMapping("/delete/{id}")
