@@ -1,6 +1,7 @@
 package cn.nicecoder.barbersys.entity.comm;
 
 import cn.nicecoder.barbersys.enums.CommonEnum;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -18,10 +19,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 public class Resp {
+
+    @ApiModelProperty(value = "响应码")
     private final Integer code;
+
+    @ApiModelProperty(value = "响应消息")
     private final String msg;
+
+    @ApiModelProperty(value = "响应数据")
     private final Object data;
+
+    @ApiModelProperty(value = "数据总数")
     private final Long count;
+
+    @ApiModelProperty(value = "时间戳")
     private final LocalDateTime timestamp = LocalDateTime.now();
 
     public static Resp success() {

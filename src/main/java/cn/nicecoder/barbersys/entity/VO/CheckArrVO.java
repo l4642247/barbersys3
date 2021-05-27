@@ -1,5 +1,6 @@
 package cn.nicecoder.barbersys.entity.VO;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,11 +19,13 @@ public class CheckArrVO implements Serializable {
     /**
      * type必须从0
      */
+    @ApiModelProperty(value = "节点类型")
     private String type;
 
     /**
      * checked属性的值范围为：0-未选中，1-选中，2-半选
      */
+    @ApiModelProperty(value = "选中状态")
     private String checked;
 
 }

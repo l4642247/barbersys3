@@ -2,7 +2,8 @@ package cn.nicecoder.barbersys.controller;
  
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
- 
+
+import io.swagger.annotations.Api;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date: 2021/5/20 上午10:48
  */
 @Controller
+@Api(tags="登录接口")
 public class LoginController 
 {
     @RequestMapping(value = "/login", method = RequestMethod.GET)

@@ -8,7 +8,7 @@
         cols: [[
             {type: "checkbox", fixed: "left"},
             {type: 'numbers', width: 80, title: "ID"},
-            {field: "username", title: "工号", minWidth: 100},
+            {field: "username", title: "用户名", minWidth: 100},
             {field: "name", title: "姓名" },
             {field: "sex", title: "性别", align:"center", templet: function (d) {return d.sex == '1'?"男":"女";}},
             {field: "roleStr", title: "职位"},

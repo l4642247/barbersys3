@@ -9,13 +9,13 @@ import cn.nicecoder.barbersys.entity.comm.MenuTreeResp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -26,6 +26,7 @@ import java.util.List;
  * @date: 2021/5/20 上午10:49
  */
 @Controller
+@Api(tags="页面跳转相关接口")
 public class PageController {
 
     @Autowired
@@ -93,7 +94,7 @@ public class PageController {
         return "403";
     }
 
-    @RequestMapping("/admin")
+    @GetMapping("/admin")
     public String admin(Model model){
         List<MenuNodeVO> menuTreeRoot = sysMenuService.createMenuTreeRoot(false, true);
         MenuTreeResp resp = new MenuTreeResp(menuTreeRoot);

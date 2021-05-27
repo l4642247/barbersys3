@@ -10,6 +10,7 @@ import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.SysMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/menu")
+@Api(tags="菜单相关接口")
 public class SysMenuController {
 
     @Autowired

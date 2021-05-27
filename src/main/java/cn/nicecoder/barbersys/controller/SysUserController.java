@@ -10,6 +10,7 @@ import cn.nicecoder.barbersys.entity.comm.Resp;
 import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.SysUserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags="系统用户相关接口")
 public class SysUserController {
 
     @Autowired

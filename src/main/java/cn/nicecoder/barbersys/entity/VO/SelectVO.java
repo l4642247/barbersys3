@@ -1,5 +1,6 @@
 package cn.nicecoder.barbersys.entity.VO;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -9,6 +10,9 @@ import lombok.Data;
  */
 @Data
 public class SelectVO {
+    @ApiModelProperty(value = "节点名称")
     String name;
+
+    @ApiModelProperty(value = "选中状态")
     Long value;
 }

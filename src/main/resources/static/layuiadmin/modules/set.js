@@ -26,8 +26,8 @@
     });
     var r = i("#LAY_avatarSrc");
     s.render({
-        url: "/api/upload/", elem: "#LAY_avatarUpload", done: function (t) {
-            0 == t.status ? r.val(t.url) : e.msg(t.msg, {icon: 5})
+        url: "/file/upload/", elem: "#LAY_avatarUpload", done: function (t) {
+            0 == t.code ? r.val(t.data.src) : e.msg(t.msg, {icon: 5})
         }
     }), a.events.avartatPreview = function (t) {
         var i = r.val();

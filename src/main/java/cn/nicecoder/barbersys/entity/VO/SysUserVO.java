@@ -19,7 +19,7 @@ public class SysUserVO implements Serializable {
     @ApiModelProperty(value = "主键id")
     private Long id;
 
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty(value = "头像")
     private String avatar;
 
     @ApiModelProperty(value = "姓名")

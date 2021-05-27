@@ -52,10 +52,10 @@
                   <input type="radio" name="sex" value="0" title="女" th:checked="${barberUserVO.sex==0}">
                 </div>
               </div>
-              <!--<div class="layui-form-item">
+               <div class="layui-form-item">
                 <label class="layui-form-label">头像</label>
                 <div class="layui-input-inline">
-                  <input name="avatar" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="http://cdn.layui.com/avatar/168.jpg" class="layui-input">
+                  <input name="avatar" th:value="${barberUserVO.avatar}" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="" class="layui-input">
                 </div>
                 <div class="layui-input-inline layui-btn-container" style="width: auto;">
                   <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
@@ -63,7 +63,7 @@
                   </button>
                   <button class="layui-btn layui-btn-primary" layadmin-event="avartatPreview">查看图片</button >
                 </div>
-              </div>-->
+              </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">手机</label>
                 <div class="layui-input-inline">
@@ -85,7 +85,6 @@
               <div class="layui-form-item">
                 <div class="layui-input-block">
                   <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
-                  <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
                 </div>
               </div>
             </div>

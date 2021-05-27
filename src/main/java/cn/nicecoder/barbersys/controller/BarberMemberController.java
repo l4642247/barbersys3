@@ -10,6 +10,7 @@ import cn.nicecoder.barbersys.service.BarberMemberService;
 import cn.nicecoder.barbersys.service.BarberOrderService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/member")
+@Api(tags="会员相关接口")
 public class BarberMemberController {
     @Autowired
     BarberMemberService barberMemberService;

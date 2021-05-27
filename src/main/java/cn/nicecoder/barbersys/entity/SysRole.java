@@ -28,20 +28,27 @@ public class SysRole implements Serializable {
     private static final long serialVersionUID=1L;
 
     @TableId(value = "id", type = IdType.AUTO)
+    @ApiModelProperty("主键id")
     private Long id;
 
+    @ApiModelProperty("编码")
     private String code;
 
+    @ApiModelProperty("名称")
     private String name;
 
+    @ApiModelProperty("排序")
     private Integer sort;
 
     @TableField(value = "STATUS", fill = FieldFill.INSERT)
+    @ApiModelProperty("状态")
     private Integer status;
 
     @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
     @TableField(value = "UPDATE_TIME", fill = FieldFill.UPDATE)
+    @ApiModelProperty("更新时间")
     private Date updateTime;
 }

@@ -45,7 +45,7 @@ public interface BarberMemberService extends IService<BarberMember> {
 
     /**
      * 删除单个会员
-     * @author: longt
+     * @author: xxxxx
      * @Param: [id]
      * @return: void
      * @date: 2021/5/24 上午10:42
@@ -54,7 +54,7 @@ public interface BarberMemberService extends IService<BarberMember> {
 
     /**
      * 批量删除会员
-     * @author: longt
+     * @author: xxxxx
      * @Param: [ids]
      * @return: void
      * @date: 2021/5/24 上午10:42

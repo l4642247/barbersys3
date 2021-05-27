@@ -34,13 +34,13 @@
     <div class="layui-form-item">
       <label class="layui-form-label">手机号码</label>
       <div class="layui-input-inline">
-        <input type="text" th:value="${barberUser.phone}" name="phone" lay-verify="phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+        <input type="text" th:value="${barberUser.phone}" maxlength="11" name="phone" lay-verify="phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
       </div>
     </div>
     <div class="layui-form-item">
       <label class="layui-form-label">身份证号</label>
       <div class="layui-input-inline">
-        <input type="text" th:value="${barberUser.idCard}" name="idCard" lay-verify="card" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+        <input type="text" th:value="${barberUser.idCard}" maxlength="18" name="idCard" lay-verify="card" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
       </div>
     </div>
     <div class="layui-form-item">

@@ -12,6 +12,7 @@ import cn.nicecoder.barbersys.enums.CommonEnum;
 import cn.nicecoder.barbersys.service.BarberOrderService;
 import cn.nicecoder.barbersys.service.SysUserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/order")
+@Api(tags="订单相关接口")
 public class BarberOrderController {
     @Autowired
     BarberOrderService barberOrderService;

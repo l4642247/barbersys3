@@ -5,6 +5,8 @@ import cn.nicecoder.barbersys.entity.SysUser;
 import cn.nicecoder.barbersys.entity.SysUserRole;
 import cn.nicecoder.barbersys.entity.DO.SysUserDO;
 import cn.nicecoder.barbersys.entity.VO.SysUserVO;
+import cn.nicecoder.barbersys.enums.CommonEnum;
+import cn.nicecoder.barbersys.exception.ServiceException;
 import cn.nicecoder.barbersys.mapper.SysUserMapper;
 import cn.nicecoder.barbersys.service.SysRoleService;
 import cn.nicecoder.barbersys.service.SysUserRoleService;
@@ -33,6 +35,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private static final String PASSWORD_DEFAULT_ORIGIN = "123456";
 
     @Autowired
+    private SysUserService sysUserService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -50,6 +55,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public SysUser createBarberUser(SysUser sysUserSave) {
+        SysUserVO sysUser = sysUserService.getOneByUsername(sysUserSave.getUsername());
+        if(sysUser != null){
+            throw new ServiceException(CommonEnum.RESP_LAYUI_FAIL.getCode(), "该用户名已存在");
+        }
         sysUserSave.setPassword(passwordEncoder.encode(PASSWORD_DEFAULT_ORIGIN));
         return sysUserSave;
     }

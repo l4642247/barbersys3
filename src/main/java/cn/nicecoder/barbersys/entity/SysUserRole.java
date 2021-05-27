@@ -28,5 +28,4 @@ public class SysUserRole implements Serializable {
 
     private Long roleId;
 
-
 }
