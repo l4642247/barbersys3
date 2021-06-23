@@ -27,13 +27,6 @@ public interface SysUserService extends IService<SysUser> {
     public SysUserVO getCurrentUser();
 
     /**
-     * 创建用户
-     * @param sysUserSave
-     * @return
-     */
-    public SysUser createBarberUser(SysUser sysUserSave);
-
-    /**
      * 修改密码
      * @param oldPassword
      * @param password
@@ -58,10 +51,11 @@ public interface SysUserService extends IService<SysUser> {
 
 
     /**
-     * 新增或更新
+     * 新增
      * @param barberUserSave
      * @return
      */
     @Transactional
-    SysUser saveOne(SysUserDO barberUserSave);
+    SysUser saveOne(SysUserDO barberUserSave,int opt);
+
 }

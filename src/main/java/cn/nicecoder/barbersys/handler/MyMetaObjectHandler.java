@@ -17,8 +17,6 @@ import java.util.Date;
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
-    private final static Integer CLICK_NUM_INIT = 0;
-
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");

@@ -7,6 +7,9 @@ package cn.nicecoder.barbersys.enums;
  */
 public enum CommonEnum {
 
+    OPT_INSERT(0, "新增"),
+    OPT_UPDATE(1, "修改"),
+
     NORMAL(1,"正常"),
     DELETED(0,"已删除"),
 
@@ -24,8 +27,6 @@ public enum CommonEnum {
 
     MENU_PRIVILEGE_0(0,"不需要权限"),
     MENU_PRIVILEGE_1(1,"需要权限"),
-
-
 
     REDIS_KEY_MENU_PERMISSION(0, "key_menuPermission"),
     ;

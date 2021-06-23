@@ -33,10 +33,13 @@
         var i = r.val();
         e.photos({photos: {title: "查看头像", data: [{src: i}]}, shade: .01, closeBtn: 1, anim: 5})
     }, n.on("submit(setmypass)", function (t) {
-        var httpRequest = new HttpRequest("/user/passwordModify", 'post', function (data) {
-            return e.msg(data.msg), !1
-        }, function (data) {
-            return e.msg(data.msg), !1
+        var httpRequest = new HttpRequest("/user/passwordModify", 'post', function (t) {
+            if(0 == t.code){
+                e.msg(t.msg, {icon: 1})
+                // setTimeout("parent.layui.admin.events.closeThisTabs()", 2000 )
+            }else{
+                e.msg(t.msg, {icon: 5})
+            }
         });
         httpRequest.set(t.field);
         httpRequest.start(true);

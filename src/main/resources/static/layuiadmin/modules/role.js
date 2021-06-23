@@ -5,7 +5,6 @@
         elem: "#LAY-user-back-role",
         url: "/role/page",
         cols: [[
-            {type: "checkbox", fixed: "left"},
             {type: 'numbers', width: 80, title: "ID"},
             {field: "code", title: "编码"},
             {field: "name", title: "角色名"},
@@ -16,7 +15,11 @@
     }), i.on("tool(LAY-user-back-role)", function (e) {
         if ("del" === e.event) layer.confirm("确定删除此角色？", function (t) {
             var httpRequest = new HttpRequest("/role/delete/"+e.data.id, 'delete', function (data) {
-                e.del(), layer.close(t)
+                if(0 == data.code){
+                    e.del(), layer.close(t)
+                }else{
+                    layer.msg(data.msg, {icon: 5})
+                }
             });
             httpRequest.start(true);
         }); else if ("edit" === e.event) {

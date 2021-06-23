@@ -5,7 +5,6 @@
         elem: "#LAY-order",
         url: "/order/page",
         cols: [[
-            {type: "checkbox", fixed: "left"},
             {type: 'numbers', width: 80, title: "ID"},
             {field: "cardNo", title: "卡号", templet: function (d) {return d.cardNo == null ? "-" : d.cardNo}},
             {field: "memberName", title: "会员名", templet: function (d) {return d.memberName == null ? "-" : d.memberName}},

@@ -54,16 +54,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public SysUser createBarberUser(SysUser sysUserSave) {
-        SysUserVO sysUser = sysUserService.getOneByUsername(sysUserSave.getUsername());
-        if(sysUser != null){
-            throw new ServiceException(CommonEnum.RESP_LAYUI_FAIL.getCode(), "该用户名已存在");
-        }
-        sysUserSave.setPassword(passwordEncoder.encode(PASSWORD_DEFAULT_ORIGIN));
-        return sysUserSave;
-    }
-
-    @Override
     public SysUser passwordModify(String oldPassword, String password) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
@@ -71,7 +61,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String passwordOrigin = sysUserOrigin.getPassword();
         boolean flag = passwordEncoder.matches(oldPassword, passwordOrigin);
         if(!flag){
-            throw new RuntimeException("密码校验失败");
+            throw new ServiceException(CommonEnum.RESP_LAYUI_FAIL.getCode(), "原密码输入错误");
         }
         sysUserOrigin.setPassword(passwordEncoder.encode(password));
         this.updateById(sysUserOrigin);
@@ -113,8 +103,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public SysUser saveOne(SysUserDO barberUserSave) {
-        this.saveOrUpdate(createBarberUser(barberUserSave));
+    public SysUser saveOne(SysUserDO barberUserSave, int opt) {
+        if(CommonEnum.OPT_INSERT.getCode() == opt){
+            SysUserVO sysUser = sysUserService.getOneByUsername(barberUserSave.getUsername());
+            if(sysUser != null){
+                throw new ServiceException(CommonEnum.RESP_LAYUI_FAIL.getCode(), "该用户名已存在");
+            }
+            barberUserSave.setPassword(passwordEncoder.encode(PASSWORD_DEFAULT_ORIGIN));
+        }
+        this.saveOrUpdate(barberUserSave);
         if(barberUserSave.getRoleStr() != null) {
             // 更新角色
             if(barberUserSave.getId() != null) {
@@ -132,6 +129,4 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.saveOrUpdate(barberUserSave);
         return barberUserSave;
     }
-
-
 }

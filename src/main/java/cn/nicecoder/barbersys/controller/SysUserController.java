@@ -47,9 +47,16 @@ public class SysUserController {
     }
 
     @PostMapping("/save")
-    @ApiOperation(value="保存/更新用户",notes="")
+    @ApiOperation(value="保存用户",notes="")
     public Resp save(@RequestBody SysUserDO barberUserSave){
-        sysUserService.saveOne(barberUserSave);
+        sysUserService.saveOne(barberUserSave, CommonEnum.OPT_INSERT.getCode());
+        return Resp.success(barberUserSave);
+    }
+
+    @PostMapping("/update")
+    @ApiOperation(value="更新用户",notes="")
+    public Resp update(@RequestBody SysUserDO barberUserSave){
+        sysUserService.saveOne(barberUserSave, CommonEnum.OPT_UPDATE.getCode());
         return Resp.success(barberUserSave);
     }
 

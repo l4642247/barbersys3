@@ -6,7 +6,7 @@
         inner join sys_user_role b on a.id = b.role_id
         inner join sys_user c on b.user_id = c.id
         where c.username = #{username}
-        and a.status = 1 and c.status = 1
+        and a.status = 1
     </select>
 
     <select id="getResourcePermission" resultType="cn.nicecoder.barbersys.entity.PO.PermissionPO">

@@ -85,7 +85,7 @@
         data: {"id":id, "status":status},
         url: "/user/updateStatus",
         success: function(data){
-          layer.msg(data.msg)
+          layer.msg(data.msg, {icon: 5})
         }
       });
     });
@@ -151,7 +151,7 @@
                   table.reload('LAY-user-manage');
                   layer.close(index); //关闭弹层
                 }else{
-                  layer.msg(data.msg)
+                  layer.msg(data.msg, {icon: 5})
                 }
               });
               httpRequest.set(field);

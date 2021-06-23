@@ -13,7 +13,7 @@
             {field: "css", title: "图标"},
             {field: "href", title: "路径", templet: function (d) {return d.href == '' ? "-":d.href}},
             {field: "sort", title: "排序"},
-            {field: "status", title: "状态", align:"center",templet: function (d) { return d.status == '1'?"启用":"禁用";}},
+            // {field: "status", title: "状态", align:"center",templet: function (d) { return d.status == '1'?"启用":"禁用";}},
             {field: "createTime", title: "添加时间", templet: function (d) {return util.toDateString(d.createTime);}},
             {title: "操作", width: 150, align: "center", fixed: "right", toolbar: "#table-option"}]],
         page: !0,
@@ -23,7 +23,11 @@
     }), i.on("tool(LAY-menu-manage)", function (e) {
         if ("del" === e.event) layer.confirm("确定删除此菜单？", function (t) {
             var httpRequest = new HttpRequest("/menu/delete/"+e.data.id, 'delete', function (data) {
-                e.del(), layer.close(t)
+                if(0 == data.code){
+                    e.del(), layer.close(t)
+                }else{
+                    layer.msg(data.msg, {icon: 5})
+                }
             });
             httpRequest.start(true);
         }); else if ("edit" === e.event) {

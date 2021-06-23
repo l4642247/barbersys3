@@ -6,7 +6,6 @@
         elem: "#LAY-user-manage",
         url: "/user/page",
         cols: [[
-            {type: "checkbox", fixed: "left"},
             {type: 'numbers', width: 80, title: "ID"},
             {field: "username", title: "用户名", minWidth: 100},
             {field: "name", title: "姓名" },
@@ -23,7 +22,11 @@
     }), i.on("tool(LAY-user-manage)", function (e) {
         if ("del" === e.event) layer.confirm("确定删除此用户？", function (t) {
             var httpRequest = new HttpRequest("/user/delete/"+e.data.id, 'delete', function (data) {
-                e.del(), layer.close(t)
+                if(0 == data.code){
+                    e.del(), layer.close(t)
+                }else{
+                    layer.msg(data.msg, {icon: 5})
+                }
             });
             httpRequest.start(true);
         }); else if ("edit" === e.event) {
@@ -37,7 +40,7 @@
                     var l = window["layui-layer-iframe" + e],
                         r = t.find("iframe").contents().find("#LAY-user-submit");
                     l.layui.form.on("submit(LAY-user-submit)", function (t) {
-                        var httpRequest = new HttpRequest("/user/save", 'post', function (data) {
+                        var httpRequest = new HttpRequest("/user/update", 'post', function (data) {
                             i.reload("LAY-user-manage");
                             layer.close(e)
                         });

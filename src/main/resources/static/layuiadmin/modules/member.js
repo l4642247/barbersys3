@@ -23,7 +23,11 @@
     }), i.on("tool(LAY-user-member)", function (e) {
         if ("del" === e.event) layer.confirm("确定删除此用户？", function (t) {
             var httpRequest = new HttpRequest("/member/delete/"+e.data.id, 'delete', function (data) {
-                e.del(), layer.close(t)
+                if(0 == data.code){
+                    e.del(), layer.close(t)
+                }else{
+                    layer.msg(data.msg, {icon: 5})
+                }
             });
             httpRequest.start(true);
         });
@@ -89,7 +93,7 @@
                                 i.reload("LAY-user-member");
                                 layer.close(e)
                             }else{
-                                layer.msg(data.msg)
+                                layer.msg(data.msg, {icon: 5})
                             }
                         });
                         httpRequest.set(t.field);
